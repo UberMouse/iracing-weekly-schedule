@@ -34,7 +34,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
       style={{ borderLeftWidth: "2px", borderLeftColor: catColor }}
     >
       <div className="flex items-start justify-between gap-2">
-        <h3 className="font-display font-semibold text-sm leading-tight uppercase tracking-wide">
+        <h3 className="font-display font-semibold text-base leading-tight uppercase tracking-wide">
           {series.seriesName}
         </h3>
         <motion.button
@@ -43,7 +43,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
           data-favorited={isFavorite ? "true" : "false"}
           whileTap={{ scale: 1.3 }}
           transition={{ type: "spring", stiffness: 500, damping: 15 }}
-          className="shrink-0 text-lg leading-none"
+          className="shrink-0 text-xl leading-none"
           style={{ color: isFavorite ? "var(--color-accent)" : "var(--color-text-muted)" }}
         >
           {isFavorite ? "★" : "☆"}
@@ -51,30 +51,30 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
       </div>
       <div className="flex flex-wrap gap-1.5">
         <span
-          className="text-xs px-2 py-0.5 rounded-full font-medium"
+          className="text-sm px-2.5 py-0.5 rounded-full font-medium"
           style={{ backgroundColor: `color-mix(in srgb, ${catColor} 15%, transparent)`, color: catColor }}
         >
           {categoryLabels[series.category]}
         </span>
-        <span className="text-xs px-1.5 py-0.5 rounded font-display font-bold border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+        <span className="text-sm px-2 py-0.5 rounded font-display font-bold border border-[var(--color-border)] text-[var(--color-text-secondary)]">
           {series.licenseClass}
         </span>
-        <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--color-surface-elevated)] text-[var(--color-text-secondary)]">
+        <span className="text-sm px-2.5 py-0.5 rounded-full bg-[var(--color-surface-elevated)] text-[var(--color-text-secondary)]">
           {series.setupType}
         </span>
         {series.isMulticlass && (
-          <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400">
+          <span className="text-sm px-2.5 py-0.5 rounded-full bg-purple-500/15 text-purple-400">
             Multiclass
           </span>
         )}
       </div>
-      <p className="text-[11px] font-mono text-[var(--color-text-muted)]">
+      <p className="text-xs font-mono text-[var(--color-text-muted)]">
         {series.cars.map((c) => c.carName).join(" · ")}
       </p>
       <div className="border-t border-[var(--color-border)] pt-2 mt-1 flex flex-col gap-0.5 max-h-48 overflow-y-auto">
         {series.scheduleWeeks.map((w) => (
-          <div key={w.weekNumber} className="flex gap-2 text-[10px] leading-snug">
-            <span className="font-mono text-[var(--color-text-muted)] shrink-0 w-6 text-right">W{w.weekNumber}</span>
+          <div key={w.weekNumber} className="flex gap-2 text-xs leading-snug">
+            <span className="font-mono text-[var(--color-text-muted)] shrink-0 w-7 text-right">W{w.weekNumber}</span>
             <span className="font-mono text-[var(--color-text-secondary)]">
               {w.trackName}{w.trackConfig ? ` — ${w.trackConfig}` : ""}
             </span>

@@ -26,20 +26,20 @@ export default function AddSeriesModal({ week, onClose }: Props) {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div
-        className="bg-gray-900 border border-gray-700 rounded-lg w-full max-w-md max-h-[70vh] flex flex-col"
+        className="bg-gray-900 border border-gray-700 rounded-lg w-full max-w-lg max-h-[70vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-4 border-b border-gray-800">
-          <h3 className="font-semibold text-sm mb-3">Add Series — Week {week}</h3>
+        <div className="p-5 border-b border-gray-800">
+          <h3 className="font-semibold text-base mb-3">Add Series — Week {week}</h3>
           <input
             type="text"
             placeholder="Search series..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-gray-800 border border-gray-700 rounded-md px-3 py-1.5 text-xs text-gray-300 placeholder:text-gray-600"
+            className="w-full bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm text-gray-300 placeholder:text-gray-600"
             autoFocus
           />
-          <label className="flex items-center gap-2 mt-2 text-xs text-gray-400">
+          <label className="flex items-center gap-2 mt-2.5 text-sm text-gray-400">
             <input
               type="checkbox"
               checked={showAll}
@@ -48,18 +48,18 @@ export default function AddSeriesModal({ week, onClose }: Props) {
             Show all series (not just favorites)
           </label>
         </div>
-        <div className="overflow-y-auto p-2 flex flex-col gap-1">
+        <div className="overflow-y-auto p-3 flex flex-col gap-1">
           {available.map((s) => {
             const weekTrack = s.scheduleWeeks.find((w) => w.weekNumber === week);
             return (
               <button
                 key={s.seriesId}
                 onClick={() => handleAdd(s)}
-                className="text-left px-3 py-2 rounded-md hover:bg-gray-800 transition-colors"
+                className="text-left px-3 py-2.5 rounded-md hover:bg-gray-800 transition-colors"
               >
-                <div className="text-xs font-medium">{s.seriesName}</div>
+                <div className="text-sm font-medium">{s.seriesName}</div>
                 {weekTrack && (
-                  <div className="text-[10px] text-gray-500">
+                  <div className="text-xs text-gray-500">
                     {weekTrack.trackName}
                     {weekTrack.trackConfig ? ` — ${weekTrack.trackConfig}` : ""}
                   </div>
@@ -68,7 +68,7 @@ export default function AddSeriesModal({ week, onClose }: Props) {
             );
           })}
           {available.length === 0 && (
-            <p className="text-xs text-gray-500 text-center py-4">
+            <p className="text-sm text-gray-500 text-center py-4">
               {showAll ? "No series available" : "No favorites yet — check 'Show all series'"}
             </p>
           )}

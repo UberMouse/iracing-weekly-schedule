@@ -29,7 +29,7 @@ export default function FilterBar() {
           <button
             key={value}
             onClick={() => toggleCategory(value)}
-            className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+            className={`text-sm px-4 py-2 rounded-full border transition-colors ${
               filters.categories.includes(value)
                 ? "bg-white text-gray-900 border-white"
                 : "border-gray-700 text-gray-400 hover:border-gray-500"
@@ -46,7 +46,7 @@ export default function FilterBar() {
         onChange={(e) =>
           setFilters({ licenseClass: (e.target.value || null) as LicenseClass | null })
         }
-        className="bg-gray-800 border border-gray-700 rounded-md px-2 py-1.5 text-xs text-gray-300"
+        className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm text-gray-300"
       >
         <option value="">All Licenses</option>
         {licenseClasses.map((lc) => (
@@ -60,7 +60,7 @@ export default function FilterBar() {
         onChange={(e) =>
           setFilters({ setupType: (e.target.value || null) as SetupType | null })
         }
-        className="bg-gray-800 border border-gray-700 rounded-md px-2 py-1.5 text-xs text-gray-300"
+        className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm text-gray-300"
       >
         <option value="">All Setups</option>
         <option value="fixed">Fixed</option>
@@ -73,7 +73,7 @@ export default function FilterBar() {
         placeholder="Search series..."
         value={filters.searchText}
         onChange={(e) => setFilters({ searchText: e.target.value })}
-        className="bg-gray-800 border border-gray-700 rounded-md px-3 py-1.5 text-xs text-gray-300 placeholder:text-gray-600 w-48"
+        className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm text-gray-300 placeholder:text-gray-600 w-56"
       />
 
       {/* Favorites toggle */}
