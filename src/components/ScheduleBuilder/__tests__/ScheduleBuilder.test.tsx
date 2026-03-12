@@ -12,7 +12,7 @@ describe("ScheduleBuilder", () => {
     });
   });
 
-  it("renders 12 week columns", () => {
+  it("renders 12 week rows", () => {
     render(<ScheduleBuilder />);
     for (let i = 1; i <= 12; i++) {
       expect(screen.getByText(`Week ${i}`)).toBeInTheDocument();
