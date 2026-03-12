@@ -1,15 +1,21 @@
 import { useAppStore } from "../../store/useAppStore";
 import type { Category, LicenseClass, SetupType } from "../../types";
 
-const categories: { value: Category; label: string }[] = [
-  { value: "oval", label: "Oval" },
-  { value: "dirt_oval", label: "Dirt Oval" },
-  { value: "dirt_road", label: "Dirt Road" },
-  { value: "sports_car", label: "Sports Car" },
-  { value: "formula", label: "Formula" },
+const categories: { value: Category; label: string; color: string }[] = [
+  { value: "oval", label: "Oval", color: "var(--color-cat-oval)" },
+  { value: "dirt_oval", label: "Dirt Oval", color: "var(--color-cat-dirt-oval)" },
+  { value: "dirt_road", label: "Dirt Road", color: "var(--color-cat-dirt-road)" },
+  { value: "sports_car", label: "Sports Car", color: "var(--color-cat-sports-car)" },
+  { value: "formula", label: "Formula", color: "var(--color-cat-formula)" },
 ];
 
-const licenseClasses: LicenseClass[] = ["R", "D", "C", "B", "A"];
+const licenseClasses: { value: LicenseClass; label: string; color: string }[] = [
+  { value: "R", label: "R", color: "var(--color-lic-R)" },
+  { value: "D", label: "D", color: "var(--color-lic-D)" },
+  { value: "C", label: "C", color: "var(--color-lic-C)" },
+  { value: "B", label: "B", color: "var(--color-lic-B)" },
+  { value: "A", label: "A", color: "var(--color-lic-A)" },
+];
 
 export default function FilterBar() {
   const { filters, setFilters } = useAppStore();
@@ -21,38 +27,56 @@ export default function FilterBar() {
     setFilters({ categories: next });
   };
 
+  const toggleLicense = (lc: LicenseClass) => {
+    const next = filters.licenseClasses.includes(lc)
+      ? filters.licenseClasses.filter((l) => l !== lc)
+      : [...filters.licenseClasses, lc];
+    setFilters({ licenseClasses: next });
+  };
+
   return (
-    <div className="flex flex-wrap items-center gap-3 mb-6">
+    <div className="flex flex-wrap items-center gap-4 mb-6">
       {/* Category pills */}
       <div className="flex gap-1.5">
-        {categories.map(({ value, label }) => (
-          <button
-            key={value}
-            onClick={() => toggleCategory(value)}
-            className={`text-sm px-4 py-2 rounded-full border transition-colors ${
-              filters.categories.includes(value)
-                ? "bg-white text-gray-900 border-white"
-                : "border-gray-700 text-gray-400 hover:border-gray-500"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
+        {categories.map(({ value, label, color }) => {
+          const active = filters.categories.includes(value);
+          return (
+            <button
+              key={value}
+              onClick={() => toggleCategory(value)}
+              className="text-sm px-4 py-2 rounded-full border transition-colors"
+              style={
+                active
+                  ? { backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`, borderColor: color, color }
+                  : { borderColor: "var(--color-border)", color: "var(--color-text-secondary)" }
+              }
+            >
+              {label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* License class dropdown */}
-      <select
-        value={filters.licenseClass ?? ""}
-        onChange={(e) =>
-          setFilters({ licenseClass: (e.target.value || null) as LicenseClass | null })
-        }
-        className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm text-gray-300"
-      >
-        <option value="">All Licenses</option>
-        {licenseClasses.map((lc) => (
-          <option key={lc} value={lc}>{lc} License</option>
-        ))}
-      </select>
+      {/* License class pills */}
+      <div className="flex gap-1.5">
+        {licenseClasses.map(({ value, label, color }) => {
+          const active = filters.licenseClasses.includes(value);
+          return (
+            <button
+              key={value}
+              onClick={() => toggleLicense(value)}
+              className="text-sm w-9 h-9 rounded-full border font-display font-bold transition-colors"
+              style={
+                active
+                  ? { backgroundColor: `color-mix(in srgb, ${color} 25%, transparent)`, borderColor: color, color }
+                  : { borderColor: "var(--color-border)", color: "var(--color-text-secondary)" }
+              }
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
 
       {/* Setup type toggle */}
       <select
@@ -79,7 +103,7 @@ export default function FilterBar() {
       {/* Favorites toggle */}
       <button
         onClick={() => setFilters({ favoritesOnly: !filters.favoritesOnly })}
-        className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+        className={`text-sm px-4 py-2 rounded-full border transition-colors ${
           filters.favoritesOnly
             ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/50"
             : "border-gray-700 text-gray-400 hover:border-gray-500"

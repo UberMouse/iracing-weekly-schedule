@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import type { Series, Category } from "../types";
+import type { Series, Category, LicenseClass } from "../types";
 
 interface Props {
   series: Series;
@@ -23,8 +23,17 @@ const categoryLabels: Record<Category, string> = {
   formula: "Formula",
 };
 
+const licenseColors: Record<LicenseClass, string> = {
+  R: "var(--color-lic-R)",
+  D: "var(--color-lic-D)",
+  C: "var(--color-lic-C)",
+  B: "var(--color-lic-B)",
+  A: "var(--color-lic-A)",
+};
+
 export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Props) {
   const catColor = categoryColors[series.category];
+  const licColor = licenseColors[series.licenseClass];
 
   return (
     <motion.div
@@ -56,7 +65,10 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
         >
           {categoryLabels[series.category]}
         </span>
-        <span className="text-sm px-2 py-0.5 rounded font-display font-bold border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+        <span
+          className="text-sm px-2 py-0.5 rounded font-display font-bold border"
+          style={{ borderColor: licColor, color: licColor }}
+        >
           {series.licenseClass}
         </span>
         <span className="text-sm px-2.5 py-0.5 rounded-full bg-[var(--color-surface-elevated)] text-[var(--color-text-secondary)]">

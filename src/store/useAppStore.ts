@@ -45,7 +45,7 @@ export const useAppStore = create<AppStore>()(
         })),
       filters: {
         categories: [],
-        licenseClass: null,
+        licenseClasses: [],
         setupType: null,
         searchText: "",
         favoritesOnly: false,

@@ -9,7 +9,7 @@ describe("useAppStore", () => {
       weeklyPicks: {},
       filters: {
         categories: [],
-        licenseClass: null,
+        licenseClasses: [],
         setupType: null,
         searchText: "",
         favoritesOnly: false,

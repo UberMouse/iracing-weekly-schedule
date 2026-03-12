@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
-import type { Category } from "../../types";
+import type { Category, LicenseClass } from "../../types";
 
 interface Props {
   week: number;
@@ -22,6 +22,14 @@ const categoryLabels: Record<Category, string> = {
   dirt_road: "Dirt Road",
   sports_car: "Sports Car",
   formula: "Formula",
+};
+
+const licenseColors: Record<LicenseClass, string> = {
+  R: "var(--color-lic-R)",
+  D: "var(--color-lic-D)",
+  C: "var(--color-lic-C)",
+  B: "var(--color-lic-B)",
+  A: "var(--color-lic-A)",
 };
 
 export default function WeekRow({ week, isCurrentWeek }: Props) {
@@ -57,6 +65,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
             if (!s) return null;
             const weekTrack = s.scheduleWeeks.find((w) => w.weekNumber === week);
             const catColor = categoryColors[s.category];
+            const licColor = licenseColors[s.licenseClass];
             return (
               <div
                 key={s.seriesId}
@@ -71,7 +80,10 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                   >
                     {categoryLabels[s.category]}
                   </span>
-                  <span className="text-xs px-1.5 py-px rounded font-display font-bold border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+                  <span
+                    className="text-xs px-1.5 py-px rounded font-display font-bold border"
+                    style={{ borderColor: licColor, color: licColor }}
+                  >
                     {s.licenseClass}
                   </span>
                 </div>

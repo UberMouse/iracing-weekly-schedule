@@ -10,7 +10,8 @@ export default function SeriesBrowser() {
     return series.filter((s) => {
       if (filters.categories.length > 0 && !filters.categories.includes(s.category))
         return false;
-      if (filters.licenseClass && s.licenseClass !== filters.licenseClass) return false;
+      if (filters.licenseClasses.length > 0 && !filters.licenseClasses.includes(s.licenseClass))
+        return false;
       if (filters.setupType && s.setupType !== filters.setupType) return false;
       if (
         filters.searchText &&

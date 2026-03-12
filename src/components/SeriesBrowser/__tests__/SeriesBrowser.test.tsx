@@ -10,7 +10,7 @@ describe("SeriesBrowser", () => {
       favorites: [],
       filters: {
         categories: [],
-        licenseClass: null,
+        licenseClasses: [],
         setupType: null,
         searchText: "",
         favoritesOnly: false,

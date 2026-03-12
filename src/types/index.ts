@@ -26,7 +26,7 @@ export interface Series {
 
 export interface FilterState {
   categories: Category[];
-  licenseClass: LicenseClass | null;
+  licenseClasses: LicenseClass[];
   setupType: SetupType | null;
   searchText: string;
   favoritesOnly: boolean;
