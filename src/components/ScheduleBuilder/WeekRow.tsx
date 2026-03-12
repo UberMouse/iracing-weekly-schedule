@@ -76,7 +76,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                   </span>
                 </div>
                 {weekTrack && (
-                  <div className="text-xs text-[var(--color-text-muted)] font-mono">
+                  <div className="text-xs text-[var(--color-text-secondary)] font-mono">
                     {weekTrack.trackName}
                     {weekTrack.trackConfig ? ` — ${weekTrack.trackConfig}` : ""}
                   </div>

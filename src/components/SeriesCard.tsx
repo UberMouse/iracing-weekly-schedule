@@ -68,7 +68,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
           </span>
         )}
       </div>
-      <p className="text-xs font-mono text-[var(--color-text-muted)]">
+      <p className="text-xs font-mono text-[var(--color-text-secondary)]">
         {series.cars.map((c) => c.carName).join(" · ")}
       </p>
       <div className="border-t border-[var(--color-border)] pt-2 mt-1 flex flex-col gap-0.5">
