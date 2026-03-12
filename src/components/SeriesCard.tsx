@@ -71,7 +71,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
       <p className="text-xs font-mono text-[var(--color-text-muted)]">
         {series.cars.map((c) => c.carName).join(" · ")}
       </p>
-      <div className="border-t border-[var(--color-border)] pt-2 mt-1 flex flex-col gap-0.5 max-h-48 overflow-y-auto">
+      <div className="border-t border-[var(--color-border)] pt-2 mt-1 flex flex-col gap-0.5">
         {series.scheduleWeeks.map((w) => (
           <div key={w.weekNumber} className="flex gap-2 text-xs leading-snug">
             <span className="font-mono text-[var(--color-text-muted)] shrink-0 w-7 text-right">W{w.weekNumber}</span>
