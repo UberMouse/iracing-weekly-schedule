@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { createHash } from "node:crypto";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -28,18 +29,26 @@ const PASSWORD = required("IRACING_PASSWORD");
 const OUTPUT_PATH = resolve(__dirname, "../src/data/season.json");
 
 // --- Auth ---
+// iRacing requires secrets to be SHA-256 hashed before sending:
+// client_secret is hashed with client_id, password is hashed with username (email)
+function maskSecret(secret: string, identifier: string): string {
+  const normalized = identifier.trim().toLowerCase();
+  return createHash("sha256")
+    .update(`${secret}${normalized}`, "utf8")
+    .digest("base64");
+}
+
 // The @iracing-data/oauth-client only supports authorization-code flow (browser).
-// For CI / build-time use we perform an OAuth2 Resource Owner Password Credentials
-// grant directly against the iRacing token endpoint.
+// For CI / build-time use we perform iRacing's Password Limited grant directly.
 async function authenticate(): Promise<string> {
   console.log("Authenticating with iRacing...");
 
   const body = new URLSearchParams({
-    grant_type: "password",
+    grant_type: "password_limited",
     username: USERNAME,
-    password: PASSWORD,
+    password: maskSecret(PASSWORD, USERNAME),
     client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET,
+    client_secret: maskSecret(CLIENT_SECRET, CLIENT_ID),
     scope: "iracing.auth",
   });
 
