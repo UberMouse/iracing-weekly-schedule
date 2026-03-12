@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run at the start of each iRacing season (roughly quarterly)
+    # Manually adjust or trigger via workflow_dispatch
+    - cron: "0 12 1 */3 *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Fetch iRacing schedule data
+        run: npx tsx scripts/fetch-schedule.ts
+        env:
+          IRACING_CLIENT_ID: ${{ secrets.IRACING_CLIENT_ID }}
+          IRACING_CLIENT_SECRET: ${{ secrets.IRACING_CLIENT_SECRET }}
+          IRACING_USERNAME: ${{ secrets.IRACING_USERNAME }}
+          IRACING_PASSWORD: ${{ secrets.IRACING_PASSWORD }}
+
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
