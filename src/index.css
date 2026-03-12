@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Google Fonts — loaded in index.html <head> */
+/* <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> */
+
+@theme {
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-body: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-bg: #0a0a0f;
+  --color-surface: #12121a;
+  --color-surface-elevated: #1a1a26;
+  --color-border: #2a2a3a;
+  --color-border-hover: #3a3a4f;
+  --color-accent: #f5a623;
+  --color-accent-dim: #f5a62333;
+
+  --color-cat-oval: #3b82f6;
+  --color-cat-dirt-oval: #f97316;
+  --color-cat-dirt-road: #d97706;
+  --color-cat-sports-car: #22c55e;
+  --color-cat-formula: #ef4444;
+
+  --color-text-primary: #e8e8f0;
+  --color-text-secondary: #8888a0;
+  --color-text-muted: #555570;
+
+  --color-current-week: #06b6d4;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Subtle noise texture overlay on body */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
