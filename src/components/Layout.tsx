@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
+import ExportImport from "./ExportImport";
 
 export default function Layout() {
   const location = useLocation();
@@ -23,6 +24,9 @@ export default function Layout() {
           <div className="flex gap-1">
             <NavLink to="/series" className={linkClass}>Series</NavLink>
             <NavLink to="/schedule" className={linkClass}>Schedule</NavLink>
+          </div>
+          <div className="ml-auto">
+            <ExportImport />
           </div>
         </div>
       </nav>
