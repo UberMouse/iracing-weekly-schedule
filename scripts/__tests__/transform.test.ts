@@ -125,9 +125,26 @@ describe("transformToSeries", () => {
     ]);
   });
 
-  it("detects multiclass when season has multiple car class IDs", () => {
+  it("detects single-class series as not multiclass", () => {
     const gt3 = result.find((s) => s.seriesId === 230)!;
     expect(gt3.isMulticlass).toBe(false);
+  });
+
+  it("detects multiclass when season has multiple car class IDs", () => {
+    const multiclassSeason = [
+      {
+        ...rawSeasons[0],
+        series_id: 230,
+        car_class_ids: [74, 22],
+      },
+    ];
+    const r = transformToSeries(
+      [rawSeries[0]],
+      multiclassSeason,
+      rawCars,
+      rawCarClasses,
+    );
+    expect(r[0].isMulticlass).toBe(true);
   });
 
   it("omits series with no season data", () => {
