@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Series, FilterState } from "../types";
-import mockData from "../data/mock-schedule.json";
+import seasonData from "../data/season.json";
 
 interface AppStore {
   series: Series[];
@@ -19,7 +19,7 @@ interface AppStore {
 export const useAppStore = create<AppStore>()(
   persist(
     (set, get) => ({
-      series: mockData as Series[],
+      series: seasonData as Series[],
       favorites: [],
       toggleFavorite: (seriesId) =>
         set((state) => ({

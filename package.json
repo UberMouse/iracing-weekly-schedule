@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "fetch-data": "tsx scripts/fetch-schedule.ts",
+    "prebuild": "test -f src/data/season.json || cp src/data/mock-schedule.json src/data/season.json",
+    "dev": "test -f src/data/season.json || cp src/data/mock-schedule.json src/data/season.json && vite",
     "build": "tsc -b && vite build",
+    "build:prod": "tsx scripts/fetch-schedule.ts && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
