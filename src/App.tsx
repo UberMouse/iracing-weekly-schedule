@@ -1,9 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
-
-function SeriesBrowserPage() {
-  return <div>Series Browser (coming soon)</div>;
-}
+import SeriesBrowser from "./components/SeriesBrowser";
 
 function ScheduleBuilderPage() {
   return <div>Schedule Builder (coming soon)</div>;
@@ -14,7 +11,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/series" element={<SeriesBrowserPage />} />
+          <Route path="/series" element={<SeriesBrowser />} />
           <Route path="/schedule" element={<ScheduleBuilderPage />} />
           <Route path="*" element={<Navigate to="/series" replace />} />
         </Route>
