@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import type { Series, Category, LicenseClass } from "../types";
+import type { Series, Category, LicenseClass, WeekSchedule } from "../types";
+import TrackMapPopover from "./TrackMapPopover";
 
 interface Props {
   series: Series;
@@ -85,14 +86,36 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
       </p>
       <div className="border-t border-[var(--color-border)] pt-2 mt-1 flex flex-col gap-0.5">
         {series.scheduleWeeks.map((w) => (
-          <div key={w.weekNumber} className="flex gap-2 text-xs leading-snug">
+          <div key={w.weekNumber} className="flex gap-2 text-xs leading-snug items-center">
             <span className="font-mono text-[var(--color-text-muted)] shrink-0 w-7 text-right">W{w.weekNumber}</span>
-            <span className="font-mono text-[var(--color-text-secondary)]">
-              {w.trackName}{w.trackConfig ? ` — ${w.trackConfig}` : ""}
-            </span>
+            <TrackMapPopover week={w}>
+              <span className="font-mono text-[var(--color-text-secondary)] cursor-default">
+                {w.trackName}{w.trackConfig ? ` — ${w.trackConfig}` : ""}
+              </span>
+            </TrackMapPopover>
+            <RainBadge week={w} />
           </div>
         ))}
       </div>
     </motion.div>
+  );
+}
+
+function RainBadge({ week }: { week: WeekSchedule }) {
+  if (!week.rainEnabled) return null;
+  if (week.rainChance === 0) {
+    return (
+      <span className="text-[10px] text-sky-600/60 shrink-0" title="Dynamic weather enabled">
+        ☁
+      </span>
+    );
+  }
+  return (
+    <span
+      className="text-[10px] text-sky-400 shrink-0"
+      title={`${week.rainChance}% rain${week.maxPrecipDesc ? ` — ${week.maxPrecipDesc}` : ""}`}
+    >
+      🌧{week.rainChance}%
+    </span>
   );
 }

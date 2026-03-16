@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
-import type { Category, LicenseClass } from "../../types";
+import TrackMapPopover from "../TrackMapPopover";
+import type { Category, LicenseClass, WeekSchedule } from "../../types";
 
 interface Props {
   week: number;
@@ -63,7 +64,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
         <div className="flex-1 flex flex-wrap gap-3 items-center">
           {pickedSeries.map((s) => {
             if (!s) return null;
-            const weekTrack = s.scheduleWeeks.find((w) => w.weekNumber === week);
+            const weekTrack = s.scheduleWeeks.find((w) => w.seasonWeek === week);
             const catColor = categoryColors[s.category];
             const licColor = licenseColors[s.licenseClass];
             return (
@@ -88,9 +89,14 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                   </span>
                 </div>
                 {weekTrack && (
-                  <div className="text-xs text-[var(--color-text-secondary)] font-mono">
-                    {weekTrack.trackName}
-                    {weekTrack.trackConfig ? ` — ${weekTrack.trackConfig}` : ""}
+                  <div className="text-xs text-[var(--color-text-secondary)] font-mono flex items-center gap-1.5">
+                    <TrackMapPopover week={weekTrack}>
+                      <span className="cursor-default">
+                        {weekTrack.trackName}
+                        {weekTrack.trackConfig ? ` — ${weekTrack.trackConfig}` : ""}
+                      </span>
+                    </TrackMapPopover>
+                    <RainBadge week={weekTrack} />
                   </div>
                 )}
                 <button
@@ -114,5 +120,24 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
       </div>
       {showModal && <AddSeriesModal week={week} onClose={() => setShowModal(false)} />}
     </div>
+  );
+}
+
+function RainBadge({ week }: { week: WeekSchedule }) {
+  if (!week.rainEnabled) return null;
+  if (week.rainChance === 0) {
+    return (
+      <span className="text-[10px] text-sky-600/60 shrink-0" title="Dynamic weather enabled">
+        ☁
+      </span>
+    );
+  }
+  return (
+    <span
+      className="text-[10px] text-sky-400 shrink-0"
+      title={`${week.rainChance}% rain${week.maxPrecipDesc ? ` — ${week.maxPrecipDesc}` : ""}`}
+    >
+      🌧{week.rainChance}%
+    </span>
   );
 }

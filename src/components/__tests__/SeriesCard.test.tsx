@@ -11,8 +11,9 @@ const mockSeries: Series = {
   licenseClass: "A",
   setupType: "fixed",
   isMulticlass: false,
+  totalWeeks: 1,
   cars: [{ carId: 1, carName: "Next Gen Chevrolet" }],
-  scheduleWeeks: [{ weekNumber: 1, trackName: "Daytona International Speedway" }],
+  scheduleWeeks: [{ weekNumber: 1, seasonWeek: 1, trackId: 100, trackName: "Daytona International Speedway", rainChance: 0, rainEnabled: false }],
 };
 
 describe("SeriesCard", () => {
