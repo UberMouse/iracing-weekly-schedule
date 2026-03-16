@@ -10,12 +10,13 @@ interface Props {
 export default function AddSeriesModal({ week, onClose }: Props) {
   const { series, favorites, weeklyPicks, addWeeklyPick } = useAppStore();
   const [search, setSearch] = useState("");
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
 
   const pickedIds = weeklyPicks[week] ?? [];
 
   const available = (showAll ? series : series.filter((s) => favorites.includes(s.seriesId)))
     .filter((s) => !pickedIds.includes(s.seriesId))
+    .filter((s) => s.scheduleWeeks.some((w) => w.seasonWeek === week))
     .filter((s) => !search || s.seriesName.toLowerCase().includes(search.toLowerCase()));
 
   const handleAdd = (s: Series) => {
@@ -50,7 +51,7 @@ export default function AddSeriesModal({ week, onClose }: Props) {
         </div>
         <div className="overflow-y-auto p-3 flex flex-col gap-1">
           {available.map((s) => {
-            const weekTrack = s.scheduleWeeks.find((w) => w.weekNumber === week);
+            const weekTrack = s.scheduleWeeks.find((w) => w.seasonWeek === week);
             return (
               <button
                 key={s.seriesId}
@@ -59,9 +60,14 @@ export default function AddSeriesModal({ week, onClose }: Props) {
               >
                 <div className="text-sm font-medium">{s.seriesName}</div>
                 {weekTrack && (
-                  <div className="text-xs text-gray-500">
-                    {weekTrack.trackName}
-                    {weekTrack.trackConfig ? ` — ${weekTrack.trackConfig}` : ""}
+                  <div className="text-xs text-gray-500 flex items-center gap-1.5">
+                    <span>
+                      {weekTrack.trackName}
+                      {weekTrack.trackConfig ? ` — ${weekTrack.trackConfig}` : ""}
+                    </span>
+                    {weekTrack.rainEnabled && weekTrack.rainChance > 0 && (
+                      <span className="text-sky-400">🌧{weekTrack.rainChance}%</span>
+                    )}
                   </div>
                 )}
               </button>
@@ -69,7 +75,7 @@ export default function AddSeriesModal({ week, onClose }: Props) {
           })}
           {available.length === 0 && (
             <p className="text-sm text-gray-500 text-center py-4">
-              {showAll ? "No series available" : "No favorites yet — check 'Show all series'"}
+              {showAll ? "No series race this week" : "No favorites race this week — check 'Show all series'"}
             </p>
           )}
         </div>
