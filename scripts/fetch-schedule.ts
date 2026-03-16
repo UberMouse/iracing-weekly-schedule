@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { createHash } from "node:crypto";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -9,7 +8,6 @@ import {
   CarApi,
   CarclassApi,
 } from "@iracing-data/api-client-fetch";
-import { DEFAULT_TOKEN_URL } from "@iracing-data/oauth-client";
 import { transformToSeries } from "./transform";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -29,8 +27,8 @@ const PASSWORD = required("IRACING_PASSWORD");
 const OUTPUT_PATH = resolve(__dirname, "../src/data/season.json");
 
 // --- Auth ---
-// iRacing requires secrets to be SHA-256 hashed before sending:
-// client_secret is hashed with client_id, password is hashed with username (email)
+// iRacing requires both client_secret and password to be SHA-256 hashed before sending.
+// Each is hashed with its corresponding identifier as salt, then Base64 encoded.
 function maskSecret(secret: string, identifier: string): string {
   const normalized = identifier.trim().toLowerCase();
   return createHash("sha256")
@@ -38,23 +36,30 @@ function maskSecret(secret: string, identifier: string): string {
     .digest("base64");
 }
 
+const TOKEN_URL = "https://oauth.iracing.com/oauth2/token";
+
 // The @iracing-data/oauth-client only supports authorization-code flow (browser).
 // For CI / build-time use we perform iRacing's Password Limited grant directly.
 async function authenticate(): Promise<string> {
   console.log("Authenticating with iRacing...");
 
+  const maskedSecret = maskSecret(CLIENT_SECRET, CLIENT_ID);
+  const maskedPassword = maskSecret(PASSWORD, USERNAME);
+
   const body = new URLSearchParams({
     grant_type: "password_limited",
-    username: USERNAME,
-    password: maskSecret(PASSWORD, USERNAME),
     client_id: CLIENT_ID,
-    client_secret: maskSecret(CLIENT_SECRET, CLIENT_ID),
+    client_secret: maskedSecret,
+    username: USERNAME,
+    password: maskedPassword,
     scope: "iracing.auth",
   });
 
-  const res = await fetch(DEFAULT_TOKEN_URL, {
+  const res = await fetch(TOKEN_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body,
   });
 
