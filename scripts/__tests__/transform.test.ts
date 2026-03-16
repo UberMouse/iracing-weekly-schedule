@@ -12,7 +12,8 @@ const rawSeries = [
     min_license_level: 8, // C 4.0 = level 8
     fixed_setup: false,
     allowed_licenses: [
-      { group_name: "Class C", min_license_level: 8, max_license_level: 12 },
+      { group_name: "Class D", min_license_level: 8, max_license_level: 8 },
+      { group_name: "Class C", min_license_level: 9, max_license_level: 12 },
     ],
   },
   {
@@ -139,12 +140,53 @@ describe("transformToSeries", () => {
     expect(gt3.setupType).toBe("open");
   });
 
-  it("maps license class from min_license_level", () => {
+  it("maps license class from allowed_licenses group_name", () => {
     const gt3 = result.find((s) => s.seriesId === 230)!;
     expect(gt3.licenseClass).toBe("C");
 
     const rookie = result.find((s) => s.seriesId === 100)!;
     expect(rookie.licenseClass).toBe("R");
+  });
+
+  it("skips crossover entry and uses true series class", () => {
+    // A-class series: B 4.0 crossover entry (min===max), true class is A
+    const aClassSeries = [
+      {
+        series_id: 300,
+        series_name: "A Class Series",
+        category_id: 5,
+        min_license_level: 1,
+        fixed_setup: false,
+        allowed_licenses: [
+          { group_name: "Class B", min_license_level: 16, max_license_level: 16 },
+          { group_name: "Class A", min_license_level: 17, max_license_level: 20 },
+          { group_name: "Pro", min_license_level: 21, max_license_level: 24 },
+        ],
+      },
+    ];
+    const aSeason = [
+      { ...rawSeasons[0], series_id: 300 },
+    ];
+    const r = transformToSeries(aClassSeries, aSeason, rawCars, rawCarClasses);
+    expect(r[0].licenseClass).toBe("A");
+  });
+
+  it("defaults to R when allowed_licenses is empty", () => {
+    const emptyLicenseSeries = [
+      {
+        series_id: 400,
+        series_name: "No License Series",
+        category_id: 5,
+        min_license_level: 1,
+        fixed_setup: false,
+        allowed_licenses: [],
+      },
+    ];
+    const emptySeason = [
+      { ...rawSeasons[0], series_id: 400 },
+    ];
+    const r = transformToSeries(emptyLicenseSeries, emptySeason, rawCars, rawCarClasses);
+    expect(r[0].licenseClass).toBe("R");
   });
 
   it("maps schedule weeks with trackId and seasonWeek", () => {
@@ -289,9 +331,12 @@ describe("cross-season series", () => {
       series_id: 500,
       series_name: "INDYCAR iRacing Series",
       category_id: 6,
-      min_license_level: 16,
+      min_license_level: 1,
       fixed_setup: false,
-      allowed_licenses: [],
+      allowed_licenses: [
+        { group_name: "Class D", min_license_level: 8, max_license_level: 8 },
+        { group_name: "Class C", min_license_level: 9, max_license_level: 12 },
+      ],
     },
   ];
 

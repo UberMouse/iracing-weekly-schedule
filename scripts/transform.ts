@@ -88,12 +88,26 @@ const CATEGORY_MAP: Record<number, Category> = {
   6: "formula",
 };
 
-function mapLicenseLevel(level: number): LicenseClass {
-  if (level >= 16) return "A"; // A 1.0+ = 16+
-  if (level >= 12) return "B"; // B 1.0+ = 12+
-  if (level >= 8) return "C"; // C 1.0+ = 8+
-  if (level >= 4) return "D"; // D 1.0+ = 4+
-  return "R"; // Rookie = 1-3
+function mapLicenseClassFromAllowedLicenses(
+  allowedLicenses: RawSeries["allowed_licenses"],
+): LicenseClass {
+  if (!allowedLicenses || allowedLicenses.length === 0) return "R";
+
+  // Entries where min === max are crossover entries (e.g. B 4.0 can enter A-class).
+  // The series' true class is the lowest group with a full license range.
+  const sorted = [...allowedLicenses].sort(
+    (a, b) => a.min_license_level - b.min_license_level,
+  );
+  const primary =
+    sorted.find((e) => e.min_license_level !== e.max_license_level) ??
+    sorted[0];
+
+  const name = primary.group_name.toLowerCase();
+  if (name.includes("class a")) return "A";
+  if (name.includes("class b")) return "B";
+  if (name.includes("class c")) return "C";
+  if (name.includes("class d")) return "D";
+  return "R";
 }
 
 function buildTrackMapUrl(asset: RawTrackAsset | undefined): string | undefined {
@@ -255,7 +269,7 @@ export function transformToSeries(
         seriesId: s.series_id,
         seriesName: s.series_name,
         category: CATEGORY_MAP[s.category_id] ?? "sports_car",
-        licenseClass: mapLicenseLevel(s.min_license_level),
+        licenseClass: mapLicenseClassFromAllowedLicenses(s.allowed_licenses),
         setupType: s.fixed_setup ? "fixed" : "open",
         isMulticlass: season.car_class_ids.length > 1,
         totalWeeks: totalScheduleWeeks,
