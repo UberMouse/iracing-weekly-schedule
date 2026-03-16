@@ -1,6 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
   schedule:
     # Run at the start of each iRacing season (roughly quarterly)
@@ -33,6 +35,7 @@ jobs:
       - run: npm ci
 
       - name: Fetch iRacing schedule data
+        if: env.IRACING_USERNAME != ''
         run: npx tsx scripts/fetch-schedule.ts
         env:
           IRACING_CLIENT_ID: ${{ secrets.IRACING_CLIENT_ID }}
