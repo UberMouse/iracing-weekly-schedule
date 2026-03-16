@@ -179,7 +179,7 @@ function computeSeasonWeek(
   if (startDate && seasonStart) {
     const entryDate = new Date(startDate);
     const diffMs = entryDate.getTime() - seasonStart.getTime();
-    const weekIndex = Math.round(diffMs / MS_PER_WEEK);
+    const weekIndex = Math.floor(diffMs / MS_PER_WEEK);
 
     // Only include weeks that fall within the 12-week season window
     if (weekIndex < 0 || weekIndex >= 12) return undefined;

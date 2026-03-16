@@ -418,6 +418,32 @@ describe("cross-season series", () => {
     expect(indycar.totalWeeks).toBe(17);
   });
 
+  it("assigns correct seasonWeek when event starts mid-week", () => {
+    // Endurance series whose first event starts on Saturday (4 days after season start on Tuesday)
+    const enduranceSeason = {
+      series_id: 500,
+      season_id: 5003,
+      season_year: 2026,
+      season_quarter: 2,
+      car_class_ids: [74],
+      schedules: [
+        // Season starts 2026-03-17 (Tue), this event is Sat of that same week
+        { race_week_num: 0, start_date: "2026-03-21", track: { track_id: 400, track_name: "Nürburgring Combined" } },
+        // Second event: Sat of season week 3
+        { race_week_num: 1, start_date: "2026-04-04", track: { track_id: 400, track_name: "Nürburgring Combined" } },
+      ],
+    };
+    const r = transformToSeries(
+      crossSeasonSeries,
+      [refSeason, enduranceSeason],
+      rawCars,
+      rawCarClasses,
+    );
+    const series = r.find((s) => s.seriesId === 500)!;
+    expect(series.scheduleWeeks[0].seasonWeek).toBe(1);
+    expect(series.scheduleWeeks[1].seasonWeek).toBe(3);
+  });
+
   it("handles series that skip weeks within the season", () => {
     // Series with 17 weeks but only some fall in the season window, with gaps
     const gappySeason = {
