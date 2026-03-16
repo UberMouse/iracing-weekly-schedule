@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "fetch-data": "op run --account my.1password.com --env-file=.env -- tsx scripts/fetch-schedule.ts",
-    "prebuild": "test -f src/data/season.json || cp src/data/mock-schedule.json src/data/season.json",
-    "dev": "test -f src/data/season.json || cp src/data/mock-schedule.json src/data/season.json && vite",
+    "dev": "vite",
     "build": "tsc -b && vite build",
     "build:prod": "op run --account my.1password.com --env-file=.env -- sh -c 'tsx scripts/fetch-schedule.ts && tsc -b && vite build'",
     "lint": "eslint .",

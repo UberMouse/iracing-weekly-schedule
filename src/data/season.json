@@ -1,0 +1,2749 @@
+[
+  {
+    "seriesId": 259,
+    "seriesName": "NASCAR Pickup Cup",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 13,
+    "cars": [
+      {
+        "carId": 20,
+        "carName": "[Legacy] NASCAR Truck Chevrolet Silverado - 2008"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 1,
+        "trackId": 27,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval - 2008",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 2,
+        "trackId": 556,
+        "trackName": "Charlotte Motor Speedway ",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 3,
+        "trackId": 104,
+        "trackName": "[Legacy] Phoenix Raceway - 2008",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 4,
+        "trackId": 27,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval - 2008",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 5,
+        "seasonWeek": 5,
+        "trackId": 136,
+        "trackName": "[Legacy] Pocono Raceway - 2009",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 6,
+        "seasonWeek": 6,
+        "trackId": 104,
+        "trackName": "[Legacy] Phoenix Raceway - 2008",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 7,
+        "seasonWeek": 7,
+        "trackId": 27,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval - 2008",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/27-daytona-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 8,
+        "seasonWeek": 8,
+        "trackId": 556,
+        "trackName": "Charlotte Motor Speedway ",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 9,
+        "seasonWeek": 9,
+        "trackId": 104,
+        "trackName": "[Legacy] Phoenix Raceway - 2008",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 10,
+        "seasonWeek": 10,
+        "trackId": 136,
+        "trackName": "[Legacy] Pocono Raceway - 2009",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_pocono/136-pocono-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 11,
+        "seasonWeek": 11,
+        "trackId": 556,
+        "trackName": "Charlotte Motor Speedway ",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 12,
+        "seasonWeek": 12,
+        "trackId": 104,
+        "trackName": "[Legacy] Phoenix Raceway - 2008",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix/104-phoenix-oval/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 134,
+    "seriesName": "13th Week Street Stock Challenge",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 187,
+        "carName": "Street Stock - Eagle T3"
+      },
+      {
+        "carId": 36,
+        "carName": "Street Stock - Panther C1"
+      },
+      {
+        "carId": 186,
+        "carName": "Street Stock - Casino M2"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 135,
+    "seriesName": "13th Week Mazda Cup",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 67,
+        "carName": "Global Mazda MX-5 Cup"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 396,
+    "seriesName": "13th Week DIRTcar Pro late Model - Fixed",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 83,
+        "carName": "Dirt Late Model - Pro"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 275,
+    "seriesName": "Nurburgring Endurance Championship",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": true,
+    "totalWeeks": 10,
+    "cars": [
+      {
+        "carId": 156,
+        "carName": "Mercedes-AMG GT3 2020"
+      },
+      {
+        "carId": 173,
+        "carName": "Ferrari 296 GT3"
+      },
+      {
+        "carId": 206,
+        "carName": "Aston Martin Vantage GT3 EVO"
+      },
+      {
+        "carId": 132,
+        "carName": "BMW M4 GT3 EVO"
+      },
+      {
+        "carId": 133,
+        "carName": "Lamborghini Huracán GT3 EVO"
+      },
+      {
+        "carId": 169,
+        "carName": "Porsche 911 GT3 R (992)"
+      },
+      {
+        "carId": 185,
+        "carName": "Ford Mustang GT3"
+      },
+      {
+        "carId": 208,
+        "carName": "Porsche 911 Cup (992.2)"
+      },
+      {
+        "carId": 157,
+        "carName": "Mercedes-AMG GT4"
+      },
+      {
+        "carId": 189,
+        "carName": "BMW M4 G82 GT4 Evo"
+      },
+      {
+        "carId": 150,
+        "carName": "Aston Martin Vantage GT4"
+      },
+      {
+        "carId": 119,
+        "carName": "Porsche 718 Cayman GT4 Clubsport MR"
+      },
+      {
+        "carId": 146,
+        "carName": "Hyundai Elantra N TCR"
+      },
+      {
+        "carId": 210,
+        "carName": "Audi RS3 LMS Gen2 TCR"
+      },
+      {
+        "carId": 147,
+        "carName": "Honda Civic Type R TCR"
+      },
+      {
+        "carId": 195,
+        "carName": "BMW M2 CS Racing"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 406,
+    "seriesName": "13th Week Sebring Sunrise",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": true,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 76,
+        "carName": "Audi 90 GTO"
+      },
+      {
+        "carId": 77,
+        "carName": "Nissan GTP ZX-T"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 158,
+    "seriesName": "13th Week Sprint Car Series",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 80,
+        "carName": "Dirt Sprint Car - 305"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 421,
+    "seriesName": "13th Week Shiny New Shakedown",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 146,
+        "carName": "Hyundai Elantra N TCR"
+      },
+      {
+        "carId": 210,
+        "carName": "Audi RS3 LMS Gen2 TCR"
+      },
+      {
+        "carId": 147,
+        "carName": "Honda Civic Type R TCR"
+      },
+      {
+        "carId": 153,
+        "carName": "Hyundai Veloster N TCR"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 556,
+    "seriesName": "13th Week Funny Forecast",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 146,
+        "carName": "Hyundai Elantra N TCR"
+      },
+      {
+        "carId": 210,
+        "carName": "Audi RS3 LMS Gen2 TCR"
+      },
+      {
+        "carId": 147,
+        "carName": "Honda Civic Type R TCR"
+      },
+      {
+        "carId": 153,
+        "carName": "Hyundai Veloster N TCR"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 47,
+    "seriesName": "NASCAR iRacing Class C Series",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 39,
+    "cars": [
+      {
+        "carId": 123,
+        "carName": "NASCAR Truck Ford F150"
+      },
+      {
+        "carId": 155,
+        "carName": "NASCAR Truck Toyota Tundra TRD Pro"
+      },
+      {
+        "carId": 111,
+        "carName": "NASCAR Truck Chevrolet Silverado"
+      },
+      {
+        "carId": 211,
+        "carName": "NASCAR Truck RAM"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 9,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 10,
+        "trackId": 447,
+        "trackName": "EchoPark Speedway (Atlanta)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 11,
+        "trackId": 179,
+        "trackName": "Long Beach Street Circuit",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_longbeach/179-longbeach/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_longbeach/179-longbeach/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_longbeach/179-longbeach/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_longbeach/179-longbeach/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_longbeach/179-longbeach/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_longbeach/179-longbeach/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_longbeach/179-longbeach/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 12,
+        "trackId": 225,
+        "trackName": "Auto Club Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 568,
+    "seriesName": "13th Week FF1600 Series",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 163,
+        "carName": "Ray FF1600"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 574,
+    "seriesName": "Super Late Model Tour",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 27,
+    "cars": [
+      {
+        "carId": 54,
+        "carName": "Super Late Model"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 9,
+        "trackId": 190,
+        "trackName": "New Smyrna Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 11,
+        "trackId": 256,
+        "trackName": "Southern National Motorsports Park",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_southernnational/256-southernnational/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_southernnational/256-southernnational/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_southernnational/256-southernnational/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_southernnational/256-southernnational/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_southernnational/256-southernnational/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_southernnational/256-southernnational/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_southernnational/256-southernnational/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 12,
+        "trackId": 248,
+        "trackName": "Five Flags Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_fiveflags/248-fiveflags/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_fiveflags/248-fiveflags/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_fiveflags/248-fiveflags/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_fiveflags/248-fiveflags/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_fiveflags/248-fiveflags/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_fiveflags/248-fiveflags/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_fiveflags/248-fiveflags/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 62,
+    "seriesName": "NASCAR iRacing Class B Series",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 39,
+    "cars": [
+      {
+        "carId": 114,
+        "carName": "NASCAR O'Reilly Chevrolet Camaro"
+      },
+      {
+        "carId": 115,
+        "carName": "NASCAR O'Reilly Ford Mustang"
+      },
+      {
+        "carId": 116,
+        "carName": "NASCAR O'Reilly Toyota Supra"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 9,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 10,
+        "trackId": 447,
+        "trackName": "EchoPark Speedway (Atlanta)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 11,
+        "trackId": 579,
+        "trackName": "Circuit of the Americas",
+        "trackConfig": "NASCAR West",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 12,
+        "trackId": 419,
+        "trackName": "Phoenix Raceway",
+        "trackConfig": "Oval w/open dogleg",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 575,
+    "seriesName": "NASCAR Modified Tour",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 26,
+    "cars": [
+      {
+        "carId": 31,
+        "carName": "Modified - NASCAR Whelen Tour"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 8,
+        "trackId": 190,
+        "trackName": "New Smyrna Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_newsmyrna/190-newsmyrna/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 10,
+        "trackId": 17,
+        "trackName": "Lanier National Speedway",
+        "trackConfig": "Asphalt",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_lanier/17-lanier/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_lanier/17-lanier/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_lanier/17-lanier/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_lanier/17-lanier/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_lanier/17-lanier/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_lanier/17-lanier/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_lanier/17-lanier/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 11,
+        "trackId": 16,
+        "trackName": "USA International Speedway",
+        "trackConfig": "Asphalt",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_lakeland/16-lakeland/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_lakeland/16-lakeland/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_lakeland/16-lakeland/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_lakeland/16-lakeland/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_lakeland/16-lakeland/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_lakeland/16-lakeland/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_lakeland/16-lakeland/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 320,
+    "seriesName": "13th Week iRacing Porsche Cup",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 208,
+        "carName": "Porsche 911 Cup (992.2)"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 321,
+    "seriesName": "13th Week NASCAR iRacing Truck Series",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 123,
+        "carName": "NASCAR Truck Ford F150"
+      },
+      {
+        "carId": 155,
+        "carName": "NASCAR Truck Toyota Tundra TRD Pro"
+      },
+      {
+        "carId": 111,
+        "carName": "NASCAR Truck Chevrolet Silverado"
+      },
+      {
+        "carId": 211,
+        "carName": "NASCAR Truck RAM"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 449,
+    "seriesName": "13th Week GT3 Challenge - Fixed",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 156,
+        "carName": "Mercedes-AMG GT3 2020"
+      },
+      {
+        "carId": 188,
+        "carName": "McLaren 720S GT3 EVO"
+      },
+      {
+        "carId": 173,
+        "carName": "Ferrari 296 GT3"
+      },
+      {
+        "carId": 176,
+        "carName": "Audi R8 LMS EVO II GT3"
+      },
+      {
+        "carId": 194,
+        "carName": "Acura NSX GT3 EVO 22"
+      },
+      {
+        "carId": 132,
+        "carName": "BMW M4 GT3 EVO"
+      },
+      {
+        "carId": 133,
+        "carName": "Lamborghini Huracán GT3 EVO"
+      },
+      {
+        "carId": 184,
+        "carName": "Chevrolet Corvette Z06 GT3.R"
+      },
+      {
+        "carId": 169,
+        "carName": "Porsche 911 GT3 R (992)"
+      },
+      {
+        "carId": 185,
+        "carName": "Ford Mustang GT3"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 323,
+    "seriesName": "13th Week iRacing Rallycross Series",
+    "category": "dirt_road",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 91,
+        "carName": "VW Beetle"
+      },
+      {
+        "carId": 81,
+        "carName": "Ford Fiesta RS WRC"
+      },
+      {
+        "carId": 101,
+        "carName": "Subaru WRX STI"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 324,
+    "seriesName": "13th Week Midget Cup",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 96,
+        "carName": "Dirt Midget"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 585,
+    "seriesName": "13th Week 5 To Go",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 114,
+        "carName": "NASCAR O'Reilly Chevrolet Camaro"
+      },
+      {
+        "carId": 115,
+        "carName": "NASCAR O'Reilly Ford Mustang"
+      },
+      {
+        "carId": 116,
+        "carName": "NASCAR O'Reilly Toyota Supra"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 207,
+    "seriesName": "NASCAR iRacing Series - Fixed",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 36,
+    "cars": [
+      {
+        "carId": 139,
+        "carName": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1"
+      },
+      {
+        "carId": 140,
+        "carName": "NASCAR Cup Series Next Gen Ford Mustang"
+      },
+      {
+        "carId": 141,
+        "carName": "NASCAR Cup Series Next Gen Toyota Camry"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 9,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 10,
+        "trackId": 447,
+        "trackName": "EchoPark Speedway (Atlanta)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 11,
+        "trackId": 579,
+        "trackName": "Circuit of the Americas",
+        "trackConfig": "NASCAR West",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 12,
+        "trackId": 419,
+        "trackName": "Phoenix Raceway",
+        "trackConfig": "Oval w/open dogleg",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 341,
+    "seriesName": "13th Week Dirt Street Stock Challenge",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 79,
+        "carName": "Dirt Street Stock"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 598,
+    "seriesName": "13th Week Mountain Showdown",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 195,
+        "carName": "BMW M2 CS Racing"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 342,
+    "seriesName": "13th Week Get Your GTE On",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 92,
+        "carName": "Ford GTE"
+      },
+      {
+        "carId": 93,
+        "carName": "Ferrari 488 GTE"
+      },
+      {
+        "carId": 109,
+        "carName": "BMW M8 GTE"
+      },
+      {
+        "carId": 127,
+        "carName": "Chevrolet Corvette C8.R GTE"
+      },
+      {
+        "carId": 102,
+        "carName": "Porsche 911 RSR"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 470,
+    "seriesName": "13th Week iRacing RX Lite",
+    "category": "dirt_road",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 138,
+        "carName": "VW Beetle - Lite"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 471,
+    "seriesName": "Dallara DW12 Dash",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 13,
+    "cars": [
+      {
+        "carId": 57,
+        "carName": "[Legacy] Dallara DW12"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 1,
+        "trackId": 556,
+        "trackName": "Charlotte Motor Speedway ",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 2,
+        "trackId": 357,
+        "trackName": "Texas Motor Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_texas_2020/357-texas-2020-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_texas_2020/357-texas-2020-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_texas_2020/357-texas-2020-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_texas_2020/357-texas-2020-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_texas_2020/357-texas-2020-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_texas_2020/357-texas-2020-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_texas_2020/357-texas-2020-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 3,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 4,
+        "trackId": 277,
+        "trackName": "Pocono Raceway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_pocono_2016/277-pocono-2016/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_pocono_2016/277-pocono-2016/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_pocono_2016/277-pocono-2016/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_pocono_2016/277-pocono-2016/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_pocono_2016/277-pocono-2016/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_pocono_2016/277-pocono-2016/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_pocono_2016/277-pocono-2016/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 5,
+        "seasonWeek": 5,
+        "trackId": 276,
+        "trackName": "Michigan International Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 6,
+        "seasonWeek": 6,
+        "trackId": 131,
+        "trackName": "New Hampshire Motor Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_newhampshire/131-newhampshire-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_newhampshire/131-newhampshire-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_newhampshire/131-newhampshire-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_newhampshire/131-newhampshire-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_newhampshire/131-newhampshire-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_newhampshire/131-newhampshire-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_newhampshire/131-newhampshire-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 7,
+        "seasonWeek": 7,
+        "trackId": 418,
+        "trackName": "Phoenix Raceway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 8,
+        "seasonWeek": 8,
+        "trackId": 116,
+        "trackName": "Talladega Superspeedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 9,
+        "seasonWeek": 9,
+        "trackId": 225,
+        "trackName": "Auto Club Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 10,
+        "seasonWeek": 10,
+        "trackId": 371,
+        "trackName": "Kentucky Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_kentucky_2020/371-kentucky-2020-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_kentucky_2020/371-kentucky-2020-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_kentucky_2020/371-kentucky-2020-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_kentucky_2020/371-kentucky-2020-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_kentucky_2020/371-kentucky-2020-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_kentucky_2020/371-kentucky-2020-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_kentucky_2020/371-kentucky-2020-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 11,
+        "seasonWeek": 11,
+        "trackId": 560,
+        "trackName": "World Wide Technology Raceway (Gateway)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 12,
+        "seasonWeek": 12,
+        "trackId": 384,
+        "trackName": "iRacing Superspeedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 344,
+    "seriesName": "13th Week MudSkipping",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 1,
+        "carName": "Skip Barber Formula 2000"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 601,
+    "seriesName": "eNASCAR Coca Cola iRacing Qualifying Series",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 11,
+    "cars": [
+      {
+        "carId": 114,
+        "carName": "NASCAR O'Reilly Chevrolet Camaro"
+      },
+      {
+        "carId": 115,
+        "carName": "NASCAR O'Reilly Ford Mustang"
+      },
+      {
+        "carId": 116,
+        "carName": "NASCAR O'Reilly Toyota Supra"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 9,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 10,
+        "trackId": 103,
+        "trackName": "Las Vegas Motor Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_vegas/103-vegas-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_vegas/103-vegas-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_vegas/103-vegas-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_vegas/103-vegas-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_vegas/103-vegas-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_vegas/103-vegas-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_vegas/103-vegas-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 11,
+        "trackId": 583,
+        "trackName": "Rockingham Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_rockingham/583-rockingham-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_rockingham/583-rockingham-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_rockingham/583-rockingham-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_rockingham/583-rockingham-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_rockingham/583-rockingham-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_rockingham/583-rockingham-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_rockingham/583-rockingham-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 12,
+        "trackId": 419,
+        "trackName": "Phoenix Raceway",
+        "trackConfig": "Oval w/open dogleg",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 602,
+    "seriesName": "13th Week ARCA Cup",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 198,
+        "carName": "ARCA Chevrolet SS"
+      },
+      {
+        "carId": 199,
+        "carName": "ARCA Ford Mustang"
+      },
+      {
+        "carId": 200,
+        "carName": "ARCA Toyota Camry"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 603,
+    "seriesName": "13th Week Late Model Stock Series",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 164,
+        "carName": "Late Model Stock"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 604,
+    "seriesName": "13th Week Mini Stock Cup",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 191,
+        "carName": "Mini Stock"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 605,
+    "seriesName": "13th Week Dirt Mini Stock Challenge",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 193,
+        "carName": "Dirt Mini Stock"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 606,
+    "seriesName": "13th Week 358 Modified Series",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 134,
+        "carName": "Dirt 358 Modified"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 607,
+    "seriesName": "13th Week BMW M2 Cup",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 195,
+        "carName": "BMW M2 CS Racing"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 608,
+    "seriesName": "13th Week Toyota GR86 Challenge",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 160,
+        "carName": "Toyota GR86"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 609,
+    "seriesName": "13th Week GT4 Sprint",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 204,
+        "carName": "Ford Mustang GT4"
+      },
+      {
+        "carId": 157,
+        "carName": "Mercedes-AMG GT4"
+      },
+      {
+        "carId": 189,
+        "carName": "BMW M4 G82 GT4 Evo"
+      },
+      {
+        "carId": 150,
+        "carName": "Aston Martin Vantage GT4"
+      },
+      {
+        "carId": 119,
+        "carName": "Porsche 718 Cayman GT4 Clubsport MR"
+      },
+      {
+        "carId": 135,
+        "carName": "McLaren 570S GT4"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 610,
+    "seriesName": "13th Week FIA F4 Challenge",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 148,
+        "carName": "FIA F4"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 611,
+    "seriesName": "13th Week Super Formula Lights Series",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 178,
+        "carName": "Super Formula Lights"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 355,
+    "seriesName": "13th Week Ferrari 296 Challenge",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 203,
+        "carName": "Ferrari 296 Challenge"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 612,
+    "seriesName": "13th Week Indy NXT Challenge",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 205,
+        "carName": "Dallara IL-15"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 613,
+    "seriesName": "13th Week Pro 2 Lite Series",
+    "category": "dirt_road",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 113,
+        "carName": "Lucas Oil Off Road Pro 2 Lite"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 229,
+    "seriesName": "NASCAR iRacing Series - Open",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 36,
+    "cars": [
+      {
+        "carId": 139,
+        "carName": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1"
+      },
+      {
+        "carId": 140,
+        "carName": "NASCAR Cup Series Next Gen Ford Mustang"
+      },
+      {
+        "carId": 141,
+        "carName": "NASCAR Cup Series Next Gen Toyota Camry"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 9,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 10,
+        "trackId": 447,
+        "trackName": "EchoPark Speedway (Atlanta)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 11,
+        "trackId": 579,
+        "trackName": "Circuit of the Americas",
+        "trackConfig": "NASCAR West",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_cota/579-cota-nascarwest/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 12,
+        "trackId": 419,
+        "trackName": "Phoenix Raceway",
+        "trackConfig": "Oval w/open dogleg",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/419-phoenix-2021-ovalopen/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 614,
+    "seriesName": "13th Week Oval Mixup",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 156,
+        "carName": "Mercedes-AMG GT3 2020"
+      },
+      {
+        "carId": 188,
+        "carName": "McLaren 720S GT3 EVO"
+      },
+      {
+        "carId": 173,
+        "carName": "Ferrari 296 GT3"
+      },
+      {
+        "carId": 206,
+        "carName": "Aston Martin Vantage GT3 EVO"
+      },
+      {
+        "carId": 176,
+        "carName": "Audi R8 LMS EVO II GT3"
+      },
+      {
+        "carId": 194,
+        "carName": "Acura NSX GT3 EVO 22"
+      },
+      {
+        "carId": 132,
+        "carName": "BMW M4 GT3 EVO"
+      },
+      {
+        "carId": 133,
+        "carName": "Lamborghini Huracán GT3 EVO"
+      },
+      {
+        "carId": 184,
+        "carName": "Chevrolet Corvette Z06 GT3.R"
+      },
+      {
+        "carId": 169,
+        "carName": "Porsche 911 GT3 R (992)"
+      },
+      {
+        "carId": 185,
+        "carName": "Ford Mustang GT3"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 615,
+    "seriesName": "13th Week Track Day",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": true,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 146,
+        "carName": "Hyundai Elantra N TCR"
+      },
+      {
+        "carId": 210,
+        "carName": "Audi RS3 LMS Gen2 TCR"
+      },
+      {
+        "carId": 147,
+        "carName": "Honda Civic Type R TCR"
+      },
+      {
+        "carId": 153,
+        "carName": "Hyundai Veloster N TCR"
+      },
+      {
+        "carId": 67,
+        "carName": "Global Mazda MX-5 Cup"
+      },
+      {
+        "carId": 30,
+        "carName": "Ford Mustang FR500S"
+      },
+      {
+        "carId": 204,
+        "carName": "Ford Mustang GT4"
+      },
+      {
+        "carId": 157,
+        "carName": "Mercedes-AMG GT4"
+      },
+      {
+        "carId": 189,
+        "carName": "BMW M4 G82 GT4 Evo"
+      },
+      {
+        "carId": 150,
+        "carName": "Aston Martin Vantage GT4"
+      },
+      {
+        "carId": 119,
+        "carName": "Porsche 718 Cayman GT4 Clubsport MR"
+      },
+      {
+        "carId": 135,
+        "carName": "McLaren 570S GT4"
+      },
+      {
+        "carId": 160,
+        "carName": "Toyota GR86"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 616,
+    "seriesName": "Indy NXT iRacing Series",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 16,
+    "cars": [
+      {
+        "carId": 205,
+        "carName": "Dallara IL-15"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 12,
+        "trackId": 95,
+        "trackName": "Sebring International Raceway",
+        "trackConfig": "International",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 617,
+    "seriesName": "13th Week Cross Car Cup",
+    "category": "dirt_road",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 207,
+        "carName": "FIA Cross Car"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 494,
+    "seriesName": "13th Week Formula Fun",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 42,
+        "carName": "Lotus 49"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 495,
+    "seriesName": "Formula A - Grand Prix Tour",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 24,
+    "cars": [
+      {
+        "carId": 161,
+        "carName": "Mercedes-AMG W13 E Performance"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 12,
+        "trackId": 152,
+        "trackName": "Phillip Island Circuit",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 496,
+    "seriesName": "Formula A - Grand Prix Tour - Fixed",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 24,
+    "cars": [
+      {
+        "carId": 161,
+        "carName": "Mercedes-AMG W13 E Performance"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 12,
+        "trackId": 152,
+        "trackName": "Phillip Island Circuit",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phillipisland/152-phillipisland/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 116,
+    "seriesName": "NASCAR Carburetor Cup",
+    "category": "oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 13,
+    "cars": [
+      {
+        "carId": 139,
+        "carName": "NASCAR Cup Series Next Gen Chevrolet Camaro ZL1"
+      },
+      {
+        "carId": 140,
+        "carName": "NASCAR Cup Series Next Gen Ford Mustang"
+      },
+      {
+        "carId": 141,
+        "carName": "NASCAR Cup Series Next Gen Toyota Camry"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 1,
+        "trackId": 116,
+        "trackName": "Talladega Superspeedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 2,
+        "trackId": 556,
+        "trackName": "Charlotte Motor Speedway ",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 3,
+        "trackId": 447,
+        "trackName": "EchoPark Speedway (Atlanta)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 4,
+        "trackId": 276,
+        "trackName": "Michigan International Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 5,
+        "seasonWeek": 5,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 6,
+        "seasonWeek": 6,
+        "trackId": 225,
+        "trackName": "Auto Club Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_california/225-california-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 7,
+        "seasonWeek": 7,
+        "trackId": 116,
+        "trackName": "Talladega Superspeedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_talladega/116-talladega/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 8,
+        "seasonWeek": 8,
+        "trackId": 556,
+        "trackName": "Charlotte Motor Speedway ",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_charlotte/556-charlotte-2025-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 9,
+        "seasonWeek": 9,
+        "trackId": 447,
+        "trackName": "EchoPark Speedway (Atlanta)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_atlanta/447-atlanta-2022-oval/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 10,
+        "seasonWeek": 10,
+        "trackId": 276,
+        "trackName": "Michigan International Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_michigan_2018/276-michigan-2018/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 11,
+        "seasonWeek": 11,
+        "trackId": 384,
+        "trackName": "iRacing Superspeedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_iracingss/384-iracingss/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 12,
+        "seasonWeek": 12,
+        "trackId": 191,
+        "trackName": "Daytona International Speedway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_daytona_2011/191-daytona-2011-oval/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 500,
+    "seriesName": "Dirt Super Late Model Tour",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 39,
+    "cars": [
+      {
+        "carId": 84,
+        "carName": "Dirt Late Model - Super"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 6,
+        "trackId": 279,
+        "trackName": "Volusia Speedway Park",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 7,
+        "trackId": 452,
+        "trackName": "Lucas Oil Speedway",
+        "trackConfig": "Dirt Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_wheatland/452-wheatland/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_wheatland/452-wheatland/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_wheatland/452-wheatland/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_wheatland/452-wheatland/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_wheatland/452-wheatland/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_wheatland/452-wheatland/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_wheatland/452-wheatland/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 8,
+        "trackId": 314,
+        "trackName": "The Dirt Track at Charlotte",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_charlottedirt/314-charlottedirt/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_charlottedirt/314-charlottedirt/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_charlottedirt/314-charlottedirt/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_charlottedirt/314-charlottedirt/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_charlottedirt/314-charlottedirt/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_charlottedirt/314-charlottedirt/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_charlottedirt/314-charlottedirt/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 9,
+        "trackId": 279,
+        "trackName": "Volusia Speedway Park",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 5,
+        "seasonWeek": 10,
+        "trackId": 305,
+        "trackName": "Knoxville Raceway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 6,
+        "seasonWeek": 11,
+        "trackId": 520,
+        "trackName": "Oswego Speedway",
+        "trackConfig": "Dirt",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_oswego/520-oswego-dirt/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_oswego/520-oswego-dirt/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_oswego/520-oswego-dirt/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_oswego/520-oswego-dirt/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_oswego/520-oswego-dirt/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_oswego/520-oswego-dirt/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_oswego/520-oswego-dirt/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 7,
+        "seasonWeek": 12,
+        "trackId": 387,
+        "trackName": "Cedar Lake Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_cedarlake/387-cedarlake/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_cedarlake/387-cedarlake/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_cedarlake/387-cedarlake/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_cedarlake/387-cedarlake/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_cedarlake/387-cedarlake/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_cedarlake/387-cedarlake/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_cedarlake/387-cedarlake/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 501,
+    "seriesName": "Dirt 410 Sprint Car Tour",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 37,
+    "cars": [
+      {
+        "carId": 86,
+        "carName": "Dirt Sprint Car - 410"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 8,
+        "trackId": 279,
+        "trackName": "Volusia Speedway Park",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 9,
+        "trackId": 305,
+        "trackName": "Knoxville Raceway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_knoxville/305-knoxville/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 3,
+        "seasonWeek": 10,
+        "trackId": 351,
+        "trackName": "Lernerville Speedway",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_lernerville/351-lernerville/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_lernerville/351-lernerville/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_lernerville/351-lernerville/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_lernerville/351-lernerville/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_lernerville/351-lernerville/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_lernerville/351-lernerville/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_lernerville/351-lernerville/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 4,
+        "seasonWeek": 11,
+        "trackId": 303,
+        "trackName": "Limaland Motorsports Park",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_limaland/303-limaland/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_limaland/303-limaland/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_limaland/303-limaland/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_limaland/303-limaland/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_limaland/303-limaland/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_limaland/303-limaland/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_limaland/303-limaland/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 5,
+        "seasonWeek": 12,
+        "trackId": 279,
+        "trackName": "Volusia Speedway Park",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_volusia/279-volusia/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 245,
+    "seriesName": "13th Week iRacing Figure GR8",
+    "category": "sports_car",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 146,
+        "carName": "Hyundai Elantra N TCR"
+      },
+      {
+        "carId": 210,
+        "carName": "Audi RS3 LMS Gen2 TCR"
+      },
+      {
+        "carId": 147,
+        "carName": "Honda Civic Type R TCR"
+      },
+      {
+        "carId": 153,
+        "carName": "Hyundai Veloster N TCR"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 374,
+    "seriesName": "INDYCAR iRacing Series",
+    "category": "formula",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 17,
+    "cars": [
+      {
+        "carId": 99,
+        "carName": "Dallara IR18"
+      }
+    ],
+    "scheduleWeeks": [
+      {
+        "weekNumber": 1,
+        "seasonWeek": 11,
+        "trackId": 95,
+        "trackName": "Sebring International Raceway",
+        "trackConfig": "International",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_sebring/95-sebring-international/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 2,
+        "seasonWeek": 12,
+        "trackId": 418,
+        "trackName": "Phoenix Raceway",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_phoenix_2021/418-phoenix-2021-oval/turns.svg"
+        }
+      }
+    ]
+  },
+  {
+    "seriesId": 381,
+    "seriesName": "13th Week Pro 2 Dirt Oval",
+    "category": "dirt_oval",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": false,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 113,
+        "carName": "Lucas Oil Off Road Pro 2 Lite"
+      }
+    ],
+    "scheduleWeeks": []
+  },
+  {
+    "seriesId": 382,
+    "seriesName": "13th Week 2x4 Off Road Trucks",
+    "category": "dirt_road",
+    "licenseClass": "R",
+    "setupType": "open",
+    "isMulticlass": true,
+    "totalWeeks": 7,
+    "cars": [
+      {
+        "carId": 104,
+        "carName": "Lucas Oil Off Road Pro 2 Truck"
+      },
+      {
+        "carId": 107,
+        "carName": "Lucas Oil Off Road Pro 4 Truck"
+      }
+    ],
+    "scheduleWeeks": []
+  }
+]

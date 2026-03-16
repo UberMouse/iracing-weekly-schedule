@@ -34,15 +34,6 @@ jobs:
 
       - run: npm ci
 
-      - name: Fetch iRacing schedule data
-        if: env.IRACING_USERNAME != ''
-        run: npx tsx scripts/fetch-schedule.ts
-        env:
-          IRACING_CLIENT_ID: ${{ secrets.IRACING_CLIENT_ID }}
-          IRACING_CLIENT_SECRET: ${{ secrets.IRACING_CLIENT_SECRET }}
-          IRACING_USERNAME: ${{ secrets.IRACING_USERNAME }}
-          IRACING_PASSWORD: ${{ secrets.IRACING_PASSWORD }}
-
       - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
