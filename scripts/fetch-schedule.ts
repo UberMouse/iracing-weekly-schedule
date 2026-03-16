@@ -7,6 +7,7 @@ import {
   SeriesApi,
   CarApi,
   CarclassApi,
+  TrackApi,
 } from "@iracing-data/api-client-fetch";
 import { transformToSeries } from "./transform";
 
@@ -94,6 +95,7 @@ async function main() {
   const seriesApi = new SeriesApi(config);
   const carApi = new CarApi(config);
   const carclassApi = new CarclassApi(config);
+  const trackApi = new TrackApi(config);
 
   console.log("Fetching series...");
   const seriesLink = await seriesApi.getSeries();
@@ -115,6 +117,11 @@ async function main() {
   const rawCarClasses = await fetchLink<unknown[]>(carClassesLink);
   console.log(`  Found ${rawCarClasses.length} car classes`);
 
+  console.log("Fetching track assets...");
+  const trackAssetsLink = await trackApi.getTrackAssets();
+  const rawTrackAssets = await fetchLink<Record<string, unknown>>(trackAssetsLink);
+  console.log(`  Found ${Object.keys(rawTrackAssets).length} track assets`);
+
   console.log("Transforming data...");
   // Cast to our raw types — the API responses match these shapes
   const series = transformToSeries(
@@ -122,6 +129,7 @@ async function main() {
     rawSeasons as Parameters<typeof transformToSeries>[1],
     rawCars as Parameters<typeof transformToSeries>[2],
     rawCarClasses as Parameters<typeof transformToSeries>[3],
+    rawTrackAssets as Parameters<typeof transformToSeries>[4],
   );
   console.log(`  Produced ${series.length} series with schedules`);
 

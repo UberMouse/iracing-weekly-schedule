@@ -1,4 +1,14 @@
-import type { Series, Category, LicenseClass } from "../src/types";
+import type { Series, Category, LicenseClass, TrackMapLayers } from "../src/types";
+
+const TRACK_IMAGE_BASE = "https://images-static.iracing.com/";
+
+function resolveTrackMapBase(trackMap: string): string {
+  // track_map may be a full URL or a relative path
+  if (trackMap.startsWith("http://") || trackMap.startsWith("https://")) {
+    return trackMap;
+  }
+  return `${TRACK_IMAGE_BASE}${trackMap}`;
+}
 
 // Raw API response types (minimal, matching what we actually use)
 export interface RawSeries {
@@ -20,9 +30,21 @@ export interface RawSeasonScheduleTrack {
   config_name?: string;
 }
 
+export interface RawWeatherSummary {
+  precip_chance?: number;
+  max_precip_rate_desc?: string;
+}
+
+export interface RawWeather {
+  precip_option?: number;
+  weather_summary?: RawWeatherSummary;
+}
+
 export interface RawSeasonSchedule {
   race_week_num: number;
+  start_date?: string;
   track: RawSeasonScheduleTrack;
+  weather?: RawWeather;
 }
 
 export interface RawSeason {
@@ -45,6 +67,18 @@ export interface RawCar {
   car_name: string;
 }
 
+export interface RawTrackAsset {
+  track_map?: string;
+  track_map_layers?: {
+    background?: string;
+    inactive?: string;
+    active?: string;
+    pitroad?: string;
+    "start-finish"?: string;
+    turns?: string;
+  };
+}
+
 const CATEGORY_MAP: Record<number, Category> = {
   1: "oval",
   2: "sports_car",
@@ -62,11 +96,95 @@ function mapLicenseLevel(level: number): LicenseClass {
   return "R"; // Rookie = 1-3
 }
 
+function buildTrackMapUrl(asset: RawTrackAsset | undefined): string | undefined {
+  if (!asset?.track_map || !asset.track_map_layers?.active) return undefined;
+  const base = resolveTrackMapBase(asset.track_map);
+  return `${base}${asset.track_map_layers.active}`;
+}
+
+function buildTrackMapLayers(asset: RawTrackAsset | undefined): TrackMapLayers | undefined {
+  if (!asset?.track_map || !asset.track_map_layers) return undefined;
+  const base = resolveTrackMapBase(asset.track_map);
+  const layers = asset.track_map_layers;
+  return {
+    ...(layers.background ? { background: `${base}${layers.background}` } : {}),
+    ...(layers.inactive ? { inactive: `${base}${layers.inactive}` } : {}),
+    ...(layers.active ? { active: `${base}${layers.active}` } : {}),
+    ...(layers.pitroad ? { pitroad: `${base}${layers.pitroad}` } : {}),
+    ...(layers["start-finish"] ? { startFinish: `${base}${layers["start-finish"]}` } : {}),
+    ...(layers.turns ? { turns: `${base}${layers.turns}` } : {}),
+  };
+}
+
+/**
+ * Determine the season start date from the earliest start_date of any
+ * standard 12-week series (race_week_num=0). Falls back to the earliest
+ * start_date across all seasons if no 12-week series exists.
+ */
+function findSeasonStartDate(rawSeasons: RawSeason[]): Date | undefined {
+  let earliest: Date | undefined;
+
+  // Prefer start_date from a standard 12-week series' first week
+  for (const season of rawSeasons) {
+    if (season.schedules.length === 12) {
+      const week0 = season.schedules.find((s) => s.race_week_num === 0);
+      if (week0?.start_date) {
+        const d = new Date(week0.start_date);
+        if (!earliest || d < earliest) earliest = d;
+      }
+    }
+  }
+
+  // Fallback: earliest start_date from any race_week_num=0
+  if (!earliest) {
+    for (const season of rawSeasons) {
+      const week0 = season.schedules.find((s) => s.race_week_num === 0);
+      if (week0?.start_date) {
+        const d = new Date(week0.start_date);
+        if (!earliest || d < earliest) earliest = d;
+      }
+    }
+  }
+
+  return earliest;
+}
+
+const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+
+/**
+ * Compute season week (1-12) from a schedule entry's start_date relative
+ * to the season start. Returns undefined if the entry falls outside the
+ * current 12-week season window.
+ */
+function computeSeasonWeek(
+  startDate: string | undefined,
+  seasonStart: Date | undefined,
+  fallbackWeekNum: number,
+): number | undefined {
+  // If we have dates, always use them for accurate mapping
+  if (startDate && seasonStart) {
+    const entryDate = new Date(startDate);
+    const diffMs = entryDate.getTime() - seasonStart.getTime();
+    const weekIndex = Math.round(diffMs / MS_PER_WEEK);
+
+    // Only include weeks that fall within the 12-week season window
+    if (weekIndex < 0 || weekIndex >= 12) return undefined;
+    return weekIndex + 1;
+  }
+
+  // Fallback: use weekNumber directly (assumes 1:1 mapping)
+  if (fallbackWeekNum >= 1 && fallbackWeekNum <= 12) {
+    return fallbackWeekNum;
+  }
+  return undefined;
+}
+
 export function transformToSeries(
   rawSeries: RawSeries[],
   rawSeasons: RawSeason[],
   rawCars: RawCar[],
   rawCarClasses: RawCarClass[],
+  trackAssets?: Record<string, RawTrackAsset>,
 ): Series[] {
   const carMap = new Map(rawCars.map((c) => [c.car_id, c]));
   const carClassMap = new Map(
@@ -75,6 +193,7 @@ export function transformToSeries(
   const seasonBySeriesId = new Map(
     rawSeasons.map((s) => [s.series_id, s]),
   );
+  const seasonStart = findSeasonStartDate(rawSeasons);
 
   return rawSeries
     .filter((s) => seasonBySeriesId.has(s.series_id))
@@ -94,17 +213,43 @@ export function transformToSeries(
         .filter((c): c is RawCar => c !== undefined)
         .map((c) => ({ carId: c.car_id, carName: c.car_name }));
 
+      const totalScheduleWeeks = season.schedules.length;
+
       // Map schedule weeks (API uses 0-indexed, we use 1-indexed)
       const scheduleWeeks = season.schedules
         .slice()
         .sort((a, b) => a.race_week_num - b.race_week_num)
-        .map((week) => ({
-          weekNumber: week.race_week_num + 1,
-          trackName: week.track.track_name,
-          ...(week.track.config_name
-            ? { trackConfig: week.track.config_name }
-            : {}),
-        }));
+        .map((week) => {
+          const weekNumber = week.race_week_num + 1;
+          const seasonWeek = computeSeasonWeek(
+            week.start_date,
+            seasonStart,
+            weekNumber,
+          );
+          const trackId = week.track.track_id;
+          const asset = trackAssets?.[String(trackId)];
+          const trackMapUrl = buildTrackMapUrl(asset);
+          const trackMapLayers = buildTrackMapLayers(asset);
+
+          return {
+            weekNumber,
+            seasonWeek,
+            trackId,
+            trackName: week.track.track_name,
+            ...(week.track.config_name
+              ? { trackConfig: week.track.config_name }
+              : {}),
+            rainChance: week.weather?.weather_summary?.precip_chance ?? 0,
+            rainEnabled: (week.weather?.precip_option ?? 0) > 0,
+            ...(week.weather?.weather_summary?.max_precip_rate_desc
+              ? { maxPrecipDesc: week.weather.weather_summary.max_precip_rate_desc }
+              : {}),
+            ...(trackMapUrl ? { trackMapUrl } : {}),
+            ...(trackMapLayers ? { trackMapLayers } : {}),
+          };
+        })
+        // Filter to only weeks in the current season (seasonWeek 1-12)
+        .filter((w): w is typeof w & { seasonWeek: number } => w.seasonWeek !== undefined);
 
       return {
         seriesId: s.series_id,
@@ -113,6 +258,7 @@ export function transformToSeries(
         licenseClass: mapLicenseLevel(s.min_license_level),
         setupType: s.fixed_setup ? "fixed" : "open",
         isMulticlass: season.car_class_ids.length > 1,
+        totalWeeks: totalScheduleWeeks,
         cars,
         scheduleWeeks,
       } satisfies Series;

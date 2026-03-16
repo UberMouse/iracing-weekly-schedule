@@ -7,10 +7,26 @@ export interface Car {
   carName: string;
 }
 
+export interface TrackMapLayers {
+  background?: string;
+  inactive?: string;
+  active?: string;
+  pitroad?: string;
+  startFinish?: string;
+  turns?: string;
+}
+
 export interface WeekSchedule {
   weekNumber: number;
+  seasonWeek: number;
+  trackId: number;
   trackName: string;
   trackConfig?: string;
+  rainChance: number;
+  rainEnabled: boolean;
+  maxPrecipDesc?: string;
+  trackMapUrl?: string;
+  trackMapLayers?: TrackMapLayers;
 }
 
 export interface Series {
@@ -20,6 +36,7 @@ export interface Series {
   licenseClass: LicenseClass;
   setupType: SetupType;
   isMulticlass: boolean;
+  totalWeeks: number;
   cars: Car[];
   scheduleWeeks: WeekSchedule[];
 }
