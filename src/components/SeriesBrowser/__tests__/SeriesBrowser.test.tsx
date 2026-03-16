@@ -34,6 +34,43 @@ describe("SeriesBrowser", () => {
     expect(screen.queryByText(series[0].seriesName)).not.toBeInTheDocument();
   });
 
+  it("sorts series by license class then alphabetically", () => {
+    const makeSeries = (name: string, licenseClass: string) => ({
+      seriesId: Math.random(),
+      seriesName: name,
+      category: "oval" as const,
+      licenseClass: licenseClass as "R" | "D" | "C" | "B" | "A",
+      setupType: "fixed" as const,
+      isMulticlass: false,
+      totalWeeks: 12,
+      cars: [{ carId: 1, carName: "Test Car" }],
+      scheduleWeeks: [],
+    });
+
+    useAppStore.setState({
+      series: [
+        makeSeries("Zebra Series", "B"),
+        makeSeries("Alpha Series", "D"),
+        makeSeries("Omega Series", "R"),
+        makeSeries("Beta Series", "D"),
+        makeSeries("Gamma Series", "A"),
+        makeSeries("Delta Series", "B"),
+      ],
+    });
+
+    render(<SeriesBrowser />);
+    const displayed = screen.getAllByTestId("series-card-name").map((el) => el.textContent);
+
+    expect(displayed).toEqual([
+      "Omega Series",   // R (lowest license)
+      "Alpha Series",   // D — alphabetically before Beta
+      "Beta Series",    // D
+      "Delta Series",   // B — alphabetically before Zebra
+      "Zebra Series",   // B
+      "Gamma Series",   // A (highest license)
+    ]);
+  });
+
   it("filters by category", async () => {
     render(<SeriesBrowser />);
     const ovalButton = screen.getByRole("button", { name: /^Oval$/i });

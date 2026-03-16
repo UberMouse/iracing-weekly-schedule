@@ -44,7 +44,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
       style={{ borderLeftWidth: "2px", borderLeftColor: catColor }}
     >
       <div className="flex items-start justify-between gap-2">
-        <h3 className="font-display font-semibold text-base leading-tight uppercase tracking-wide">
+        <h3 data-testid="series-card-name" className="font-display font-semibold text-base leading-tight uppercase tracking-wide">
           {series.seriesName}
         </h3>
         <motion.button

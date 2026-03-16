@@ -3,24 +3,32 @@ import { useAppStore } from "../../store/useAppStore";
 import SeriesCard from "../SeriesCard";
 import FilterBar from "./FilterBar";
 
+const LICENSE_ORDER: Record<string, number> = { R: 0, D: 1, C: 2, B: 3, A: 4 };
+
 export default function SeriesBrowser() {
   const { series, filters, favorites, toggleFavorite } = useAppStore();
 
   const filtered = useMemo(() => {
-    return series.filter((s) => {
-      if (filters.categories.length > 0 && !filters.categories.includes(s.category))
-        return false;
-      if (filters.licenseClasses.length > 0 && !filters.licenseClasses.includes(s.licenseClass))
-        return false;
-      if (filters.setupType && s.setupType !== filters.setupType) return false;
-      if (
-        filters.searchText &&
-        !s.seriesName.toLowerCase().includes(filters.searchText.toLowerCase())
-      )
-        return false;
-      if (filters.favoritesOnly && !favorites.includes(s.seriesId)) return false;
-      return true;
-    });
+    return series
+      .filter((s) => {
+        if (filters.categories.length > 0 && !filters.categories.includes(s.category))
+          return false;
+        if (filters.licenseClasses.length > 0 && !filters.licenseClasses.includes(s.licenseClass))
+          return false;
+        if (filters.setupType && s.setupType !== filters.setupType) return false;
+        if (
+          filters.searchText &&
+          !s.seriesName.toLowerCase().includes(filters.searchText.toLowerCase())
+        )
+          return false;
+        if (filters.favoritesOnly && !favorites.includes(s.seriesId)) return false;
+        return true;
+      })
+      .sort((a, b) => {
+        const licDiff = (LICENSE_ORDER[a.licenseClass] ?? 99) - (LICENSE_ORDER[b.licenseClass] ?? 99);
+        if (licDiff !== 0) return licDiff;
+        return a.seriesName.localeCompare(b.seriesName);
+      });
   }, [series, filters, favorites]);
 
   return (

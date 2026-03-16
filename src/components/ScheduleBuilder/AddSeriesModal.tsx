@@ -8,9 +8,10 @@ interface Props {
 }
 
 export default function AddSeriesModal({ week, onClose }: Props) {
-  const { series, favorites, weeklyPicks, addWeeklyPick } = useAppStore();
+  const { series, favorites, weeklyPicks, addWeeklyPick, modalShowAllSeries, setModalShowAllSeries } = useAppStore();
   const [search, setSearch] = useState("");
-  const [showAll, setShowAll] = useState(true);
+
+  const showAll = modalShowAllSeries;
 
   const pickedIds = weeklyPicks[week] ?? [];
 
@@ -44,7 +45,7 @@ export default function AddSeriesModal({ week, onClose }: Props) {
             <input
               type="checkbox"
               checked={showAll}
-              onChange={(e) => setShowAll(e.target.checked)}
+              onChange={(e) => setModalShowAllSeries(e.target.checked)}
             />
             Show all series (not just favorites)
           </label>

@@ -12,6 +12,8 @@ interface AppStore {
   removeWeeklyPick: (week: number, seriesId: number) => void;
   filters: FilterState;
   setFilters: (filters: Partial<FilterState>) => void;
+  modalShowAllSeries: boolean;
+  setModalShowAllSeries: (value: boolean) => void;
   exportData: () => string;
   importData: (json: string) => void;
 }
@@ -54,6 +56,8 @@ export const useAppStore = create<AppStore>()(
         set((state) => ({
           filters: { ...state.filters, ...filters },
         })),
+      modalShowAllSeries: true,
+      setModalShowAllSeries: (value) => set({ modalShowAllSeries: value }),
       exportData: () => {
         const { favorites, weeklyPicks } = get();
         return JSON.stringify({ favorites, weeklyPicks });
@@ -68,6 +72,7 @@ export const useAppStore = create<AppStore>()(
       partialize: (state) => ({
         favorites: state.favorites,
         weeklyPicks: state.weeklyPicks,
+        modalShowAllSeries: state.modalShowAllSeries,
       }),
     }
   )
