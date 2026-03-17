@@ -1,4 +1,5 @@
 import WeekRow from "./WeekRow";
+import SeasonCreditsTracker from "./SeasonCreditsTracker";
 
 const TOTAL_WEEKS = 12;
 const CURRENT_WEEK = 1; // TODO: derive from season start date
@@ -11,6 +12,9 @@ export default function ScheduleBuilder() {
         {Array.from({ length: TOTAL_WEEKS }, (_, i) => i + 1).map((week) => (
           <WeekRow key={week} week={week} isCurrentWeek={week === CURRENT_WEEK} />
         ))}
+      </div>
+      <div className="sticky bottom-4 mt-4 flex justify-end">
+        <SeasonCreditsTracker />
       </div>
     </div>
   );
