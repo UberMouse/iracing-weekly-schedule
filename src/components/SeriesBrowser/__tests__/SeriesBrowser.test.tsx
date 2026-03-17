@@ -9,8 +9,8 @@ describe("SeriesBrowser", () => {
     useAppStore.setState({
       favorites: [],
       filters: {
-        categories: [],
-        licenseClasses: [],
+        categories: ["oval", "dirt_oval", "dirt_road", "sports_car", "formula"],
+        licenseClasses: ["R", "D", "C", "B", "A"],
         setupType: null,
         searchText: "",
         favoritesOnly: false,
@@ -76,12 +76,13 @@ describe("SeriesBrowser", () => {
   it("filters by category", async () => {
     render(<SeriesBrowser />);
     const ovalButton = screen.getByRole("button", { name: /^Oval$/i });
+    // Clicking deactivates oval (all start active)
     await userEvent.click(ovalButton);
-    // Only oval series should be visible
+    // Oval series should be hidden
     const series = useAppStore.getState().series;
-    const nonOval = series.find((s) => s.category !== "oval");
-    if (nonOval) {
-      expect(screen.queryByText(nonOval.seriesName)).not.toBeInTheDocument();
+    const ovalSeries = series.find((s) => s.category === "oval");
+    if (ovalSeries) {
+      expect(screen.queryByText(ovalSeries.seriesName)).not.toBeInTheDocument();
     }
   });
 });

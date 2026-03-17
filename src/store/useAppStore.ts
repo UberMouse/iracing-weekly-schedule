@@ -46,8 +46,8 @@ export const useAppStore = create<AppStore>()(
           },
         })),
       filters: {
-        categories: [],
-        licenseClasses: [],
+        categories: ["oval", "dirt_oval", "dirt_road", "sports_car", "formula"],
+        licenseClasses: ["R", "D", "C", "B", "A"],
         setupType: null,
         searchText: "",
         favoritesOnly: false,
@@ -73,6 +73,7 @@ export const useAppStore = create<AppStore>()(
         favorites: state.favorites,
         weeklyPicks: state.weeklyPicks,
         modalShowAllSeries: state.modalShowAllSeries,
+        filters: state.filters,
       }),
     }
   )
