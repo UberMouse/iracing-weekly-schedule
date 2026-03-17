@@ -37,6 +37,13 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
   const catColor = categoryColors[series.category];
   const licColor = licenseColors[series.licenseClass];
 
+  // Detect same-track series (e.g. Ring Meister) where every week uses the same track
+  const isSameTrack =
+    series.scheduleWeeks.length > 1 &&
+    series.scheduleWeeks.every((w) => w.trackId === series.scheduleWeeks[0].trackId);
+  const hasPerWeekCars = series.scheduleWeeks.some((w) => w.cars && w.cars.length > 0);
+  const isCarRotation = isSameTrack && hasPerWeekCars;
+
   return (
     <motion.div
       whileHover={{ y: -2 }}
@@ -83,18 +90,35 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
         )}
         <EventTypeBadge raceTimeMinutes={series.raceTimeMinutes} isRepeating={series.isRepeating} />
       </div>
-      <p className="text-xs font-mono text-[var(--color-text-secondary)]">
-        {series.cars.map((c) => c.carName).join(" · ")}
-      </p>
+      {isCarRotation ? (
+        <p className="text-xs font-mono text-[var(--color-text-secondary)]">
+          <TrackMapPopover week={series.scheduleWeeks[0]}>
+            <span className="cursor-default">
+              {series.scheduleWeeks[0].trackName}
+              {series.scheduleWeeks[0].trackConfig ? ` — ${series.scheduleWeeks[0].trackConfig}` : ""}
+            </span>
+          </TrackMapPopover>
+        </p>
+      ) : (
+        <p className="text-xs font-mono text-[var(--color-text-secondary)]">
+          {series.cars.map((c) => c.carName).join(" · ")}
+        </p>
+      )}
       <div className="border-t border-[var(--color-border)] pt-2 mt-1 flex flex-col gap-0.5">
         {series.scheduleWeeks.map((w) => (
           <div key={w.weekNumber} className="flex gap-2 text-xs leading-snug items-center">
             <span className="font-mono text-[var(--color-text-muted)] shrink-0 w-7 text-right">W{w.weekNumber}</span>
-            <TrackMapPopover week={w}>
-              <span className="font-mono text-[var(--color-text-secondary)] cursor-default">
-                {w.trackName}{w.trackConfig ? ` — ${w.trackConfig}` : ""}
+            {isCarRotation && w.cars ? (
+              <span className="font-mono text-[var(--color-text-secondary)]">
+                {w.cars.map((c) => c.carName).join(" · ")}
               </span>
-            </TrackMapPopover>
+            ) : (
+              <TrackMapPopover week={w}>
+                <span className="font-mono text-[var(--color-text-secondary)] cursor-default">
+                  {w.trackName}{w.trackConfig ? ` — ${w.trackConfig}` : ""}
+                </span>
+              </TrackMapPopover>
+            )}
             <RainBadge week={w} />
           </div>
         ))}

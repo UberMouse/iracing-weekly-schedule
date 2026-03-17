@@ -71,6 +71,7 @@ export interface RawDetailedSchedule {
     race_week_num: number;
     race_time_limit?: number | null;
     race_time_descriptors?: RawRaceTimeDescriptor[];
+    race_week_cars?: { car_id: number; car_name: string; car_name_abbreviated?: string }[];
   }[];
 }
 
@@ -309,6 +310,15 @@ export function transformToSeries(
           const trackMapUrl = buildTrackMapUrl(asset);
           const trackMapLayers = buildTrackMapLayers(asset);
 
+          // Resolve per-week cars from the detailed schedule
+          const detailed = detailedSchedules?.get(season.season_id);
+          const detailedWeek = detailed?.schedules.find(
+            (dw) => dw.race_week_num === week.race_week_num,
+          );
+          const weekCars = detailedWeek?.race_week_cars
+            ?.map((c) => ({ carId: c.car_id, carName: c.car_name }))
+            ?? undefined;
+
           return {
             weekNumber,
             seasonWeek,
@@ -324,6 +334,7 @@ export function transformToSeries(
               : {}),
             ...(trackMapUrl ? { trackMapUrl } : {}),
             ...(trackMapLayers ? { trackMapLayers } : {}),
+            ...(weekCars ? { cars: weekCars } : {}),
           };
         })
         // Filter to only weeks in the current season (seasonWeek 1-12)

@@ -101,6 +101,11 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                     <RainBadge week={weekTrack} />
                   </div>
                 )}
+                {weekTrack?.cars && weekTrack.cars.length > 0 && (
+                  <div className="text-xs text-[var(--color-text-muted)] font-mono">
+                    {weekTrack.cars.map((c) => c.carName).join(" · ")}
+                  </div>
+                )}
                 <button
                   onClick={() => removeWeeklyPick(week, s.seriesId)}
                   aria-label="Remove series"

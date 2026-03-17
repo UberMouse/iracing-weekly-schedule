@@ -27,6 +27,7 @@ export interface WeekSchedule {
   maxPrecipDesc?: string;
   trackMapUrl?: string;
   trackMapLayers?: TrackMapLayers;
+  cars?: Car[];
 }
 
 export interface Series {
