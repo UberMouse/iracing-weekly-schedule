@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import type { WeekSchedule } from "../types";
 
@@ -9,6 +9,17 @@ interface Props {
 
 export default function TrackMapPopover({ week, children }: Props) {
   const [show, setShow] = useState(false);
+  const [flipBelow, setFlipBelow] = useState(false);
+  const triggerRef = useRef<HTMLSpanElement>(null);
+
+  const handleMouseEnter = useCallback(() => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      // Popover is ~330px tall (288 content + padding + label + margin)
+      setFlipBelow(rect.top < 340);
+    }
+    setShow(true);
+  }, []);
 
   if (!week.trackMapLayers && !week.trackMapUrl) {
     return <>{children}</>;
@@ -18,19 +29,22 @@ export default function TrackMapPopover({ week, children }: Props) {
 
   return (
     <span
+      ref={triggerRef}
       className="relative inline-block"
-      onMouseEnter={() => setShow(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setShow(false)}
     >
       {children}
       <AnimatePresence>
         {show && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 4 }}
+            initial={{ opacity: 0, scale: 0.95, y: flipBelow ? -4 : 4 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 4 }}
+            exit={{ opacity: 0, scale: 0.95, y: flipBelow ? -4 : 4 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="absolute bottom-full left-0 mb-2 z-50 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg p-3 shadow-xl shadow-black/40 pointer-events-none"
+            className={`absolute left-0 z-50 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg p-3 shadow-xl shadow-black/40 pointer-events-none ${
+              flipBelow ? "top-full mt-2" : "bottom-full mb-2"
+            }`}
           >
             <div className="relative w-72 h-72">
               {layers ? (
