@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import type { Series } from "../../types";
+import EventTypeBadge from "../EventTypeBadge";
 
 interface Props {
   week: number;
@@ -59,7 +60,10 @@ export default function AddSeriesModal({ week, onClose }: Props) {
                 onClick={() => handleAdd(s)}
                 className="text-left px-3 py-2.5 rounded-md hover:bg-gray-800 transition-colors"
               >
-                <div className="text-sm font-medium">{s.seriesName}</div>
+                <div className="text-sm font-medium flex items-center gap-1.5">
+                  {s.seriesName}
+                  <EventTypeBadge raceTimeMinutes={s.raceTimeMinutes} isRepeating={s.isRepeating} compact />
+                </div>
                 {weekTrack && (
                   <div className="text-xs text-gray-500 flex items-center gap-1.5">
                     <span>

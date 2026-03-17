@@ -7,6 +7,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 160,
@@ -249,6 +251,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 13,
+    "raceTimeMinutes": 20,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 20,
@@ -494,6 +498,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 85,
@@ -729,6 +735,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 69,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 161,
@@ -972,6 +980,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 23,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 96,
@@ -1209,6 +1219,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 36,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 83,
@@ -1445,6 +1457,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 47,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 131,
@@ -1681,6 +1695,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 162,
@@ -1924,6 +1940,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 26,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 163,
@@ -2167,6 +2185,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 163,
@@ -2409,6 +2429,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 75,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 201,
@@ -2653,6 +2675,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 165,
@@ -2896,6 +2920,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 31,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 165,
@@ -3141,6 +3167,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 204,
@@ -3386,6 +3414,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 10,
+    "raceTimeMinutes": 283,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 156,
@@ -3455,7 +3485,7 @@
     "scheduleWeeks": [
       {
         "weekNumber": 1,
-        "seasonWeek": 2,
+        "seasonWeek": 1,
         "trackId": 262,
         "trackName": "Nürburgring Combined",
         "trackConfig": "Gesamtstrecke VLN",
@@ -3474,7 +3504,7 @@
       },
       {
         "weekNumber": 2,
-        "seasonWeek": 4,
+        "seasonWeek": 3,
         "trackId": 262,
         "trackName": "Nürburgring Combined",
         "trackConfig": "Gesamtstrecke VLN",
@@ -3493,7 +3523,7 @@
       },
       {
         "weekNumber": 3,
-        "seasonWeek": 7,
+        "seasonWeek": 6,
         "trackId": 262,
         "trackName": "Nürburgring Combined",
         "trackConfig": "Gesamtstrecke VLN",
@@ -3512,7 +3542,26 @@
       },
       {
         "weekNumber": 4,
-        "seasonWeek": 11,
+        "seasonWeek": 10,
+        "trackId": 262,
+        "trackName": "Nürburgring Combined",
+        "trackConfig": "Gesamtstrecke VLN",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/262-nurburgring-combinedshortb/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/262-nurburgring-combinedshortb/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/262-nurburgring-combinedshortb/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/262-nurburgring-combinedshortb/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/262-nurburgring-combinedshortb/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/262-nurburgring-combinedshortb/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/262-nurburgring-combinedshortb/turns.svg"
+        }
+      },
+      {
+        "weekNumber": 5,
+        "seasonWeek": 12,
         "trackId": 262,
         "trackName": "Nürburgring Combined",
         "trackConfig": "Gesamtstrecke VLN",
@@ -3539,6 +3588,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 74,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 92,
@@ -3798,6 +3849,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 60,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 171,
@@ -4045,6 +4098,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 41,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 171,
@@ -4292,6 +4347,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 24,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 139,
@@ -4539,6 +4596,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 49,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 128,
@@ -4843,6 +4902,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 148,
@@ -5084,6 +5145,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 54,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 76,
@@ -5330,6 +5393,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 148,
@@ -5574,6 +5639,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 148,
@@ -5817,6 +5884,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 27,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 5,
@@ -6057,6 +6126,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 41,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 164,
@@ -6292,6 +6363,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 37,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 1,
@@ -6535,6 +6608,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 23,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 78,
@@ -6772,6 +6847,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 22,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 80,
@@ -7009,6 +7086,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 19,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 180,
@@ -7248,6 +7327,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 44,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 178,
@@ -7492,6 +7573,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 178,
@@ -7736,6 +7819,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 35,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 182,
@@ -7973,6 +8058,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 26,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 179,
@@ -8211,6 +8298,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 42,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 208,
@@ -8454,6 +8543,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 21,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 2,
@@ -8695,6 +8786,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 195,
@@ -8939,6 +9032,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 19,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 181,
@@ -9178,6 +9273,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 156,
@@ -9462,6 +9559,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 39,
+    "raceTimeMinutes": 72,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 123,
@@ -9713,6 +9812,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 55,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 85,
@@ -9948,6 +10049,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 67,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 83,
@@ -10184,6 +10287,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 5,
@@ -10428,6 +10533,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 51,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 86,
@@ -10664,6 +10771,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 30,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 120,
@@ -10906,6 +11015,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 20,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 191,
@@ -11145,6 +11256,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 76,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 84,
@@ -11379,6 +11492,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 51,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 89,
@@ -11617,6 +11732,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 56,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 18,
@@ -11858,6 +11975,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 51,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 87,
@@ -12096,6 +12215,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 22,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 193,
@@ -12337,6 +12458,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 47,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 79,
@@ -12574,6 +12697,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 93,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 139,
@@ -12821,6 +12946,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 21,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 82,
@@ -13059,6 +13186,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 26,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 195,
@@ -13303,6 +13432,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 6,
+    "raceTimeMinutes": 134,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 165,
@@ -13336,7 +13467,7 @@
     "scheduleWeeks": [
       {
         "weekNumber": 1,
-        "seasonWeek": 2,
+        "seasonWeek": 1,
         "trackId": 580,
         "trackName": "Adelaide Street Circuit",
         "rainChance": 0,
@@ -13354,7 +13485,7 @@
       },
       {
         "weekNumber": 2,
-        "seasonWeek": 4,
+        "seasonWeek": 3,
         "trackId": 571,
         "trackName": "Sonoma Raceway",
         "trackConfig": "Sportscar Alt",
@@ -13373,7 +13504,7 @@
       },
       {
         "weekNumber": 3,
-        "seasonWeek": 6,
+        "seasonWeek": 5,
         "trackId": 585,
         "trackName": "Barber Motorsports Park",
         "rainChance": 32,
@@ -13391,7 +13522,7 @@
       },
       {
         "weekNumber": 4,
-        "seasonWeek": 8,
+        "seasonWeek": 7,
         "trackId": 449,
         "trackName": "Motorsport Arena Oschersleben",
         "trackConfig": "Grand Prix",
@@ -13410,7 +13541,7 @@
       },
       {
         "weekNumber": 5,
-        "seasonWeek": 10,
+        "seasonWeek": 9,
         "trackId": 229,
         "trackName": "Circuit of the Americas",
         "trackConfig": "Grand Prix",
@@ -13429,7 +13560,7 @@
       },
       {
         "weekNumber": 6,
-        "seasonWeek": 12,
+        "seasonWeek": 11,
         "trackId": 445,
         "trackName": "Fuji International Speedway",
         "trackConfig": "No Chicane",
@@ -13456,6 +13587,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 27,
+    "raceTimeMinutes": 109,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 54,
@@ -13640,6 +13773,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 39,
+    "raceTimeMinutes": 84,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 114,
@@ -13888,6 +14023,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 38,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 23,
@@ -14132,6 +14269,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 26,
+    "raceTimeMinutes": 109,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 31,
@@ -14296,6 +14435,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 55,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 95,
@@ -14533,6 +14674,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 56,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 25,
@@ -14774,6 +14917,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 55,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 91,
@@ -15027,6 +15172,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 41,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 96,
@@ -15264,6 +15411,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 134,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 195,
@@ -15519,6 +15668,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 42,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 149,
@@ -15761,6 +15912,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 6,
+    "raceTimeMinutes": 374,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 128,
@@ -15830,7 +15983,7 @@
     "scheduleWeeks": [
       {
         "weekNumber": 1,
-        "seasonWeek": 3,
+        "seasonWeek": 2,
         "trackId": 341,
         "trackName": "Silverstone Circuit",
         "trackConfig": "Grand Prix",
@@ -15849,7 +16002,7 @@
       },
       {
         "weekNumber": 2,
-        "seasonWeek": 5,
+        "seasonWeek": 4,
         "trackId": 509,
         "trackName": "Algarve International Circuit",
         "trackConfig": "Grand Prix",
@@ -15868,7 +16021,7 @@
       },
       {
         "weekNumber": 3,
-        "seasonWeek": 7,
+        "seasonWeek": 6,
         "trackId": 266,
         "trackName": "Autodromo Internazionale Enzo e Dino Ferrari",
         "trackConfig": "Grand Prix",
@@ -15887,7 +16040,7 @@
       },
       {
         "weekNumber": 4,
-        "seasonWeek": 9,
+        "seasonWeek": 8,
         "trackId": 523,
         "trackName": "Circuit de Spa-Francorchamps",
         "trackConfig": "Grand Prix Pits",
@@ -15906,7 +16059,7 @@
       },
       {
         "weekNumber": 5,
-        "seasonWeek": 11,
+        "seasonWeek": 10,
         "trackId": 264,
         "trackName": "Nürburgring Combined",
         "trackConfig": "Gesamtstrecke Long",
@@ -15922,6 +16075,25 @@
           "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/264-nurburgring-combinedlong/start-finish.svg",
           "turns": "https://members-assets.iracing.com/public/track-maps/tracks_nurburgring_combined/264-nurburgring-combinedlong/turns.svg"
         }
+      },
+      {
+        "weekNumber": 6,
+        "seasonWeek": 12,
+        "trackId": 18,
+        "trackName": "Road America",
+        "trackConfig": "Full Course",
+        "rainChance": 33,
+        "rainEnabled": true,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_roadamerica/18-roadamerica-full/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_roadamerica/18-roadamerica-full/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_roadamerica/18-roadamerica-full/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_roadamerica/18-roadamerica-full/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_roadamerica/18-roadamerica-full/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_roadamerica/18-roadamerica-full/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_roadamerica/18-roadamerica-full/turns.svg"
+        }
       }
     ]
   },
@@ -15933,6 +16105,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 23,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 113,
@@ -16172,6 +16346,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 128,
@@ -16416,6 +16592,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 39,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 205,
@@ -16657,6 +16835,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 51,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 205,
@@ -16900,6 +17080,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 156,
@@ -17181,6 +17363,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 156,
@@ -17464,6 +17648,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 156,
@@ -17746,6 +17932,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 16,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 207,
@@ -17991,6 +18179,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 11,
+    "raceTimeMinutes": 120,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 114,
@@ -18146,6 +18336,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 203,
@@ -18390,6 +18582,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 39,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 31,
@@ -18629,6 +18823,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 52,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 114,
@@ -18877,6 +19073,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 16,
+    "raceTimeMinutes": 57,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 205,
@@ -18886,7 +19084,7 @@
     "scheduleWeeks": [
       {
         "weekNumber": 3,
-        "seasonWeek": 2,
+        "seasonWeek": 1,
         "trackId": 584,
         "trackName": "St. Petersburg Grand Prix",
         "trackConfig": "Grand Prix",
@@ -18905,7 +19103,7 @@
       },
       {
         "weekNumber": 4,
-        "seasonWeek": 3,
+        "seasonWeek": 2,
         "trackId": 585,
         "trackName": "Barber Motorsports Park",
         "rainChance": 0,
@@ -18923,7 +19121,7 @@
       },
       {
         "weekNumber": 5,
-        "seasonWeek": 6,
+        "seasonWeek": 5,
         "trackId": 179,
         "trackName": "Long Beach Street Circuit",
         "rainChance": 0,
@@ -18941,7 +19139,7 @@
       },
       {
         "weekNumber": 6,
-        "seasonWeek": 9,
+        "seasonWeek": 8,
         "trackId": 448,
         "trackName": "Indianapolis Motor Speedway",
         "trackConfig": "Road Course",
@@ -18960,7 +19158,7 @@
       },
       {
         "weekNumber": 7,
-        "seasonWeek": 12,
+        "seasonWeek": 11,
         "trackId": 319,
         "trackName": "Detroit Grand Prix at Belle Isle",
         "trackConfig": "Belle Isle",
@@ -18976,6 +19174,25 @@
           "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_belleisle/319-belleisle/start-finish.svg",
           "turns": "https://members-assets.iracing.com/public/track-maps/tracks_belleisle/319-belleisle/turns.svg"
         }
+      },
+      {
+        "weekNumber": 8,
+        "seasonWeek": 12,
+        "trackId": 560,
+        "trackName": "World Wide Technology Raceway (Gateway)",
+        "trackConfig": "Oval",
+        "rainChance": 0,
+        "rainEnabled": false,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_gateway/560-gateway-2025-oval/turns.svg"
+        }
       }
     ]
   },
@@ -18987,6 +19204,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 39,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 195,
@@ -19242,6 +19461,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 41,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 84,
@@ -19476,6 +19697,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 13,
+    "raceTimeMinutes": 24,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 139,
@@ -19724,6 +19947,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 17,
+    "raceTimeMinutes": 117,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 99,
@@ -19872,6 +20097,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 38,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 37,
@@ -20114,6 +20341,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 77,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 99,
@@ -20344,6 +20573,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 73,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 99,
@@ -20585,6 +20816,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 26,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 67,
@@ -20829,6 +21062,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 57,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 190,
@@ -21076,6 +21311,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 57,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 190,
@@ -21323,6 +21560,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 85,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 124,
@@ -21577,6 +21816,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 46,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 54,
@@ -21817,6 +22058,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 39,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 31,
@@ -22056,6 +22299,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 6,
+    "raceTimeMinutes": 174,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 128,
@@ -22125,7 +22370,7 @@
     "scheduleWeeks": [
       {
         "weekNumber": 1,
-        "seasonWeek": 2,
+        "seasonWeek": 1,
         "trackId": 95,
         "trackName": "Sebring International Raceway",
         "trackConfig": "International",
@@ -22144,7 +22389,7 @@
       },
       {
         "weekNumber": 2,
-        "seasonWeek": 4,
+        "seasonWeek": 3,
         "trackId": 390,
         "trackName": "Hockenheimring Baden-Württemberg",
         "trackConfig": "Grand Prix",
@@ -22163,7 +22408,7 @@
       },
       {
         "weekNumber": 3,
-        "seasonWeek": 6,
+        "seasonWeek": 5,
         "trackId": 179,
         "trackName": "Long Beach Street Circuit",
         "rainChance": 0,
@@ -22181,7 +22426,7 @@
       },
       {
         "weekNumber": 4,
-        "seasonWeek": 8,
+        "seasonWeek": 7,
         "trackId": 47,
         "trackName": "WeatherTech Raceway at Laguna Seca",
         "trackConfig": "Full Course",
@@ -22200,7 +22445,7 @@
       },
       {
         "weekNumber": 5,
-        "seasonWeek": 10,
+        "seasonWeek": 9,
         "trackId": 127,
         "trackName": "Road Atlanta",
         "trackConfig": "Full Course",
@@ -22219,7 +22464,7 @@
       },
       {
         "weekNumber": 6,
-        "seasonWeek": 12,
+        "seasonWeek": 11,
         "trackId": 319,
         "trackName": "Detroit Grand Prix at Belle Isle",
         "trackConfig": "Belle Isle",
@@ -22246,6 +22491,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 46,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 123,
@@ -22497,6 +22744,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 32,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 99,
@@ -22738,6 +22987,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 38,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 198,
@@ -22985,6 +23236,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 76,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 131,
@@ -23221,6 +23474,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 44,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 129,
@@ -23465,6 +23720,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 146,
@@ -23720,6 +23977,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 39,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 106,
@@ -23962,6 +24221,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 44,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 39,
@@ -24219,6 +24480,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 22,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 187,
@@ -24466,6 +24729,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 25,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 164,
@@ -24701,6 +24966,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 21,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 2,
@@ -24942,6 +25209,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 95,
@@ -25179,6 +25448,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 121,
@@ -25423,6 +25694,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 156,
@@ -25706,6 +25979,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 33,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 187,
@@ -25954,6 +26229,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 22,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 79,
@@ -26195,6 +26472,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 52,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 139,
@@ -26442,6 +26721,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 59,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 128,
@@ -26746,6 +27027,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 26,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 142,
@@ -26989,6 +27272,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 39,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 106,
@@ -27231,6 +27516,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 174,
@@ -27491,6 +27778,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 64,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 42,
@@ -27732,6 +28021,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 27,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 86,
@@ -27968,6 +28259,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 16,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 138,
@@ -28213,6 +28506,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 18,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 138,
@@ -28458,6 +28753,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 17,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 91,
@@ -28711,6 +29008,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 15,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 113,
@@ -28950,6 +29249,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 26,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 107,
@@ -29189,6 +29490,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 36,
+    "raceTimeMinutes": 252,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 139,
@@ -29399,6 +29702,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 26,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 104,
@@ -29638,6 +29943,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 39,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 44,
@@ -29885,6 +30192,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 21,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 134,
@@ -30122,6 +30431,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 13,
+    "raceTimeMinutes": 25,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 57,
@@ -30363,6 +30674,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 42,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 208,
@@ -30606,6 +30919,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 51,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 54,
@@ -30846,6 +31161,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 22,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 5,
@@ -31086,6 +31403,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 54,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 156,
@@ -31369,6 +31688,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 42,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 161,
@@ -31612,6 +31933,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 36,
+    "raceTimeMinutes": 252,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 139,
@@ -31822,6 +32145,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 44,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 67,
@@ -32067,6 +32392,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 204,
@@ -32330,6 +32657,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 6,
+    "raceTimeMinutes": 134,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 146,
@@ -32375,7 +32704,7 @@
     "scheduleWeeks": [
       {
         "weekNumber": 1,
-        "seasonWeek": 3,
+        "seasonWeek": 2,
         "trackId": 95,
         "trackName": "Sebring International Raceway",
         "trackConfig": "International",
@@ -32394,7 +32723,7 @@
       },
       {
         "weekNumber": 2,
-        "seasonWeek": 5,
+        "seasonWeek": 4,
         "trackId": 234,
         "trackName": "Donington Park Racing Circuit",
         "trackConfig": "National",
@@ -32413,7 +32742,7 @@
       },
       {
         "weekNumber": 3,
-        "seasonWeek": 7,
+        "seasonWeek": 6,
         "trackId": 252,
         "trackName": "Nürburgring Combined",
         "trackConfig": "Gesamtstrecke 24h",
@@ -32432,7 +32761,7 @@
       },
       {
         "weekNumber": 4,
-        "seasonWeek": 9,
+        "seasonWeek": 8,
         "trackId": 47,
         "trackName": "WeatherTech Raceway at Laguna Seca",
         "trackConfig": "Full Course",
@@ -32451,7 +32780,7 @@
       },
       {
         "weekNumber": 5,
-        "seasonWeek": 11,
+        "seasonWeek": 10,
         "trackId": 297,
         "trackName": "Snetterton Circuit",
         "trackConfig": "300",
@@ -32467,6 +32796,25 @@
           "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_snetterton/297-snetterton-300/start-finish.svg",
           "turns": "https://members-assets.iracing.com/public/track-maps/tracks_snetterton/297-snetterton-300/turns.svg"
         }
+      },
+      {
+        "weekNumber": 6,
+        "seasonWeek": 12,
+        "trackId": 153,
+        "trackName": "Mid-Ohio Sports Car Course",
+        "trackConfig": "Full Course",
+        "rainChance": 35,
+        "rainEnabled": true,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_midohio/153-midohio-full/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_midohio/153-midohio-full/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_midohio/153-midohio-full/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_midohio/153-midohio-full/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_midohio/153-midohio-full/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_midohio/153-midohio-full/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_midohio/153-midohio-full/turns.svg"
+        }
       }
     ]
   },
@@ -32478,6 +32826,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 151,
@@ -32725,6 +33075,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 194,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 156,
@@ -32774,7 +33126,7 @@
     "scheduleWeeks": [
       {
         "weekNumber": 1,
-        "seasonWeek": 2,
+        "seasonWeek": 1,
         "trackId": 584,
         "trackName": "St. Petersburg Grand Prix",
         "trackConfig": "Grand Prix",
@@ -32793,7 +33145,7 @@
       },
       {
         "weekNumber": 2,
-        "seasonWeek": 3,
+        "seasonWeek": 2,
         "trackId": 95,
         "trackName": "Sebring International Raceway",
         "trackConfig": "International",
@@ -32812,7 +33164,7 @@
       },
       {
         "weekNumber": 3,
-        "seasonWeek": 4,
+        "seasonWeek": 3,
         "trackId": 9,
         "trackName": "Summit Point Raceway",
         "trackConfig": "Summit Point Raceway",
@@ -32831,7 +33183,7 @@
       },
       {
         "weekNumber": 4,
-        "seasonWeek": 5,
+        "seasonWeek": 4,
         "trackId": 523,
         "trackName": "Circuit de Spa-Francorchamps",
         "trackConfig": "Grand Prix Pits",
@@ -32850,7 +33202,7 @@
       },
       {
         "weekNumber": 5,
-        "seasonWeek": 6,
+        "seasonWeek": 5,
         "trackId": 498,
         "trackName": "Autodromo Internazionale del Mugello",
         "trackConfig": "Grand Prix",
@@ -32869,7 +33221,7 @@
       },
       {
         "weekNumber": 6,
-        "seasonWeek": 7,
+        "seasonWeek": 6,
         "trackId": 444,
         "trackName": "Fuji International Speedway",
         "trackConfig": "Grand Prix",
@@ -32888,7 +33240,7 @@
       },
       {
         "weekNumber": 7,
-        "seasonWeek": 8,
+        "seasonWeek": 7,
         "trackId": 145,
         "trackName": "Brands Hatch Circuit",
         "trackConfig": "Grand Prix",
@@ -32907,7 +33259,7 @@
       },
       {
         "weekNumber": 8,
-        "seasonWeek": 9,
+        "seasonWeek": 8,
         "trackId": 580,
         "trackName": "Adelaide Street Circuit",
         "rainChance": 0,
@@ -32925,7 +33277,7 @@
       },
       {
         "weekNumber": 9,
-        "seasonWeek": 10,
+        "seasonWeek": 9,
         "trackId": 168,
         "trackName": "Suzuka International Racing Course",
         "trackConfig": "Grand Prix",
@@ -32944,7 +33296,7 @@
       },
       {
         "weekNumber": 10,
-        "seasonWeek": 11,
+        "seasonWeek": 10,
         "trackId": 463,
         "trackName": "Circuit de Nevers Magny-Cours",
         "trackConfig": "Grand Prix",
@@ -32963,7 +33315,7 @@
       },
       {
         "weekNumber": 11,
-        "seasonWeek": 12,
+        "seasonWeek": 11,
         "trackId": 532,
         "trackName": "Thruxton Circuit",
         "rainChance": 0,
@@ -32978,6 +33330,25 @@
           "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_thruxton/532-thruxton/start-finish.svg",
           "turns": "https://members-assets.iracing.com/public/track-maps/tracks_thruxton/532-thruxton/turns.svg"
         }
+      },
+      {
+        "weekNumber": 12,
+        "seasonWeek": 12,
+        "trackId": 539,
+        "trackName": "Miami International Autodrome",
+        "trackConfig": "Grand Prix",
+        "rainChance": 26,
+        "rainEnabled": true,
+        "maxPrecipDesc": "None",
+        "trackMapUrl": "https://members-assets.iracing.com/public/track-maps/tracks_miami/539-miami-gp/active.svg",
+        "trackMapLayers": {
+          "background": "https://members-assets.iracing.com/public/track-maps/tracks_miami/539-miami-gp/background.svg",
+          "inactive": "https://members-assets.iracing.com/public/track-maps/tracks_miami/539-miami-gp/inactive.svg",
+          "active": "https://members-assets.iracing.com/public/track-maps/tracks_miami/539-miami-gp/active.svg",
+          "pitroad": "https://members-assets.iracing.com/public/track-maps/tracks_miami/539-miami-gp/pitroad.svg",
+          "startFinish": "https://members-assets.iracing.com/public/track-maps/tracks_miami/539-miami-gp/start-finish.svg",
+          "turns": "https://members-assets.iracing.com/public/track-maps/tracks_miami/539-miami-gp/turns.svg"
+        }
       }
     ]
   },
@@ -32989,6 +33360,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 24,
+    "raceTimeMinutes": 126,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 161,
@@ -33118,6 +33491,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 24,
+    "raceTimeMinutes": 126,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 161,
@@ -33247,6 +33622,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 29,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 148,
@@ -33489,6 +33866,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 39,
+    "raceTimeMinutes": 80,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 84,
@@ -33725,6 +34104,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 37,
+    "raceTimeMinutes": 69,
+    "isRepeating": false,
     "cars": [
       {
         "carId": 86,
@@ -33960,6 +34341,8 @@
     "setupType": "open",
     "isMulticlass": true,
     "totalWeeks": 12,
+    "raceTimeMinutes": 44,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 165,
@@ -34227,6 +34610,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 146,
@@ -34482,6 +34867,8 @@
     "setupType": "open",
     "isMulticlass": false,
     "totalWeeks": 12,
+    "raceTimeMinutes": 34,
+    "isRepeating": true,
     "cars": [
       {
         "carId": 158,

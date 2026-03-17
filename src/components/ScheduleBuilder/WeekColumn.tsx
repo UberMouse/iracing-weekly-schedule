@@ -3,6 +3,7 @@ import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
 import TrackMapPopover from "../TrackMapPopover";
 import type { WeekSchedule } from "../../types";
+import EventTypeBadge from "../EventTypeBadge";
 
 interface Props {
   week: number;
@@ -42,7 +43,10 @@ export default function WeekColumn({ week, isCurrentWeek }: Props) {
           const weekTrack = s.scheduleWeeks.find((w) => w.seasonWeek === week);
           return (
             <div key={s.seriesId} className="bg-[var(--color-surface-elevated)] rounded-md px-2 py-1.5 text-xs group relative">
-              <div className="font-medium pr-5">{s.seriesName}</div>
+              <div className="font-medium pr-5 flex items-center gap-1">
+                {s.seriesName}
+                <EventTypeBadge raceTimeMinutes={s.raceTimeMinutes} isRepeating={s.isRepeating} compact />
+              </div>
               {weekTrack && (
                 <div className="text-[10px] text-[var(--color-text-muted)] mt-0.5 font-mono flex items-center gap-1">
                   <TrackMapPopover week={weekTrack}>

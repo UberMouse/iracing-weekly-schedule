@@ -12,6 +12,8 @@ const mockSeries: Series = {
   setupType: "fixed",
   isMulticlass: false,
   totalWeeks: 1,
+  raceTimeMinutes: null,
+  isRepeating: true,
   cars: [{ carId: 1, carName: "Next Gen Chevrolet" }],
   scheduleWeeks: [{ weekNumber: 1, seasonWeek: 1, trackId: 100, trackName: "Daytona International Speedway", rainChance: 0, rainEnabled: false }],
 };

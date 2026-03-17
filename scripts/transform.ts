@@ -40,11 +40,20 @@ export interface RawWeather {
   weather_summary?: RawWeatherSummary;
 }
 
+export interface RawRaceTimeDescriptor {
+  repeating: boolean;
+  session_minutes: number;
+  repeat_minutes?: number | null;
+  super_session?: boolean;
+}
+
 export interface RawSeasonSchedule {
   race_week_num: number;
   start_date?: string;
   track: RawSeasonScheduleTrack;
   weather?: RawWeather;
+  race_time_limit?: number | null;
+  race_time_descriptors?: RawRaceTimeDescriptor[];
 }
 
 export interface RawSeason {
@@ -54,6 +63,15 @@ export interface RawSeason {
   season_quarter: number;
   car_class_ids: number[];
   schedules: RawSeasonSchedule[];
+}
+
+/** Detailed schedule from /data/series/season_schedule/{season_id} */
+export interface RawDetailedSchedule {
+  schedules: {
+    race_week_num: number;
+    race_time_limit?: number | null;
+    race_time_descriptors?: RawRaceTimeDescriptor[];
+  }[];
 }
 
 export interface RawCarClass {
@@ -193,12 +211,56 @@ function computeSeasonWeek(
   return undefined;
 }
 
+/**
+ * Extract session minutes from detailed schedule data.
+ * Uses session_minutes from race_time_descriptors (covers both time- and lap-limited races),
+ * falling back to race_time_limit from the basic seasons endpoint.
+ */
+function resolveIsRepeating(
+  season: RawSeason,
+  detailedSchedules?: Map<number, RawDetailedSchedule>,
+): boolean {
+  const detailed = detailedSchedules?.get(season.season_id);
+  const firstWeek = detailed?.schedules[0];
+  const descriptor = firstWeek?.race_time_descriptors?.[0];
+  return descriptor?.repeating ?? true; // default to true (most series repeat)
+}
+
+function resolveSessionMinutes(
+  season: RawSeason,
+  detailedSchedules?: Map<number, RawDetailedSchedule>,
+): number | null {
+  const detailed = detailedSchedules?.get(season.season_id);
+  if (detailed) {
+    const firstWeek = detailed.schedules[0];
+    // session_minutes from race_time_descriptors captures actual session duration
+    // for both time-limited and lap-limited races
+    const descriptor = firstWeek?.race_time_descriptors?.[0];
+    if (descriptor && descriptor.session_minutes > 0) {
+      return descriptor.session_minutes;
+    }
+    // Fall back to race_time_limit from detailed schedule
+    if (firstWeek?.race_time_limit && firstWeek.race_time_limit > 0) {
+      return firstWeek.race_time_limit;
+    }
+  }
+
+  // Fall back to race_time_limit from basic seasons endpoint
+  const firstSchedule = season.schedules[0];
+  if (firstSchedule?.race_time_limit && firstSchedule.race_time_limit > 0) {
+    return firstSchedule.race_time_limit;
+  }
+
+  return null;
+}
+
 export function transformToSeries(
   rawSeries: RawSeries[],
   rawSeasons: RawSeason[],
   rawCars: RawCar[],
   rawCarClasses: RawCarClass[],
   trackAssets?: Record<string, RawTrackAsset>,
+  detailedSchedules?: Map<number, RawDetailedSchedule>,
 ): Series[] {
   const carMap = new Map(rawCars.map((c) => [c.car_id, c]));
   const carClassMap = new Map(
@@ -228,6 +290,8 @@ export function transformToSeries(
         .map((c) => ({ carId: c.car_id, carName: c.car_name }));
 
       const totalScheduleWeeks = season.schedules.length;
+      const raceTimeMinutes = resolveSessionMinutes(season, detailedSchedules);
+      const isRepeating = resolveIsRepeating(season, detailedSchedules);
 
       // Map schedule weeks (API uses 0-indexed, we use 1-indexed)
       const scheduleWeeks = season.schedules
@@ -273,6 +337,8 @@ export function transformToSeries(
         setupType: s.fixed_setup ? "fixed" : "open",
         isMulticlass: season.car_class_ids.length > 1,
         totalWeeks: totalScheduleWeeks,
+        raceTimeMinutes,
+        isRepeating,
         cars,
         scheduleWeeks,
       } satisfies Series;

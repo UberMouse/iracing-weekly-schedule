@@ -3,6 +3,7 @@ import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
 import TrackMapPopover from "../TrackMapPopover";
 import type { Category, LicenseClass, WeekSchedule } from "../../types";
+import EventTypeBadge from "../EventTypeBadge";
 
 interface Props {
   week: number;
@@ -87,6 +88,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                   >
                     {s.licenseClass}
                   </span>
+                  <EventTypeBadge raceTimeMinutes={s.raceTimeMinutes} isRepeating={s.isRepeating} compact />
                 </div>
                 {weekTrack && (
                   <div className="text-xs text-[var(--color-text-secondary)] font-mono flex items-center gap-1.5">

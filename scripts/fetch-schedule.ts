@@ -9,7 +9,7 @@ import {
   CarclassApi,
   TrackApi,
 } from "@iracing-data/api-client-fetch";
-import { transformToSeries } from "./transform";
+import { transformToSeries, type RawDetailedSchedule, type RawSeason } from "./transform";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -122,6 +122,33 @@ async function main() {
   const rawTrackAssets = await fetchLink<Record<string, unknown>>(trackAssetsLink);
   console.log(`  Found ${Object.keys(rawTrackAssets).length} track assets`);
 
+  // Fetch detailed schedules per season for session_minutes (covers lap-limited races)
+  const typedSeasons = rawSeasons as RawSeason[];
+  console.log(`Fetching detailed schedules for ${typedSeasons.length} seasons...`);
+  const detailedSchedules = new Map<number, RawDetailedSchedule>();
+  const BATCH_SIZE = 10;
+  for (let i = 0; i < typedSeasons.length; i += BATCH_SIZE) {
+    const batch = typedSeasons.slice(i, i + BATCH_SIZE);
+    const results = await Promise.all(
+      batch.map(async (season) => {
+        try {
+          const link = await seriesApi.getSeriesSeasonSchedule({ season_id: season.season_id });
+          const data = await fetchLink<RawDetailedSchedule>(link);
+          return [season.season_id, data] as const;
+        } catch {
+          return [season.season_id, null] as const;
+        }
+      }),
+    );
+    for (const [seasonId, data] of results) {
+      if (data) detailedSchedules.set(seasonId, data);
+    }
+    if (i + BATCH_SIZE < typedSeasons.length) {
+      process.stdout.write(`  ${Math.min(i + BATCH_SIZE, typedSeasons.length)}/${typedSeasons.length}\r`);
+    }
+  }
+  console.log(`  Fetched ${detailedSchedules.size} detailed schedules`);
+
   console.log("Transforming data...");
   // Cast to our raw types — the API responses match these shapes
   const series = transformToSeries(
@@ -130,6 +157,7 @@ async function main() {
     rawCars as Parameters<typeof transformToSeries>[2],
     rawCarClasses as Parameters<typeof transformToSeries>[3],
     rawTrackAssets as Parameters<typeof transformToSeries>[4],
+    detailedSchedules,
   );
   console.log(`  Produced ${series.length} series with schedules`);
 

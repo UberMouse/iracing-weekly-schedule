@@ -37,8 +37,18 @@ export interface Series {
   setupType: SetupType;
   isMulticlass: boolean;
   totalWeeks: number;
+  raceTimeMinutes: number | null;
+  isRepeating: boolean;
   cars: Car[];
   scheduleWeeks: WeekSchedule[];
+}
+
+export type EventType = "sprint" | "endurance" | "special";
+
+export function classifyEventType(raceTimeMinutes: number | null, isRepeating: boolean): EventType {
+  if (isRepeating) return "sprint";
+  if (raceTimeMinutes !== null && raceTimeMinutes > 180) return "special";
+  return "endurance";
 }
 
 export interface FilterState {

@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import type { Series, Category, LicenseClass, WeekSchedule } from "../types";
 import TrackMapPopover from "./TrackMapPopover";
+import EventTypeBadge from "./EventTypeBadge";
 
 interface Props {
   series: Series;
@@ -80,6 +81,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
             Multiclass
           </span>
         )}
+        <EventTypeBadge raceTimeMinutes={series.raceTimeMinutes} isRepeating={series.isRepeating} />
       </div>
       <p className="text-xs font-mono text-[var(--color-text-secondary)]">
         {series.cars.map((c) => c.carName).join(" · ")}

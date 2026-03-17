@@ -43,6 +43,8 @@ describe("SeriesBrowser", () => {
       setupType: "fixed" as const,
       isMulticlass: false,
       totalWeeks: 12,
+      raceTimeMinutes: null,
+      isRepeating: true,
       cars: [{ carId: 1, carName: "Test Car" }],
       scheduleWeeks: [],
     });
