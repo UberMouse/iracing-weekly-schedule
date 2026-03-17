@@ -16,7 +16,6 @@ export interface RawSeries {
   series_name: string;
   category_id: number;
   min_license_level: number;
-  fixed_setup: boolean;
   allowed_licenses: {
     group_name: string;
     min_license_level: number;
@@ -61,6 +60,7 @@ export interface RawSeason {
   season_id: number;
   season_year: number;
   season_quarter: number;
+  fixed_setup: boolean;
   car_class_ids: number[];
   schedules: RawSeasonSchedule[];
 }
@@ -345,7 +345,7 @@ export function transformToSeries(
         seriesName: s.series_name,
         category: CATEGORY_MAP[s.category_id] ?? "sports_car",
         licenseClass: mapLicenseClassFromAllowedLicenses(s.allowed_licenses),
-        setupType: s.fixed_setup ? "fixed" : "open",
+        setupType: season.fixed_setup ? "fixed" : "open",
         isMulticlass: season.car_class_ids.length > 1,
         totalWeeks: totalScheduleWeeks,
         raceTimeMinutes,

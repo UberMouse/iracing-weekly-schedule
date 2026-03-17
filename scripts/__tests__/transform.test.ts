@@ -10,7 +10,6 @@ const rawSeries = [
     series_name: "GT3 Sprint",
     category_id: 5,
     min_license_level: 8, // C 4.0 = level 8
-    fixed_setup: false,
     allowed_licenses: [
       { group_name: "Class D", min_license_level: 8, max_license_level: 8 },
       { group_name: "Class C", min_license_level: 9, max_license_level: 12 },
@@ -21,7 +20,6 @@ const rawSeries = [
     series_name: "Rookie Mazda",
     category_id: 5,
     min_license_level: 1,
-    fixed_setup: true,
     allowed_licenses: [
       { group_name: "Rookie", min_license_level: 1, max_license_level: 4 },
     ],
@@ -35,6 +33,7 @@ const rawSeasons = [
     season_id: 4001,
     season_year: 2026,
     season_quarter: 2,
+    fixed_setup: false,
     car_class_ids: [74],
     schedules: [
       {
@@ -68,6 +67,7 @@ const rawSeasons = [
     season_id: 4002,
     season_year: 2026,
     season_quarter: 2,
+    fixed_setup: true,
     car_class_ids: [22],
     schedules: [
       {
@@ -156,7 +156,6 @@ describe("transformToSeries", () => {
         series_name: "A Class Series",
         category_id: 5,
         min_license_level: 1,
-        fixed_setup: false,
         allowed_licenses: [
           { group_name: "Class B", min_license_level: 16, max_license_level: 16 },
           { group_name: "Class A", min_license_level: 17, max_license_level: 20 },
@@ -178,7 +177,6 @@ describe("transformToSeries", () => {
         series_name: "No License Series",
         category_id: 5,
         min_license_level: 1,
-        fixed_setup: false,
         allowed_licenses: [],
       },
     ];
@@ -245,7 +243,6 @@ describe("transformToSeries", () => {
         series_name: "Ghost Series",
         category_id: 1,
         min_license_level: 1,
-        fixed_setup: false,
         allowed_licenses: [],
       },
     ];
@@ -346,6 +343,7 @@ describe("cross-season series", () => {
     season_id: 4001,
     season_year: 2026,
     season_quarter: 2,
+    fixed_setup: false,
     car_class_ids: [74],
     schedules: Array.from({ length: 12 }, (_, i) => ({
       race_week_num: i,
@@ -363,6 +361,7 @@ describe("cross-season series", () => {
     season_id: 5001,
     season_year: 2026,
     season_quarter: 2,
+    fixed_setup: false,
     car_class_ids: [74],
     schedules: Array.from({ length: 17 }, (_, i) => ({
       race_week_num: i,
@@ -425,6 +424,7 @@ describe("cross-season series", () => {
       season_id: 5003,
       season_year: 2026,
       season_quarter: 2,
+      fixed_setup: false,
       car_class_ids: [74],
       schedules: [
         // Season starts 2026-03-17 (Tue), this event is Sat of that same week
@@ -451,6 +451,7 @@ describe("cross-season series", () => {
       season_id: 5002,
       season_year: 2026,
       season_quarter: 2,
+      fixed_setup: false,
       car_class_ids: [74],
       schedules: [
         // Week during season week 1
