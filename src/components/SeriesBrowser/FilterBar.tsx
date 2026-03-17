@@ -35,7 +35,7 @@ export default function FilterBar() {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-4 mb-6">
+    <div className="sticky top-[63px] z-30 flex flex-wrap items-center gap-4 pb-4 mb-2 bg-[var(--color-bg)] pt-4 -mt-4 border-b border-[var(--color-border)]">
       {/* Category pills */}
       <div className="flex gap-1.5">
         {categories.map(({ value, label, color }) => {
