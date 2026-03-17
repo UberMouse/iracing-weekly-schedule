@@ -2,11 +2,11 @@ import { useAppStore } from "../../store/useAppStore";
 import type { Category, LicenseClass, SetupType } from "../../types";
 
 const categories: { value: Category; label: string; color: string }[] = [
-  { value: "oval", label: "Oval", color: "var(--color-cat-oval)" },
-  { value: "dirt_oval", label: "Dirt Oval", color: "var(--color-cat-dirt-oval)" },
-  { value: "dirt_road", label: "Dirt Road", color: "var(--color-cat-dirt-road)" },
   { value: "sports_car", label: "Sports Car", color: "var(--color-cat-sports-car)" },
+  { value: "oval", label: "Oval", color: "var(--color-cat-oval)" },
   { value: "formula", label: "Formula", color: "var(--color-cat-formula)" },
+  { value: "dirt_road", label: "Dirt Road", color: "var(--color-cat-dirt-road)" },
+  { value: "dirt_oval", label: "Dirt Oval", color: "var(--color-cat-dirt-oval)" },
 ];
 
 const licenseClasses: { value: LicenseClass; label: string; color: string }[] = [

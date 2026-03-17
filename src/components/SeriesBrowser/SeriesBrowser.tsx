@@ -4,6 +4,7 @@ import SeriesCard from "../SeriesCard";
 import FilterBar from "./FilterBar";
 
 const LICENSE_ORDER: Record<string, number> = { R: 0, D: 1, C: 2, B: 3, A: 4 };
+const CATEGORY_ORDER: Record<string, number> = { sports_car: 0, oval: 1, formula: 2, dirt_road: 3, dirt_oval: 4 };
 
 export default function SeriesBrowser() {
   const { series, filters, favorites, toggleFavorite } = useAppStore();
@@ -27,6 +28,8 @@ export default function SeriesBrowser() {
       .sort((a, b) => {
         const licDiff = (LICENSE_ORDER[a.licenseClass] ?? 99) - (LICENSE_ORDER[b.licenseClass] ?? 99);
         if (licDiff !== 0) return licDiff;
+        const catDiff = (CATEGORY_ORDER[a.category] ?? 99) - (CATEGORY_ORDER[b.category] ?? 99);
+        if (catDiff !== 0) return catDiff;
         return a.seriesName.localeCompare(b.seriesName);
       });
   }, [series, filters, favorites]);

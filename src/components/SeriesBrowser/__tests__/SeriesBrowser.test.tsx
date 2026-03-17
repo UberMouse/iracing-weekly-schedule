@@ -34,11 +34,11 @@ describe("SeriesBrowser", () => {
     expect(screen.queryByText(series[0].seriesName)).not.toBeInTheDocument();
   });
 
-  it("sorts series by license class then alphabetically", () => {
-    const makeSeries = (name: string, licenseClass: string) => ({
+  it("sorts series by license class, then category, then alphabetically", () => {
+    const makeSeries = (name: string, licenseClass: string, category = "oval" as const) => ({
       seriesId: Math.random(),
       seriesName: name,
-      category: "oval" as const,
+      category,
       licenseClass: licenseClass as "R" | "D" | "C" | "B" | "A",
       setupType: "fixed" as const,
       isMulticlass: false,
@@ -51,12 +51,12 @@ describe("SeriesBrowser", () => {
 
     useAppStore.setState({
       series: [
-        makeSeries("Zebra Series", "B"),
-        makeSeries("Alpha Series", "D"),
-        makeSeries("Omega Series", "R"),
-        makeSeries("Beta Series", "D"),
-        makeSeries("Gamma Series", "A"),
-        makeSeries("Delta Series", "B"),
+        makeSeries("Zebra Series", "B", "formula"),
+        makeSeries("Alpha Series", "D", "oval"),
+        makeSeries("Omega Series", "R", "sports_car"),
+        makeSeries("Beta Series", "D", "sports_car"),
+        makeSeries("Gamma Series", "A", "dirt_road"),
+        makeSeries("Delta Series", "B", "oval"),
       ],
     });
 
@@ -64,12 +64,12 @@ describe("SeriesBrowser", () => {
     const displayed = screen.getAllByTestId("series-card-name").map((el) => el.textContent);
 
     expect(displayed).toEqual([
-      "Omega Series",   // R (lowest license)
-      "Alpha Series",   // D — alphabetically before Beta
-      "Beta Series",    // D
-      "Delta Series",   // B — alphabetically before Zebra
-      "Zebra Series",   // B
-      "Gamma Series",   // A (highest license)
+      "Omega Series",   // R, sports_car
+      "Beta Series",    // D, sports_car — sports_car before oval
+      "Alpha Series",   // D, oval
+      "Delta Series",   // B, oval — oval before formula
+      "Zebra Series",   // B, formula
+      "Gamma Series",   // A, dirt_road
     ]);
   });
 
