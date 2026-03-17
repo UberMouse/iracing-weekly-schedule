@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, beforeEach } from "vitest";
 import SeriesBrowser from "../SeriesBrowser";
 import { useAppStore } from "../../../store/useAppStore";
+import type { Category } from "../../../types";
 
 describe("SeriesBrowser", () => {
   beforeEach(() => {
@@ -35,7 +36,7 @@ describe("SeriesBrowser", () => {
   });
 
   it("sorts series by license class, then category, then alphabetically", () => {
-    const makeSeries = (name: string, licenseClass: string, category = "oval" as const) => ({
+    const makeSeries = (name: string, licenseClass: string, category: Category = "oval") => ({
       seriesId: Math.random(),
       seriesName: name,
       category,
