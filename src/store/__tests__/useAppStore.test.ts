@@ -7,6 +7,7 @@ describe("useAppStore", () => {
     useAppStore.setState({
       favorites: [],
       weeklyPicks: {},
+      modalShowAllSeries: true,
       filters: {
         categories: ["oval", "dirt_oval", "dirt_road", "sports_car", "formula"],
         licenseClasses: ["R", "D", "C", "B", "A"],
@@ -54,6 +55,17 @@ describe("useAppStore", () => {
       useAppStore.getState().setFilters({ searchText: "mazda" });
       expect(useAppStore.getState().filters.searchText).toBe("mazda");
       expect(useAppStore.getState().filters.categories).toEqual(["oval", "dirt_oval", "dirt_road", "sports_car", "formula"]);
+    });
+  });
+
+  describe("modalShowAllSeries", () => {
+    it("defaults to true", () => {
+      expect(useAppStore.getState().modalShowAllSeries).toBe(true);
+    });
+
+    it("updates via setModalShowAllSeries", () => {
+      useAppStore.getState().setModalShowAllSeries(false);
+      expect(useAppStore.getState().modalShowAllSeries).toBe(false);
     });
   });
 

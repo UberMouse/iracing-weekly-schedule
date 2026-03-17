@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { transformToSeries } from "../transform";
-import type { RawTrackAsset } from "../transform";
+import type { RawTrackAsset, RawDetailedSchedule } from "../transform";
 import type { Category } from "../../src/types";
 
 // Minimal fixtures matching iRacing API response shapes
@@ -444,6 +444,70 @@ describe("cross-season series", () => {
     expect(series.scheduleWeeks[1].seasonWeek).toBe(3);
   });
 
+  it("populates per-week cars from detailedSchedules", () => {
+    const detailedSchedules = new Map<number, RawDetailedSchedule>([
+      [5001, {
+        schedules: [
+          {
+            race_week_num: 2,
+            race_week_cars: [
+              { car_id: 50, car_name: "BMW M4 GT3" },
+            ],
+          },
+          {
+            race_week_num: 3,
+            race_week_cars: [
+              { car_id: 51, car_name: "Porsche 911 GT3 R" },
+            ],
+          },
+        ],
+      }],
+    ]);
+    const r = transformToSeries(
+      [...rawSeries, ...crossSeasonSeries],
+      allSeasons,
+      rawCars,
+      rawCarClasses,
+      undefined,
+      detailedSchedules,
+    );
+    const indycar = r.find((s) => s.seriesId === 500)!;
+    // race_week_num 2 maps to season week 1
+    expect(indycar.scheduleWeeks[0].cars).toEqual([{ carId: 50, carName: "BMW M4 GT3" }]);
+    expect(indycar.scheduleWeeks[1].cars).toEqual([{ carId: 51, carName: "Porsche 911 GT3 R" }]);
+  });
+
+  it("leaves week.cars undefined when detailedSchedules has no race_week_cars", () => {
+    const detailedSchedules = new Map<number, RawDetailedSchedule>([
+      [5001, {
+        schedules: [
+          { race_week_num: 2 },
+        ],
+      }],
+    ]);
+    const r = transformToSeries(
+      [...rawSeries, ...crossSeasonSeries],
+      allSeasons,
+      rawCars,
+      rawCarClasses,
+      undefined,
+      detailedSchedules,
+    );
+    const indycar = r.find((s) => s.seriesId === 500)!;
+    expect(indycar.scheduleWeeks[0].cars).toBeUndefined();
+  });
+
+  it("leaves week.cars undefined when no detailedSchedules passed", () => {
+    const r = transformToSeries(
+      [...rawSeries, ...crossSeasonSeries],
+      allSeasons,
+      rawCars,
+      rawCarClasses,
+    );
+    const indycar = r.find((s) => s.seriesId === 500)!;
+    expect(indycar.scheduleWeeks[0].cars).toBeUndefined();
+  });
+
   it("handles series that skip weeks within the season", () => {
     // Series with 17 weeks but only some fall in the season window, with gaps
     const gappySeason = {
@@ -473,5 +537,126 @@ describe("cross-season series", () => {
     expect(series.scheduleWeeks[0].seasonWeek).toBe(1);
     expect(series.scheduleWeeks[1].seasonWeek).toBe(3);
     expect(series.scheduleWeeks[2].seasonWeek).toBe(5);
+  });
+});
+
+describe("resolveSessionMinutes and resolveIsRepeating", () => {
+  const baseSeries = [
+    {
+      series_id: 600,
+      series_name: "Endurance Series",
+      category_id: 5,
+      min_license_level: 1,
+      allowed_licenses: [
+        { group_name: "Rookie", min_license_level: 1, max_license_level: 4 },
+      ],
+    },
+  ];
+
+  const baseSeason = {
+    series_id: 600,
+    season_id: 6001,
+    season_year: 2026,
+    season_quarter: 2,
+    fixed_setup: false,
+    car_class_ids: [74],
+    schedules: [
+      {
+        race_week_num: 0,
+        start_date: "2026-03-17",
+        track: { track_id: 10, track_name: "Spa" },
+      },
+    ],
+  };
+
+  // Include the 12-week ref season so season start is detected
+  const refSeason = {
+    series_id: 230,
+    season_id: 4001,
+    season_year: 2026,
+    season_quarter: 2,
+    fixed_setup: false,
+    car_class_ids: [74],
+    schedules: Array.from({ length: 12 }, (_, i) => ({
+      race_week_num: i,
+      start_date: new Date(2026, 2, 17 + i * 7).toISOString().split("T")[0],
+      track: { track_id: i + 10, track_name: `Track ${i + 1}` },
+    })),
+  };
+
+  it("extracts session_minutes from race_time_descriptors", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{ repeating: false, session_minutes: 240 }],
+        }],
+      }],
+    ]);
+    const r = transformToSeries(
+      [...rawSeries, ...baseSeries],
+      [refSeason, baseSeason],
+      rawCars,
+      rawCarClasses,
+      undefined,
+      detailed,
+    );
+    const series = r.find((s) => s.seriesId === 600)!;
+    expect(series.raceTimeMinutes).toBe(240);
+  });
+
+  it("extracts isRepeating=false from descriptor", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{ repeating: false, session_minutes: 240 }],
+        }],
+      }],
+    ]);
+    const r = transformToSeries(
+      [...rawSeries, ...baseSeries],
+      [refSeason, baseSeason],
+      rawCars,
+      rawCarClasses,
+      undefined,
+      detailed,
+    );
+    const series = r.find((s) => s.seriesId === 600)!;
+    expect(series.isRepeating).toBe(false);
+  });
+
+  it("defaults isRepeating to true and raceTimeMinutes to null without detailed schedule", () => {
+    const r = transformToSeries(
+      [...rawSeries, ...baseSeries],
+      [refSeason, baseSeason],
+      rawCars,
+      rawCarClasses,
+    );
+    const series = r.find((s) => s.seriesId === 600)!;
+    expect(series.isRepeating).toBe(true);
+    expect(series.raceTimeMinutes).toBeNull();
+  });
+
+  it("falls back to race_time_limit when no session_minutes", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_limit: 180,
+          race_time_descriptors: [{ repeating: true, session_minutes: 0 }],
+        }],
+      }],
+    ]);
+    const r = transformToSeries(
+      [...rawSeries, ...baseSeries],
+      [refSeason, baseSeason],
+      rawCars,
+      rawCarClasses,
+      undefined,
+      detailed,
+    );
+    const series = r.find((s) => s.seriesId === 600)!;
+    expect(series.raceTimeMinutes).toBe(180);
   });
 });
