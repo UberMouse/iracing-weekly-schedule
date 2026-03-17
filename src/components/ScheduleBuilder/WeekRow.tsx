@@ -35,12 +35,20 @@ const licenseColors: Record<LicenseClass, string> = {
 };
 
 export default function WeekRow({ week, isCurrentWeek }: Props) {
-  const { series, weeklyPicks, removeWeeklyPick } = useAppStore();
+  const { series, weeklyPicks, weeklyMaybes, removeWeeklyPick, removeWeeklyMaybe, toggleMaybe } = useAppStore();
   const [showModal, setShowModal] = useState(false);
 
   const pickedIds = weeklyPicks[week] ?? [];
-  const pickedSeries = pickedIds
-    .map((id) => series.find((s) => s.seriesId === id))
+  const maybeIds = weeklyMaybes[week] ?? [];
+  const entries: { seriesId: number; isMaybe: boolean }[] = [
+    ...pickedIds.map((id) => ({ seriesId: id, isMaybe: false })),
+    ...maybeIds.map((id) => ({ seriesId: id, isMaybe: true })),
+  ];
+  const pickedSeries = entries
+    .map((e) => {
+      const s = series.find((s) => s.seriesId === e.seriesId);
+      return s ? { ...s, isMaybe: e.isMaybe } : null;
+    })
     .filter(Boolean);
 
   return (
@@ -71,10 +79,21 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
             return (
               <div
                 key={s.seriesId}
-                className="bg-[var(--color-surface-elevated)] rounded-md px-4 py-2.5 text-sm group relative flex flex-col gap-1"
-                style={{ borderLeft: `3px solid ${catColor}` }}
+                className={`bg-[var(--color-surface-elevated)] rounded-md px-4 py-2.5 text-sm group relative flex flex-col gap-1 ${
+                  s.isMaybe ? "opacity-50" : ""
+                }`}
+                style={{
+                  borderLeft: s.isMaybe
+                    ? `3px dashed ${catColor}`
+                    : `3px solid ${catColor}`,
+                }}
               >
-                <div className="font-medium pr-5">{s.seriesName}</div>
+                <div className="font-medium pr-12 flex items-center gap-1.5">
+                  {s.seriesName}
+                  {s.isMaybe && (
+                    <span className="text-[10px] text-gray-500 font-normal uppercase tracking-wide">maybe</span>
+                  )}
+                </div>
                 <div className="flex items-center gap-1.5">
                   <span
                     className="text-xs px-2 py-px rounded-full font-medium"
@@ -106,13 +125,27 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                     {weekTrack.cars.map((c) => c.carName).join(" · ")}
                   </div>
                 )}
-                <button
-                  onClick={() => removeWeeklyPick(week, s.seriesId)}
-                  aria-label="Remove series"
-                  className="absolute top-1.5 right-1.5 text-[var(--color-text-muted)] hover:text-red-400 text-sm opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  ✕
-                </button>
+                <div className="absolute top-1.5 right-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => toggleMaybe(week, s.seriesId)}
+                    aria-label={s.isMaybe ? "Promote to definite" : "Mark as maybe"}
+                    className="text-[var(--color-text-muted)] hover:text-yellow-400 text-sm"
+                    title={s.isMaybe ? "Promote to definite" : "Mark as maybe"}
+                  >
+                    ?
+                  </button>
+                  <button
+                    onClick={() =>
+                      s.isMaybe
+                        ? removeWeeklyMaybe(week, s.seriesId)
+                        : removeWeeklyPick(week, s.seriesId)
+                    }
+                    aria-label="Remove series"
+                    className="text-[var(--color-text-muted)] hover:text-red-400 text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
             );
           })}

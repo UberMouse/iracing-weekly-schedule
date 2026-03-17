@@ -9,6 +9,7 @@ describe("ScheduleBuilder", () => {
     useAppStore.setState({
       favorites: [],
       weeklyPicks: {},
+      weeklyMaybes: {},
     });
   });
 
@@ -41,5 +42,46 @@ describe("ScheduleBuilder", () => {
     const removeBtn = screen.getByRole("button", { name: /remove/i });
     await userEvent.click(removeBtn);
     expect(useAppStore.getState().weeklyPicks[1]).not.toContain(testSeries.seriesId);
+  });
+
+  it("shows maybe series with maybe label", () => {
+    const series = useAppStore.getState().series;
+    const testSeries = series[0];
+    useAppStore.setState({ weeklyMaybes: { 1: [testSeries.seriesId] } });
+    render(<ScheduleBuilder />);
+    expect(screen.getByText(testSeries.seriesName)).toBeInTheDocument();
+    expect(screen.getByText("maybe")).toBeInTheDocument();
+  });
+
+  it("can toggle a pick to maybe", async () => {
+    const series = useAppStore.getState().series;
+    const testSeries = series[0];
+    useAppStore.setState({ weeklyPicks: { 1: [testSeries.seriesId] } });
+    render(<ScheduleBuilder />);
+    const toggleBtn = screen.getByRole("button", { name: /mark as maybe/i });
+    await userEvent.click(toggleBtn);
+    expect(useAppStore.getState().weeklyPicks[1]).not.toContain(testSeries.seriesId);
+    expect(useAppStore.getState().weeklyMaybes[1]).toContain(testSeries.seriesId);
+  });
+
+  it("can toggle a maybe back to definite", async () => {
+    const series = useAppStore.getState().series;
+    const testSeries = series[0];
+    useAppStore.setState({ weeklyMaybes: { 1: [testSeries.seriesId] } });
+    render(<ScheduleBuilder />);
+    const toggleBtn = screen.getByRole("button", { name: /promote to definite/i });
+    await userEvent.click(toggleBtn);
+    expect(useAppStore.getState().weeklyMaybes[1]).not.toContain(testSeries.seriesId);
+    expect(useAppStore.getState().weeklyPicks[1]).toContain(testSeries.seriesId);
+  });
+
+  it("can remove a maybe series", async () => {
+    const series = useAppStore.getState().series;
+    const testSeries = series[0];
+    useAppStore.setState({ weeklyMaybes: { 1: [testSeries.seriesId] } });
+    render(<ScheduleBuilder />);
+    const removeBtn = screen.getByRole("button", { name: /remove/i });
+    await userEvent.click(removeBtn);
+    expect(useAppStore.getState().weeklyMaybes[1]).not.toContain(testSeries.seriesId);
   });
 });
