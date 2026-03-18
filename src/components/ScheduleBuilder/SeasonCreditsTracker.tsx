@@ -25,7 +25,7 @@ export default function SeasonCreditsTracker() {
     <div className="flex flex-col items-end gap-2">
       {expanded && (
         <div
-          className="bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl w-80 max-h-96 overflow-y-auto"
+          className="bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl w-[calc(100vw-2rem)] sm:w-80 max-h-96 overflow-y-auto"
           role="region"
           aria-label="Season credits details"
         >

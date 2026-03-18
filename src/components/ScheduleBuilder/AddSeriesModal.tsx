@@ -101,13 +101,13 @@ export default function AddSeriesModal({ week, onClose }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/60 flex items-end sm:items-center justify-center z-50" onClick={onClose}>
       <div
-        className="bg-gray-900 border border-gray-700 rounded-lg w-full max-w-lg max-h-[70vh] flex flex-col"
+        className="bg-gray-900 border border-gray-700 rounded-t-lg sm:rounded-lg w-full sm:max-w-lg max-h-[85vh] sm:max-h-[70vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-5 border-b border-gray-800">
-          <h3 className="font-semibold text-base mb-3">Add Series — Week {week}</h3>
+        <div className="p-4 sm:p-5 border-b border-gray-800">
+          <h3 className="font-semibold text-sm sm:text-base mb-2.5 sm:mb-3">Add Series — Week {week}</h3>
           <input
             type="text"
             placeholder="Search series..."

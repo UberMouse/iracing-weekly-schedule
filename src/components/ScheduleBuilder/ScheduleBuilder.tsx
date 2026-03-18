@@ -7,7 +7,7 @@ const CURRENT_WEEK = 1; // TODO: derive from season start date
 export default function ScheduleBuilder() {
   return (
     <div>
-      <h2 className="font-display text-xl font-semibold uppercase tracking-widest mb-5">Weekly Schedule</h2>
+      <h2 className="font-display text-lg sm:text-xl font-semibold uppercase tracking-widest mb-3 sm:mb-5">Weekly Schedule</h2>
       <div className="flex flex-col gap-3">
         {Array.from({ length: TOTAL_WEEKS }, (_, i) => i + 1).map((week) => (
           <WeekRow key={week} week={week} isCurrentWeek={week === CURRENT_WEEK} />

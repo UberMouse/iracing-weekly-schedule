@@ -35,16 +35,16 @@ export default function FilterBar() {
   };
 
   return (
-    <div className="sticky top-[63px] z-30 flex flex-wrap items-center gap-4 pb-4 mb-2 bg-[var(--color-bg)] pt-4 -mt-4 border-b border-[var(--color-border)]">
+    <div className="sticky top-[53px] sm:top-[63px] z-30 flex flex-wrap items-center gap-2 sm:gap-4 pb-3 sm:pb-4 mb-2 bg-[var(--color-bg)] pt-3 sm:pt-4 -mt-3 sm:-mt-4 border-b border-[var(--color-border)]">
       {/* Category pills */}
-      <div className="flex gap-1.5">
+      <div className="flex flex-wrap gap-1.5">
         {categories.map(({ value, label, color }) => {
           const active = filters.categories.includes(value);
           return (
             <button
               key={value}
               onClick={() => toggleCategory(value)}
-              className="text-sm px-4 py-2 rounded-full border transition-colors"
+              className="text-xs sm:text-sm px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-colors"
               style={
                 active
                   ? { backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`, borderColor: color, color }
@@ -65,7 +65,7 @@ export default function FilterBar() {
             <button
               key={value}
               onClick={() => toggleLicense(value)}
-              className="text-sm w-9 h-9 rounded-full border font-display font-bold transition-colors"
+              className="text-xs sm:text-sm w-8 h-8 sm:w-9 sm:h-9 rounded-full border font-display font-bold transition-colors"
               style={
                 active
                   ? { backgroundColor: `color-mix(in srgb, ${color} 25%, transparent)`, borderColor: color, color }
@@ -84,7 +84,7 @@ export default function FilterBar() {
         onChange={(e) =>
           setFilters({ setupType: (e.target.value || null) as SetupType | null })
         }
-        className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm text-gray-300"
+        className="bg-gray-800 border border-gray-700 rounded-md px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-gray-300"
       >
         <option value="">All Setups</option>
         <option value="fixed">Fixed</option>
@@ -97,13 +97,13 @@ export default function FilterBar() {
         placeholder="Search series..."
         value={filters.searchText}
         onChange={(e) => setFilters({ searchText: e.target.value })}
-        className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm text-gray-300 placeholder:text-gray-600 w-56"
+        className="bg-gray-800 border border-gray-700 rounded-md px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-gray-300 placeholder:text-gray-600 w-full sm:w-56"
       />
 
       {/* Favorites toggle */}
       <button
         onClick={() => setFilters({ favoritesOnly: !filters.favoritesOnly })}
-        className={`text-sm px-4 py-2 rounded-full border transition-colors ${
+        className={`text-xs sm:text-sm px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-colors ${
           filters.favoritesOnly
             ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/50"
             : "border-gray-700 text-gray-400 hover:border-gray-500"

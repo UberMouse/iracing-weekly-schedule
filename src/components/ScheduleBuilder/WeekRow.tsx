@@ -59,9 +59,9 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
           : "border-[var(--color-border)] bg-[var(--color-surface)]/50"
       }`}
     >
-      <div className="flex items-center gap-5 px-5 py-4">
+      <div className="flex items-center gap-3 sm:gap-5 px-3 sm:px-5 py-3 sm:py-4">
         <div
-          className={`shrink-0 w-24 font-display font-semibold text-base uppercase ${
+          className={`shrink-0 w-16 sm:w-24 font-display font-semibold text-sm sm:text-base uppercase ${
             isCurrentWeek
               ? "text-[var(--color-current-week)]"
               : "text-[var(--color-text-secondary)]"
@@ -70,7 +70,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
           Week {week}
           {isCurrentWeek && <div className="text-xs opacity-70 font-normal">Current</div>}
         </div>
-        <div className="flex-1 flex flex-wrap gap-3 items-center">
+        <div className="flex-1 flex flex-wrap gap-2 sm:gap-3 items-center">
           {pickedSeries.map((s) => {
             if (!s) return null;
             const weekTrack = s.scheduleWeeks.find((w) => w.seasonWeek === week);
@@ -79,7 +79,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
             return (
               <div
                 key={s.seriesId}
-                className={`bg-[var(--color-surface-elevated)] rounded-md px-4 py-2.5 text-sm group relative flex flex-col gap-1 ${
+                className={`bg-[var(--color-surface-elevated)] rounded-md px-3 sm:px-4 py-2 sm:py-2.5 text-sm group relative flex flex-col gap-1 ${
                   s.isMaybe ? "opacity-50" : ""
                 }`}
                 style={{
@@ -125,7 +125,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                     {weekTrack.cars.map((c) => c.carName).join(" · ")}
                   </div>
                 )}
-                <div className="absolute top-1.5 right-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-1.5 right-1.5 flex items-center gap-1 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => toggleMaybe(week, s.seriesId)}
                     aria-label={s.isMaybe ? "Promote to definite" : "Mark as maybe"}
@@ -152,7 +152,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
           <button
             onClick={() => setShowModal(true)}
             aria-label="Add series"
-            className="border border-dashed border-[var(--color-border)] rounded-md px-4 py-2.5 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] hover:border-[var(--color-border-hover)] transition-colors"
+            className="border border-dashed border-[var(--color-border)] rounded-md px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] hover:border-[var(--color-border-hover)] transition-colors"
           >
             + Add Series
           </button>
