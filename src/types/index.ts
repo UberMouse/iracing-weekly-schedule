@@ -52,6 +52,14 @@ export function classifyEventType(raceTimeMinutes: number | null, isRepeating: b
   return "endurance";
 }
 
+export function isCarRotation(series: Series): boolean {
+  return (
+    series.scheduleWeeks.length > 1 &&
+    series.scheduleWeeks.every((w) => w.trackId === series.scheduleWeeks[0].trackId) &&
+    series.scheduleWeeks.some((w) => w.cars && w.cars.length > 0)
+  );
+}
+
 export interface FilterState {
   categories: Category[];
   licenseClasses: LicenseClass[];

@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { isCarRotation } from "../types";
 import type { Series, Category, LicenseClass, WeekSchedule } from "../types";
 import TrackMapPopover from "./TrackMapPopover";
 import EventTypeBadge from "./EventTypeBadge";
@@ -37,12 +38,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
   const catColor = categoryColors[series.category];
   const licColor = licenseColors[series.licenseClass];
 
-  // Detect same-track series (e.g. Ring Meister) where every week uses the same track
-  const isSameTrack =
-    series.scheduleWeeks.length > 1 &&
-    series.scheduleWeeks.every((w) => w.trackId === series.scheduleWeeks[0].trackId);
-  const hasPerWeekCars = series.scheduleWeeks.some((w) => w.cars && w.cars.length > 0);
-  const isCarRotation = isSameTrack && hasPerWeekCars;
+  const carRotation = isCarRotation(series);
 
   return (
     <motion.div
@@ -90,7 +86,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
         )}
         <EventTypeBadge raceTimeMinutes={series.raceTimeMinutes} isRepeating={series.isRepeating} />
       </div>
-      {isCarRotation ? (
+      {carRotation ? (
         <p className="text-xs font-mono text-[var(--color-text-secondary)]">
           <TrackMapPopover week={series.scheduleWeeks[0]}>
             <span className="cursor-default">
@@ -108,7 +104,7 @@ export default function SeriesCard({ series, isFavorite, onToggleFavorite }: Pro
         {series.scheduleWeeks.map((w) => (
           <div key={w.weekNumber} className="flex gap-2 text-xs leading-snug items-center">
             <span className="font-mono text-[var(--color-text-muted)] shrink-0 w-7 text-right">W{w.weekNumber}</span>
-            {isCarRotation && w.cars ? (
+            {carRotation && w.cars ? (
               <span className="font-mono text-[var(--color-text-secondary)]">
                 {w.cars.map((c) => c.carName).join(" · ")}
               </span>

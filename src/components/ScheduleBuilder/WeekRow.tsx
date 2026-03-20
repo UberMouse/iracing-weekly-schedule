@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
 import TrackMapPopover from "../TrackMapPopover";
+import { isCarRotation } from "../../types";
 import type { Category, LicenseClass, WeekSchedule } from "../../types";
 import EventTypeBadge from "../EventTypeBadge";
 
@@ -109,7 +110,11 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                   </span>
                   <EventTypeBadge raceTimeMinutes={s.raceTimeMinutes} isRepeating={s.isRepeating} compact />
                 </div>
-                {weekTrack && (
+                {weekTrack && isCarRotation(s) && weekTrack.cars && weekTrack.cars.length > 0 ? (
+                  <div className="text-xs text-[var(--color-text-secondary)] font-mono">
+                    {weekTrack.cars.map((c) => c.carName).join(" · ")}
+                  </div>
+                ) : weekTrack ? (
                   <div className="text-xs text-[var(--color-text-secondary)] font-mono flex items-center gap-1.5">
                     <TrackMapPopover week={weekTrack}>
                       <span className="cursor-default">
@@ -119,12 +124,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
                     </TrackMapPopover>
                     <RainBadge week={weekTrack} />
                   </div>
-                )}
-                {weekTrack?.cars && weekTrack.cars.length > 0 && (
-                  <div className="text-xs text-[var(--color-text-muted)] font-mono">
-                    {weekTrack.cars.map((c) => c.carName).join(" · ")}
-                  </div>
-                )}
+                ) : null}
                 <div className="absolute top-1.5 right-1.5 flex items-center gap-1 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => toggleMaybe(week, s.seriesId)}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
+import { isCarRotation } from "../../types";
 import type { Series } from "../../types";
 import EventTypeBadge from "../EventTypeBadge";
 
@@ -34,7 +35,11 @@ function SeriesRow({
           {series.seriesName}
           <EventTypeBadge raceTimeMinutes={series.raceTimeMinutes} isRepeating={series.isRepeating} compact />
         </div>
-        {weekTrack && (
+        {weekTrack && isCarRotation(series) && weekTrack.cars && weekTrack.cars.length > 0 ? (
+          <div className="text-xs text-gray-500 font-mono">
+            {weekTrack.cars.map((c) => c.carName).join(" · ")}
+          </div>
+        ) : weekTrack ? (
           <div className="text-xs text-gray-500 flex items-center gap-1.5">
             <span>
               {weekTrack.trackName}
@@ -44,7 +49,7 @@ function SeriesRow({
               <span className="text-sky-400">🌧{weekTrack.rainChance}%</span>
             )}
           </div>
-        )}
+        ) : null}
       </div>
       {onAddAll && (
         <button
