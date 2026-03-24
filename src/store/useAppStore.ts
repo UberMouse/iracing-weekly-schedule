@@ -4,6 +4,7 @@ import type { Series, FilterState } from "../types";
 import seasonData from "../data/season.json";
 
 interface AppStore {
+  seasonStartDate: string;
   series: Series[];
   favorites: number[];
   toggleFavorite: (seriesId: number) => void;
@@ -25,7 +26,8 @@ interface AppStore {
 export const useAppStore = create<AppStore>()(
   persist(
     (set, get) => ({
-      series: seasonData as Series[],
+      seasonStartDate: (seasonData as { seasonStartDate: string }).seasonStartDate,
+      series: (seasonData as { series: Series[] }).series,
       favorites: [],
       toggleFavorite: (seriesId) =>
         set((state) => ({

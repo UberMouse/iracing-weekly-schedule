@@ -262,7 +262,7 @@ export function transformToSeries(
   rawCarClasses: RawCarClass[],
   trackAssets?: Record<string, RawTrackAsset>,
   detailedSchedules?: Map<number, RawDetailedSchedule>,
-): Series[] {
+): { seasonStartDate: string; series: Series[] } {
   const carMap = new Map(rawCars.map((c) => [c.car_id, c]));
   const carClassMap = new Map(
     rawCarClasses.map((cc) => [cc.car_class_id, cc]),
@@ -272,7 +272,7 @@ export function transformToSeries(
   );
   const seasonStart = findSeasonStartDate(rawSeasons);
 
-  return rawSeries
+  const series = rawSeries
     .filter((s) => seasonBySeriesId.has(s.series_id))
     .map((s) => {
       const season = seasonBySeriesId.get(s.series_id)!;
@@ -354,4 +354,6 @@ export function transformToSeries(
         scheduleWeeks,
       } satisfies Series;
     });
+
+  return { seasonStartDate: seasonStart.toISOString(), series };
 }

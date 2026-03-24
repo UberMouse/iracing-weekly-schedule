@@ -61,20 +61,20 @@ describe("WeekRow", () => {
 
   it("shows car name instead of track for car-rotation series", () => {
     useAppStore.setState({ weeklyPicks: { 1: [carRotationSeries.seriesId] } });
-    render(<WeekRow week={1} isCurrentWeek={false} />);
+    render(<WeekRow week={1} isCurrentWeek={false} seasonStartDate="2026-03-10T00:00:00.000Z" />);
     expect(screen.getByText("BMW M4 GT4")).toBeInTheDocument();
     expect(screen.queryByText("Nürburgring Combined")).not.toBeInTheDocument();
   });
 
   it("shows track name for normal series", () => {
     useAppStore.setState({ weeklyPicks: { 1: [normalSeries.seriesId] } });
-    render(<WeekRow week={1} isCurrentWeek={false} />);
+    render(<WeekRow week={1} isCurrentWeek={false} seasonStartDate="2026-03-10T00:00:00.000Z" />);
     expect(screen.getByText("Spa")).toBeInTheDocument();
   });
 
   it("shows correct car per week for car-rotation series", () => {
     useAppStore.setState({ weeklyPicks: { 2: [carRotationSeries.seriesId] } });
-    render(<WeekRow week={2} isCurrentWeek={false} />);
+    render(<WeekRow week={2} isCurrentWeek={false} seasonStartDate="2026-03-10T00:00:00.000Z" />);
     expect(screen.getByText("Porsche Cayman")).toBeInTheDocument();
     expect(screen.queryByText("BMW M4 GT4")).not.toBeInTheDocument();
   });

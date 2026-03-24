@@ -9,6 +9,15 @@ import EventTypeBadge from "../EventTypeBadge";
 interface Props {
   week: number;
   isCurrentWeek: boolean;
+  seasonStartDate: string;
+}
+
+const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+
+function formatWeekStartDate(seasonStartDate: string, week: number): string {
+  const start = new Date(seasonStartDate).getTime();
+  const weekStart = new Date(start + (week - 1) * MS_PER_WEEK);
+  return weekStart.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
 const categoryColors: Record<Category, string> = {
@@ -35,7 +44,7 @@ const licenseColors: Record<LicenseClass, string> = {
   A: "var(--color-lic-A)",
 };
 
-export default function WeekRow({ week, isCurrentWeek }: Props) {
+export default function WeekRow({ week, isCurrentWeek, seasonStartDate }: Props) {
   const { series, weeklyPicks, weeklyMaybes, removeWeeklyPick, removeWeeklyMaybe, toggleMaybe } = useAppStore();
   const [showModal, setShowModal] = useState(false);
 
@@ -69,6 +78,7 @@ export default function WeekRow({ week, isCurrentWeek }: Props) {
           }`}
         >
           Week {week}
+          <div className="text-xs opacity-70 font-normal">{formatWeekStartDate(seasonStartDate, week)}</div>
           {isCurrentWeek && <div className="text-xs opacity-70 font-normal">Current</div>}
         </div>
         <div className="flex-1 flex flex-wrap gap-2 sm:gap-3 items-center">

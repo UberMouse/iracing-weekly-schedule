@@ -151,7 +151,7 @@ async function main() {
 
   console.log("Transforming data...");
   // Cast to our raw types — the API responses match these shapes
-  const series = transformToSeries(
+  const result = transformToSeries(
     rawSeries as Parameters<typeof transformToSeries>[0],
     rawSeasons as Parameters<typeof transformToSeries>[1],
     rawCars as Parameters<typeof transformToSeries>[2],
@@ -159,11 +159,12 @@ async function main() {
     rawTrackAssets as Parameters<typeof transformToSeries>[4],
     detailedSchedules,
   );
-  console.log(`  Produced ${series.length} series with schedules`);
+  console.log(`  Produced ${result.series.length} series with schedules`);
+  console.log(`  Season start date: ${result.seasonStartDate}`);
 
   // Write output
   mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
-  writeFileSync(OUTPUT_PATH, JSON.stringify(series, null, 2));
+  writeFileSync(OUTPUT_PATH, JSON.stringify(result, null, 2));
   console.log(`Written to ${OUTPUT_PATH}`);
 }
 

@@ -121,7 +121,7 @@ const trackAssets: Record<string, RawTrackAsset> = {
 };
 
 describe("transformToSeries", () => {
-  const result = transformToSeries(
+  const { series: result } = transformToSeries(
     rawSeries,
     rawSeasons,
     rawCars,
@@ -166,7 +166,7 @@ describe("transformToSeries", () => {
     const aSeason = [
       { ...rawSeasons[0], series_id: 300 },
     ];
-    const r = transformToSeries(aClassSeries, aSeason, rawCars, rawCarClasses);
+    const { series: r } = transformToSeries(aClassSeries, aSeason, rawCars, rawCarClasses);
     expect(r[0].licenseClass).toBe("A");
   });
 
@@ -183,7 +183,7 @@ describe("transformToSeries", () => {
     const emptySeason = [
       { ...rawSeasons[0], series_id: 400 },
     ];
-    const r = transformToSeries(emptyLicenseSeries, emptySeason, rawCars, rawCarClasses);
+    const { series: r } = transformToSeries(emptyLicenseSeries, emptySeason, rawCars, rawCarClasses);
     expect(r[0].licenseClass).toBe("R");
   });
 
@@ -226,7 +226,7 @@ describe("transformToSeries", () => {
         car_class_ids: [74, 22],
       },
     ];
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [rawSeries[0]],
       multiclassSeason,
       rawCars,
@@ -246,7 +246,7 @@ describe("transformToSeries", () => {
         allowed_licenses: [],
       },
     ];
-    const r = transformToSeries(withExtra, rawSeasons, rawCars, rawCarClasses);
+    const { series: r } = transformToSeries(withExtra, rawSeasons, rawCars, rawCarClasses);
     expect(r.find((s) => s.seriesId === 999)).toBeUndefined();
   });
 
@@ -313,7 +313,7 @@ describe("transformToSeries", () => {
   });
 
   it("works without track assets parameter", () => {
-    const r = transformToSeries(rawSeries, rawSeasons, rawCars, rawCarClasses);
+    const { series: r } = transformToSeries(rawSeries, rawSeasons, rawCars, rawCarClasses);
     const gt3 = r.find((s) => s.seriesId === 230)!;
     expect(gt3.scheduleWeeks[0].trackMapUrl).toBeUndefined();
     expect(gt3.scheduleWeeks[0].rainChance).toBe(30);
@@ -373,7 +373,7 @@ describe("cross-season series", () => {
   const allSeasons = [refSeason, indycarSeason];
 
   it("filters cross-season series to only current season weeks", () => {
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...crossSeasonSeries],
       allSeasons,
       rawCars,
@@ -385,7 +385,7 @@ describe("cross-season series", () => {
   });
 
   it("maps cross-season series weeks to correct season weeks", () => {
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...crossSeasonSeries],
       allSeasons,
       rawCars,
@@ -407,7 +407,7 @@ describe("cross-season series", () => {
   });
 
   it("preserves totalWeeks as the full series schedule length", () => {
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...crossSeasonSeries],
       allSeasons,
       rawCars,
@@ -433,7 +433,7 @@ describe("cross-season series", () => {
         { race_week_num: 1, start_date: "2026-04-04", track: { track_id: 400, track_name: "Nürburgring Combined" } },
       ],
     };
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       crossSeasonSeries,
       [refSeason, enduranceSeason],
       rawCars,
@@ -463,7 +463,7 @@ describe("cross-season series", () => {
         ],
       }],
     ]);
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...crossSeasonSeries],
       allSeasons,
       rawCars,
@@ -485,7 +485,7 @@ describe("cross-season series", () => {
         ],
       }],
     ]);
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...crossSeasonSeries],
       allSeasons,
       rawCars,
@@ -498,7 +498,7 @@ describe("cross-season series", () => {
   });
 
   it("leaves week.cars undefined when no detailedSchedules passed", () => {
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...crossSeasonSeries],
       allSeasons,
       rawCars,
@@ -526,7 +526,7 @@ describe("cross-season series", () => {
         { race_week_num: 2, start_date: "2026-04-14", track: { track_id: 302, track_name: "Track C" } },
       ],
     };
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       crossSeasonSeries,
       [refSeason, gappySeason],
       rawCars,
@@ -593,7 +593,7 @@ describe("resolveSessionMinutes and resolveIsRepeating", () => {
         }],
       }],
     ]);
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...baseSeries],
       [refSeason, baseSeason],
       rawCars,
@@ -614,7 +614,7 @@ describe("resolveSessionMinutes and resolveIsRepeating", () => {
         }],
       }],
     ]);
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...baseSeries],
       [refSeason, baseSeason],
       rawCars,
@@ -627,7 +627,7 @@ describe("resolveSessionMinutes and resolveIsRepeating", () => {
   });
 
   it("defaults isRepeating to true and raceTimeMinutes to null without detailed schedule", () => {
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...baseSeries],
       [refSeason, baseSeason],
       rawCars,
@@ -648,7 +648,7 @@ describe("resolveSessionMinutes and resolveIsRepeating", () => {
         }],
       }],
     ]);
-    const r = transformToSeries(
+    const { series: r } = transformToSeries(
       [...rawSeries, ...baseSeries],
       [refSeason, baseSeason],
       rawCars,
