@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useAppStore } from "../../store/useAppStore";
+import { useAppStore, useCurrentSeries } from "../../store/useAppStore";
 import SeriesCard from "../SeriesCard";
 import FilterBar from "./FilterBar";
 
@@ -7,7 +7,10 @@ const LICENSE_ORDER: Record<string, number> = { R: 0, D: 1, C: 2, B: 3, A: 4 };
 const CATEGORY_ORDER: Record<string, number> = { sports_car: 0, oval: 1, formula: 2, dirt_road: 3, dirt_oval: 4 };
 
 export default function SeriesBrowser() {
-  const { series, filters, favorites, toggleFavorite } = useAppStore();
+  const series = useCurrentSeries();
+  const filters = useAppStore((s) => s.filters);
+  const favorites = useAppStore((s) => s.favorites);
+  const toggleFavorite = useAppStore((s) => s.toggleFavorite);
 
   const filtered = useMemo(() => {
     return series

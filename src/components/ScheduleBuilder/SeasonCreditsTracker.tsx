@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useAppStore } from "../../store/useAppStore";
 import { useSeasonCredits } from "../../hooks/useSeasonCredits";
-import type { LicenseClass } from "../../types";
+import type { LicenseClass, Series } from "../../types";
 
 const licenseColors: Record<LicenseClass, string> = {
   R: "var(--color-lic-R)",
@@ -11,9 +10,13 @@ const licenseColors: Record<LicenseClass, string> = {
   A: "var(--color-lic-A)",
 };
 
-export default function SeasonCreditsTracker() {
+interface Props {
+  weeklyPicks: Record<number, number[]>;
+  series: Series[];
+}
+
+export default function SeasonCreditsTracker({ weeklyPicks, series }: Props) {
   const [expanded, setExpanded] = useState(false);
-  const { weeklyPicks, series } = useAppStore();
   const credits = useSeasonCredits(weeklyPicks, series);
 
   const hasAnySeries = credits.qualifiedSeries.length > 0 || credits.inProgressSeries.length > 0;

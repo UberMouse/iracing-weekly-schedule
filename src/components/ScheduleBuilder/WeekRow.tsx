@@ -3,13 +3,17 @@ import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
 import TrackMapPopover from "../TrackMapPopover";
 import { isCarRotation } from "../../types";
-import type { Category, LicenseClass, WeekSchedule } from "../../types";
+import type { Category, LicenseClass, WeekSchedule, Series } from "../../types";
 import EventTypeBadge from "../EventTypeBadge";
 
 interface Props {
   week: number;
   isCurrentWeek: boolean;
   seasonStartDate: string;
+  series: Series[];
+  weeklyPicks: Record<number, number[]>;
+  weeklyMaybes: Record<number, number[]>;
+  readOnly?: boolean;
 }
 
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
@@ -44,8 +48,16 @@ const licenseColors: Record<LicenseClass, string> = {
   A: "var(--color-lic-A)",
 };
 
-export default function WeekRow({ week, isCurrentWeek, seasonStartDate }: Props) {
-  const { series, weeklyPicks, weeklyMaybes, removeWeeklyPick, removeWeeklyMaybe, toggleMaybe } = useAppStore();
+export default function WeekRow({
+  week,
+  isCurrentWeek,
+  seasonStartDate,
+  series,
+  weeklyPicks,
+  weeklyMaybes,
+  readOnly = false,
+}: Props) {
+  const { removeWeeklyPick, removeWeeklyMaybe, toggleMaybe } = useAppStore();
   const [showModal, setShowModal] = useState(false);
 
   const pickedIds = weeklyPicks[week] ?? [];
@@ -135,40 +147,52 @@ export default function WeekRow({ week, isCurrentWeek, seasonStartDate }: Props)
                     <RainBadge week={weekTrack} />
                   </div>
                 ) : null}
-                <div className="absolute top-1.5 right-1.5 flex items-center gap-1 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={() => toggleMaybe(week, s.seriesId)}
-                    aria-label={s.isMaybe ? "Promote to definite" : "Mark as maybe"}
-                    className="text-[var(--color-text-muted)] hover:text-yellow-400 text-sm"
-                    title={s.isMaybe ? "Promote to definite" : "Mark as maybe"}
-                  >
-                    ?
-                  </button>
-                  <button
-                    onClick={() =>
-                      s.isMaybe
-                        ? removeWeeklyMaybe(week, s.seriesId)
-                        : removeWeeklyPick(week, s.seriesId)
-                    }
-                    aria-label="Remove series"
-                    className="text-[var(--color-text-muted)] hover:text-red-400 text-sm"
-                  >
-                    ✕
-                  </button>
-                </div>
+                {!readOnly && (
+                  <div className="absolute top-1.5 right-1.5 flex items-center gap-1 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() => toggleMaybe(week, s.seriesId)}
+                      aria-label={s.isMaybe ? "Promote to definite" : "Mark as maybe"}
+                      className="text-[var(--color-text-muted)] hover:text-yellow-400 text-sm"
+                      title={s.isMaybe ? "Promote to definite" : "Mark as maybe"}
+                    >
+                      ?
+                    </button>
+                    <button
+                      onClick={() =>
+                        s.isMaybe
+                          ? removeWeeklyMaybe(week, s.seriesId)
+                          : removeWeeklyPick(week, s.seriesId)
+                      }
+                      aria-label="Remove series"
+                      className="text-[var(--color-text-muted)] hover:text-red-400 text-sm"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
-          <button
-            onClick={() => setShowModal(true)}
-            aria-label="Add series"
-            className="border border-dashed border-[var(--color-border)] rounded-md px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] hover:border-[var(--color-border-hover)] transition-colors"
-          >
-            + Add Series
-          </button>
+          {!readOnly && (
+            <button
+              onClick={() => setShowModal(true)}
+              aria-label="Add series"
+              className="border border-dashed border-[var(--color-border)] rounded-md px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] hover:border-[var(--color-border-hover)] transition-colors"
+            >
+              + Add Series
+            </button>
+          )}
         </div>
       </div>
-      {showModal && <AddSeriesModal week={week} onClose={() => setShowModal(false)} />}
+      {!readOnly && showModal && (
+        <AddSeriesModal
+          week={week}
+          series={series}
+          weeklyPicks={weeklyPicks}
+          weeklyMaybes={weeklyMaybes}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 }

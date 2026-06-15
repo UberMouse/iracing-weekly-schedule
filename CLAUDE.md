@@ -19,21 +19,22 @@ Run a single test file: `npx vitest run src/components/__tests__/SeriesCard.test
 
 ## Architecture
 
-Static SPA that fetches iRacing schedule data at build time and bundles it as JSON. No backend.
+Static SPA that fetches iRacing schedule data and serves it as static JSON blobs from `public/seasons/`. No backend.
 
-### Data Pipeline (build time)
+### Data Pipeline (fetch time — run locally, committed)
 
 1. `scripts/fetch-schedule.ts` — Authenticates via iRacing OAuth2 (Password Limited Flow), fetches series/seasons/cars/tracks from the iRacing Data API
-2. `scripts/transform.ts` — Normalizes API responses into the app's `Series` type, writes `src/data/season.json`
-3. Vite bundles `season.json` into the static site, deployed to GitHub Pages
+2. `scripts/transform.ts` — Normalizes API responses into the app's `Series` type; derives `seasonId`/`seasonName` (`<year>-S<quarter>`) from the season's year/quarter
+3. `scripts/season-files.ts` (`writeSeasonFiles`) — writes the per-season archive `public/seasons/<id>.json` (immutable; never overwrites prior seasons) and rebuilds `public/seasons/current-season.json` (`{ currentSeasonId, availableSeasons, season }`) by scanning the directory
 
-OAuth2 credentials come from `.env` (see `.env.example`), injected via 1Password CLI (`op run`) locally or GitHub Actions secrets in CI.
+`npm run fetch-data` / `build:prod` are run **locally** (creds injected via 1Password `op run`); the resulting `public/seasons/` files are **committed to git**, which is what keeps past-season archives durable. CI only builds and deploys committed data (it does not fetch).
 
 ### Frontend
 
 - **React 19 + TypeScript** with Vite 7, Tailwind CSS 4, Zustand 5, React Router v7, Motion.js
-- Two-page SPA: `/series` (browse/filter series) and `/schedule` (build weekly plan)
-- Zustand store (`src/store/useAppStore.ts`) with `persist` middleware — favorites, weekly picks, and filter state survive in localStorage; series data is ephemeral
+- Two-page SPA: `/series` (browse/filter the current season) and `/schedule` (build/view weekly plan, with a season switcher)
+- Season data is fetched at runtime: `useAppStore.loadSeasons()` fetches `current-season.json` (cache-busted with `?v=__BUILD_VERSION__`); past seasons are lazy-fetched per `<id>.json` when selected in the switcher. The app shows a loading gate until the current season resolves.
+- Zustand store (`src/store/useAppStore.ts`) with `persist` middleware — favorites, **per-season** picks (`seasonPicks` keyed by season id), and filter state survive in localStorage; fetched season data is ephemeral. A `migrate` (v0→v1) folds legacy flat picks into `seasonPicks["2026-S2"]`. Past seasons render read-only; only the current season is editable.
 
 ### Key Domain Types (`src/types/index.ts`)
 
@@ -61,4 +62,4 @@ The transform (`scripts/transform.ts`) handles several non-obvious mappings:
 
 ## Deployment
 
-GitHub Actions (`.github/workflows/deploy.yml`): push to main, manual dispatch, or quarterly cron triggers `npm run build:prod` then deploys to GitHub Pages. Base path: `/iracing-weekly-schedule/`.
+GitHub Actions (`.github/workflows/deploy.yml`): push to main, manual dispatch, or quarterly cron runs `npm run build` (no data fetch) then deploys committed files (including `public/seasons/`) to GitHub Pages. Base path: `/iracing-weekly-schedule/`. To publish a new season: run `npm run fetch-data` locally, commit the new `public/seasons/` files, and push.

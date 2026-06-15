@@ -6,6 +6,9 @@ import EventTypeBadge from "../EventTypeBadge";
 
 interface Props {
   week: number;
+  series: Series[];
+  weeklyPicks: Record<number, number[]>;
+  weeklyMaybes: Record<number, number[]>;
   onClose: () => void;
 }
 
@@ -67,8 +70,8 @@ function SeriesRow({
   );
 }
 
-export default function AddSeriesModal({ week, onClose }: Props) {
-  const { series, favorites, weeklyPicks, weeklyMaybes, addWeeklyPick, addSeriesToAllWeeks, modalShowAllSeries, setModalShowAllSeries } =
+export default function AddSeriesModal({ week, series, weeklyPicks, weeklyMaybes, onClose }: Props) {
+  const { favorites, addWeeklyPick, addSeriesToAllWeeks, modalShowAllSeries, setModalShowAllSeries } =
     useAppStore();
   const [search, setSearch] = useState("");
 

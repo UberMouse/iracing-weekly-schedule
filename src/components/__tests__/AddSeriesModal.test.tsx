@@ -49,30 +49,32 @@ const normalSeries: Series = {
   ],
 };
 
+const allSeries = [carRotationSeries, normalSeries];
+
+function renderModal(week: number) {
+  return render(
+    <AddSeriesModal week={week} series={allSeries} weeklyPicks={{}} weeklyMaybes={{}} onClose={() => {}} />,
+  );
+}
+
 describe("AddSeriesModal", () => {
   beforeEach(() => {
-    useAppStore.setState({
-      series: [carRotationSeries, normalSeries],
-      weeklyPicks: {},
-      weeklyMaybes: {},
-      favorites: [],
-      modalShowAllSeries: true,
-    });
+    useAppStore.setState({ favorites: [], modalShowAllSeries: true });
   });
 
   it("shows car name instead of track for car-rotation series", () => {
-    render(<AddSeriesModal week={1} onClose={() => {}} />);
+    renderModal(1);
     expect(screen.getByText("BMW M4 GT4")).toBeInTheDocument();
     expect(screen.queryByText("Nürburgring Combined")).not.toBeInTheDocument();
   });
 
   it("shows track name for normal series", () => {
-    render(<AddSeriesModal week={1} onClose={() => {}} />);
+    renderModal(1);
     expect(screen.getByText("Spa")).toBeInTheDocument();
   });
 
   it("shows correct car for week 2 of car-rotation series", () => {
-    render(<AddSeriesModal week={2} onClose={() => {}} />);
+    renderModal(2);
     expect(screen.getByText("Porsche Cayman")).toBeInTheDocument();
     expect(screen.queryByText("BMW M4 GT4")).not.toBeInTheDocument();
   });

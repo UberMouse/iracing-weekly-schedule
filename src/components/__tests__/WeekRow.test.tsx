@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import WeekRow from "../ScheduleBuilder/WeekRow";
-import { useAppStore } from "../../store/useAppStore";
 import type { Series } from "../../types";
 
 const carRotationSeries: Series = {
@@ -49,33 +48,66 @@ const normalSeries: Series = {
   ],
 };
 
-describe("WeekRow", () => {
-  beforeEach(() => {
-    useAppStore.setState({
-      series: [carRotationSeries, normalSeries],
-      weeklyPicks: {},
-      weeklyMaybes: {},
-      favorites: [],
-    });
-  });
+const allSeries = [carRotationSeries, normalSeries];
 
+describe("WeekRow", () => {
   it("shows car name instead of track for car-rotation series", () => {
-    useAppStore.setState({ weeklyPicks: { 1: [carRotationSeries.seriesId] } });
-    render(<WeekRow week={1} isCurrentWeek={false} seasonStartDate="2026-03-10T00:00:00.000Z" />);
+    render(
+      <WeekRow
+        week={1}
+        isCurrentWeek={false}
+        seasonStartDate="2026-03-10T00:00:00.000Z"
+        series={allSeries}
+        weeklyPicks={{ 1: [carRotationSeries.seriesId] }}
+        weeklyMaybes={{}}
+      />,
+    );
     expect(screen.getByText("BMW M4 GT4")).toBeInTheDocument();
     expect(screen.queryByText("Nürburgring Combined")).not.toBeInTheDocument();
   });
 
   it("shows track name for normal series", () => {
-    useAppStore.setState({ weeklyPicks: { 1: [normalSeries.seriesId] } });
-    render(<WeekRow week={1} isCurrentWeek={false} seasonStartDate="2026-03-10T00:00:00.000Z" />);
+    render(
+      <WeekRow
+        week={1}
+        isCurrentWeek={false}
+        seasonStartDate="2026-03-10T00:00:00.000Z"
+        series={allSeries}
+        weeklyPicks={{ 1: [normalSeries.seriesId] }}
+        weeklyMaybes={{}}
+      />,
+    );
     expect(screen.getByText("Spa")).toBeInTheDocument();
   });
 
   it("shows correct car per week for car-rotation series", () => {
-    useAppStore.setState({ weeklyPicks: { 2: [carRotationSeries.seriesId] } });
-    render(<WeekRow week={2} isCurrentWeek={false} seasonStartDate="2026-03-10T00:00:00.000Z" />);
+    render(
+      <WeekRow
+        week={2}
+        isCurrentWeek={false}
+        seasonStartDate="2026-03-10T00:00:00.000Z"
+        series={allSeries}
+        weeklyPicks={{ 2: [carRotationSeries.seriesId] }}
+        weeklyMaybes={{}}
+      />,
+    );
     expect(screen.getByText("Porsche Cayman")).toBeInTheDocument();
     expect(screen.queryByText("BMW M4 GT4")).not.toBeInTheDocument();
+  });
+
+  it("hides add/remove controls when read-only", () => {
+    render(
+      <WeekRow
+        week={1}
+        isCurrentWeek={false}
+        seasonStartDate="2026-03-10T00:00:00.000Z"
+        series={allSeries}
+        weeklyPicks={{ 1: [normalSeries.seriesId] }}
+        weeklyMaybes={{}}
+        readOnly
+      />,
+    );
+    expect(screen.queryByRole("button", { name: /add series/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /remove series/i })).not.toBeInTheDocument();
   });
 });

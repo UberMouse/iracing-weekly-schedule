@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -28,8 +27,6 @@ const PASSWORD = required("IRACING_PASSWORD");
 
 // Per-season archives + current-season.json, served as static blobs by GitHub Pages.
 const SEASONS_DIR = resolve(__dirname, "../public/seasons");
-// Legacy bundled copy still imported by the app until the Chunk B store refactor.
-const LEGACY_OUTPUT_PATH = resolve(__dirname, "../src/data/season.json");
 
 // --- Auth ---
 // iRacing requires both client_secret and password to be SHA-256 hashed before sending.
@@ -171,13 +168,6 @@ async function main() {
   console.log(
     `Wrote ${SEASONS_DIR}/${result.seasonId}.json and current-season.json ` +
       `(${current.availableSeasons.length} season(s) available)`,
-  );
-
-  // Legacy bundled copy — removed once the Chunk B store refactor fetches at runtime.
-  mkdirSync(dirname(LEGACY_OUTPUT_PATH), { recursive: true });
-  writeFileSync(
-    LEGACY_OUTPUT_PATH,
-    JSON.stringify({ seasonStartDate: result.seasonStartDate, series: result.series }, null, 2),
   );
 }
 

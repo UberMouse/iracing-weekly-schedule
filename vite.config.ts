@@ -4,11 +4,13 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
+// Unique per build: short git SHA + timestamp. Drives both the stale-cache
+// reload check and the ?v= cache-bust on the mutable current-season.json fetch.
+const BUILD_VERSION =
+  execSync("git rev-parse --short HEAD").toString().trim() + "-" + Date.now();
+
 function versionCheckPlugin(): Plugin {
-  const buildVersion =
-    execSync("git rev-parse --short HEAD").toString().trim() +
-    "-" +
-    Date.now();
+  const buildVersion = BUILD_VERSION;
   let basePath = "/";
 
   return {
@@ -58,6 +60,9 @@ function versionCheckPlugin(): Plugin {
 
 export default defineConfig({
   base: "/iracing-weekly-schedule/",
+  define: {
+    __BUILD_VERSION__: JSON.stringify(BUILD_VERSION),
+  },
   plugins: [versionCheckPlugin(), react(), tailwindcss()],
   test: {
     globals: true,

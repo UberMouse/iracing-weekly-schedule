@@ -5,7 +5,7 @@ import { useAppStore } from "../../store/useAppStore";
 
 describe("ExportImport", () => {
   beforeEach(() => {
-    useAppStore.setState({ favorites: [1, 2], weeklyPicks: { 1: [1] } });
+    useAppStore.setState({ favorites: [1, 2], seasonPicks: { "2026-S2": { weeklyPicks: { 1: [1] }, weeklyMaybes: {} } } });
   });
 
   it("renders export and import buttons", () => {
