@@ -182,6 +182,35 @@ function findSeasonStartDate(rawSeasons: RawSeason[]): Date | undefined {
   return earliest;
 }
 
+/**
+ * Determine the current season's year/quarter from the fetched seasons.
+ * The "current seasons" endpoint returns seasons that all share the same
+ * year/quarter, so we take the most common pair to be robust against stragglers.
+ */
+function findSeasonIdentity(
+  rawSeasons: RawSeason[],
+): { seasonId: string; seasonName: string } | undefined {
+  const counts = new Map<string, { year: number; quarter: number; count: number }>();
+  for (const s of rawSeasons) {
+    if (typeof s.season_year !== "number" || typeof s.season_quarter !== "number") continue;
+    const key = `${s.season_year}-S${s.season_quarter}`;
+    const entry = counts.get(key);
+    if (entry) entry.count += 1;
+    else counts.set(key, { year: s.season_year, quarter: s.season_quarter, count: 1 });
+  }
+
+  let best: { year: number; quarter: number; count: number } | undefined;
+  for (const entry of counts.values()) {
+    if (!best || entry.count > best.count) best = entry;
+  }
+  if (!best) return undefined;
+
+  return {
+    seasonId: `${best.year}-S${best.quarter}`,
+    seasonName: `${best.year} Season ${best.quarter}`,
+  };
+}
+
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
 
 /**
@@ -262,7 +291,7 @@ export function transformToSeries(
   rawCarClasses: RawCarClass[],
   trackAssets?: Record<string, RawTrackAsset>,
   detailedSchedules?: Map<number, RawDetailedSchedule>,
-): { seasonStartDate: string; series: Series[] } {
+): { seasonId: string; seasonName: string; seasonStartDate: string; series: Series[] } {
   const carMap = new Map(rawCars.map((c) => [c.car_id, c]));
   const carClassMap = new Map(
     rawCarClasses.map((cc) => [cc.car_class_id, cc]),
@@ -271,6 +300,10 @@ export function transformToSeries(
     rawSeasons.map((s) => [s.series_id, s]),
   );
   const seasonStart = findSeasonStartDate(rawSeasons);
+  if (!seasonStart) {
+    throw new Error("Could not determine season start date from any schedule entry");
+  }
+  const identity = findSeasonIdentity(rawSeasons);
 
   const series = rawSeries
     .filter((s) => seasonBySeriesId.has(s.series_id))
@@ -355,5 +388,12 @@ export function transformToSeries(
       } satisfies Series;
     });
 
-  return { seasonStartDate: seasonStart.toISOString(), series };
+  // Real iRacing data always carries year/quarter; fall back defensively.
+  const fallbackYear = seasonStart?.getUTCFullYear();
+  const fallback = fallbackYear
+    ? { seasonId: `${fallbackYear}-S0`, seasonName: `${fallbackYear} Season` }
+    : { seasonId: "unknown", seasonName: "Unknown Season" };
+  const { seasonId, seasonName } = identity ?? fallback;
+
+  return { seasonId, seasonName, seasonStartDate: seasonStart.toISOString(), series };
 }

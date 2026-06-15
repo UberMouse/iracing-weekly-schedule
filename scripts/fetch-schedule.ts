@@ -10,6 +10,7 @@ import {
   TrackApi,
 } from "@iracing-data/api-client-fetch";
 import { transformToSeries, type RawDetailedSchedule, type RawSeason } from "./transform";
+import { writeSeasonFiles } from "./season-files";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -25,7 +26,10 @@ const CLIENT_SECRET = required("IRACING_CLIENT_SECRET");
 const USERNAME = required("IRACING_USERNAME");
 const PASSWORD = required("IRACING_PASSWORD");
 
-const OUTPUT_PATH = resolve(__dirname, "../src/data/season.json");
+// Per-season archives + current-season.json, served as static blobs by GitHub Pages.
+const SEASONS_DIR = resolve(__dirname, "../public/seasons");
+// Legacy bundled copy still imported by the app until the Chunk B store refactor.
+const LEGACY_OUTPUT_PATH = resolve(__dirname, "../src/data/season.json");
 
 // --- Auth ---
 // iRacing requires both client_secret and password to be SHA-256 hashed before sending.
@@ -160,12 +164,21 @@ async function main() {
     detailedSchedules,
   );
   console.log(`  Produced ${result.series.length} series with schedules`);
-  console.log(`  Season start date: ${result.seasonStartDate}`);
+  console.log(`  Season: ${result.seasonId} (${result.seasonName}), start ${result.seasonStartDate}`);
 
-  // Write output
-  mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
-  writeFileSync(OUTPUT_PATH, JSON.stringify(result, null, 2));
-  console.log(`Written to ${OUTPUT_PATH}`);
+  // Write per-season archive + rebuild current-season.json (never overwrites prior archives).
+  const current = writeSeasonFiles(SEASONS_DIR, result);
+  console.log(
+    `Wrote ${SEASONS_DIR}/${result.seasonId}.json and current-season.json ` +
+      `(${current.availableSeasons.length} season(s) available)`,
+  );
+
+  // Legacy bundled copy — removed once the Chunk B store refactor fetches at runtime.
+  mkdirSync(dirname(LEGACY_OUTPUT_PATH), { recursive: true });
+  writeFileSync(
+    LEGACY_OUTPUT_PATH,
+    JSON.stringify({ seasonStartDate: result.seasonStartDate, series: result.series }, null, 2),
+  );
 }
 
 main().catch((err) => {

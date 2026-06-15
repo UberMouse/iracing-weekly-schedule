@@ -133,6 +133,12 @@ describe("transformToSeries", () => {
     expect(result).toHaveLength(2);
   });
 
+  it("derives seasonId and seasonName from season_year/season_quarter", () => {
+    const out = transformToSeries(rawSeries, rawSeasons, rawCars, rawCarClasses, trackAssets);
+    expect(out.seasonId).toBe("2026-S2");
+    expect(out.seasonName).toBe("2026 Season 2");
+  });
+
   it("maps series metadata", () => {
     const gt3 = result.find((s) => s.seriesId === 230)!;
     expect(gt3.seriesName).toBe("GT3 Sprint");
