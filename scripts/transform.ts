@@ -107,7 +107,11 @@ const CATEGORY_MAP: Record<number, Category> = {
   6: "formula",
 };
 
-function mapLicenseClassFromAllowedLicenses(
+export function mapCategory(categoryId: number): Category {
+  return CATEGORY_MAP[categoryId] ?? "sports_car";
+}
+
+export function mapLicenseClassFromAllowedLicenses(
   allowedLicenses: RawSeries["allowed_licenses"],
 ): LicenseClass {
   if (!allowedLicenses || allowedLicenses.length === 0) return "R";
@@ -129,13 +133,13 @@ function mapLicenseClassFromAllowedLicenses(
   return "R";
 }
 
-function buildTrackMapUrl(asset: RawTrackAsset | undefined): string | undefined {
+export function buildTrackMapUrl(asset: RawTrackAsset | undefined): string | undefined {
   if (!asset?.track_map || !asset.track_map_layers?.active) return undefined;
   const base = resolveTrackMapBase(asset.track_map);
   return `${base}${asset.track_map_layers.active}`;
 }
 
-function buildTrackMapLayers(asset: RawTrackAsset | undefined): TrackMapLayers | undefined {
+export function buildTrackMapLayers(asset: RawTrackAsset | undefined): TrackMapLayers | undefined {
   if (!asset?.track_map || !asset.track_map_layers) return undefined;
   const base = resolveTrackMapBase(asset.track_map);
   const layers = asset.track_map_layers;
@@ -218,7 +222,7 @@ const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
  * to the season start. Returns undefined if the entry falls outside the
  * current 12-week season window.
  */
-function computeSeasonWeek(
+export function computeSeasonWeek(
   startDate: string | undefined,
   seasonStart: Date | undefined,
   fallbackWeekNum: number,

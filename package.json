@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "fetch-data": "op run --account my.1password.com --env-file=.env -- tsx scripts/fetch-schedule.ts",
+    "fetch-prelim": "op run --account my.1password.com --env-file=.env -- tsx scripts/fetch-prelim.ts",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:prod": "op run --account my.1password.com --env-file=.env -- sh -c 'tsx scripts/fetch-schedule.ts && tsc -b && vite build'",
@@ -39,6 +40,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "jsdom": "^28.1.0",
+    "pdfjs-dist": "^4.10.38",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",

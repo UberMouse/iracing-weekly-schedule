@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import ExportImport from "./ExportImport";
+import ProvisionalBanner from "./ProvisionalBanner";
 
 export default function Layout() {
   const location = useLocation();
@@ -32,6 +33,7 @@ export default function Layout() {
         </div>
       </nav>
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+        <ProvisionalBanner />
         <motion.div
           key={location.pathname}
           initial={{ opacity: 0 }}

@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -8,74 +7,15 @@ import {
   CarclassApi,
   TrackApi,
 } from "@iracing-data/api-client-fetch";
+import { authenticate } from "./iracing-api";
 import { transformToSeries, type RawDetailedSchedule, type RawSeason } from "./transform";
-import { writeSeasonFiles } from "./season-files";
+import { buildSeriesIdRemap } from "./prelim-transform";
+import { readSeasonFile, writeSeasonFiles, type SeasonFile } from "./season-files";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// --- Config ---
-const required = (name: string): string => {
-  const val = process.env[name];
-  if (!val) throw new Error(`Missing required env var: ${name}`);
-  return val;
-};
-
-const CLIENT_ID = required("IRACING_CLIENT_ID");
-const CLIENT_SECRET = required("IRACING_CLIENT_SECRET");
-const USERNAME = required("IRACING_USERNAME");
-const PASSWORD = required("IRACING_PASSWORD");
-
 // Per-season archives + current-season.json, served as static blobs by GitHub Pages.
 const SEASONS_DIR = resolve(__dirname, "../public/seasons");
-
-// --- Auth ---
-// iRacing requires both client_secret and password to be SHA-256 hashed before sending.
-// Each is hashed with its corresponding identifier as salt, then Base64 encoded.
-function maskSecret(secret: string, identifier: string): string {
-  const normalized = identifier.trim().toLowerCase();
-  return createHash("sha256")
-    .update(`${secret}${normalized}`, "utf8")
-    .digest("base64");
-}
-
-const TOKEN_URL = "https://oauth.iracing.com/oauth2/token";
-
-// The @iracing-data/oauth-client only supports authorization-code flow (browser).
-// For CI / build-time use we perform iRacing's Password Limited grant directly.
-async function authenticate(): Promise<string> {
-  console.log("Authenticating with iRacing...");
-
-  const maskedSecret = maskSecret(CLIENT_SECRET, CLIENT_ID);
-  const maskedPassword = maskSecret(PASSWORD, USERNAME);
-
-  const body = new URLSearchParams({
-    grant_type: "password_limited",
-    client_id: CLIENT_ID,
-    client_secret: maskedSecret,
-    username: USERNAME,
-    password: maskedPassword,
-    scope: "iracing.auth",
-  });
-
-  const res = await fetch(TOKEN_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body,
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(
-      `Authentication failed (${res.status}): ${text}`,
-    );
-  }
-
-  const json = (await res.json()) as { access_token: string };
-  console.log("Authenticated successfully.");
-  return json.access_token;
-}
 
 // --- API Helpers ---
 // iRacing API returns { link, expires } — must fetch the link for actual data
@@ -163,8 +103,29 @@ async function main() {
   console.log(`  Produced ${result.series.length} series with schedules`);
   console.log(`  Season: ${result.seasonId} (${result.seasonName}), start ${result.seasonStartDate}`);
 
+  // If this season was previously imported from the preliminary PDF, its series
+  // ids were best-effort guesses. Record how they map onto the official ones so
+  // the app can carry picks and favourites across the swap. An already-published
+  // remap is preserved until it is certain every client has replayed it.
+  const existing = readSeasonFile(SEASONS_DIR, result.seasonId);
+  const seriesIdRemap = existing?.provisional
+    ? buildSeriesIdRemap(existing.series, result.series)
+    : existing?.seriesIdRemap;
+
+  if (existing?.provisional) {
+    console.log(
+      `  Replacing provisional ${result.seasonId} data; ` +
+        `remapping ${Object.keys(seriesIdRemap ?? {}).length} series id(s)`,
+    );
+  }
+
+  const seasonFile: SeasonFile = {
+    ...result,
+    ...(seriesIdRemap && Object.keys(seriesIdRemap).length ? { seriesIdRemap } : {}),
+  };
+
   // Write per-season archive + rebuild current-season.json (never overwrites prior archives).
-  const current = writeSeasonFiles(SEASONS_DIR, result);
+  const current = writeSeasonFiles(SEASONS_DIR, seasonFile);
   console.log(
     `Wrote ${SEASONS_DIR}/${result.seasonId}.json and current-season.json ` +
       `(${current.availableSeasons.length} season(s) available)`,

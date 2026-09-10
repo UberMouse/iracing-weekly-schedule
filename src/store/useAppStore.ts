@@ -7,6 +7,8 @@ export interface SeasonMeta {
   id: string;
   name: string;
   startDate: string;
+  /** Scraped from iRacing's preliminary schedule PDF, not the Data API. */
+  provisional?: boolean;
 }
 
 /** A single season's full data, as served from public/seasons/<id>.json */
@@ -15,6 +17,13 @@ export interface SeasonData {
   seasonName: string;
   seasonStartDate: string;
   series: Series[];
+  /** Scraped from iRacing's preliminary schedule PDF, not the Data API. */
+  provisional?: boolean;
+  /**
+   * Present on the season that has just replaced a provisional import: maps the
+   * provisional series ids onto the official ones. Replayed once per season.
+   */
+  seriesIdRemap?: Record<string, number>;
 }
 
 /** The entry-point blob fetched on app load. */
@@ -57,6 +66,8 @@ interface AppStore {
   // Per-season picks (persisted) + global favorites/filters
   seasonPicks: Record<string, SeasonPicks>;
   favorites: number[];
+  /** Season ids whose provisional->official series id remap has been replayed. */
+  appliedSeriesRemaps: string[];
   filters: FilterState;
   modalShowAllSeries: boolean;
 
@@ -71,6 +82,43 @@ interface AppStore {
   setModalShowAllSeries: (value: boolean) => void;
   exportData: () => string;
   importData: (json: string) => void;
+}
+
+/**
+ * Rewrite picks (and provisional-only favourites) after official data replaces
+ * a PDF import, so selections made before the season opened survive.
+ *
+ * Picks are remapped in full: they are scoped to this season, so every id in
+ * them came from the provisional archive. Favourites are global and long-lived,
+ * so only synthetic ids — always negative, and impossible to have favourited in
+ * an earlier season — are moved. A real id there may predate the import.
+ */
+function applySeriesIdRemap(
+  seasonPicks: Record<string, SeasonPicks>,
+  favorites: number[],
+  seasonId: string,
+  remap: Record<string, number>,
+): { seasonPicks: Record<string, SeasonPicks>; favorites: number[] } {
+  const remapId = (id: number): number => remap[String(id)] ?? id;
+  const remapWeeks = (weeks: Record<number, number[]>): Record<number, number[]> =>
+    Object.fromEntries(
+      Object.entries(weeks).map(([week, ids]) => [week, [...new Set(ids.map(remapId))]]),
+    );
+
+  const picks = seasonPicks[seasonId];
+  const nextPicks = picks
+    ? {
+        ...seasonPicks,
+        [seasonId]: {
+          weeklyPicks: remapWeeks(picks.weeklyPicks),
+          weeklyMaybes: remapWeeks(picks.weeklyMaybes),
+        },
+      }
+    : seasonPicks;
+
+  const nextFavorites = [...new Set(favorites.map((id) => (id < 0 ? remapId(id) : id)))];
+
+  return { seasonPicks: nextPicks, favorites: nextFavorites };
 }
 
 /** Apply a transform to the *current* season's picks (edits only ever target it). */
@@ -104,14 +152,29 @@ export const useAppStore = create<AppStore>()(
           });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const data = (await res.json()) as CurrentSeasonFile;
-          set((state) => ({
-            status: "ready",
-            currentSeasonId: data.currentSeasonId,
-            availableSeasons: data.availableSeasons,
-            seasonCache: { ...state.seasonCache, [data.season.seasonId]: data.season },
-            // Always reset the viewed season to current on load.
-            viewingSeasonId: data.currentSeasonId,
-          }));
+          set((state) => {
+            const { seasonId, seriesIdRemap } = data.season;
+            // Replay a provisional->official id remap at most once per season;
+            // re-applying could move ids that are legitimate targets.
+            const shouldRemap =
+              !!seriesIdRemap && !state.appliedSeriesRemaps.includes(seasonId);
+            const remapped = shouldRemap
+              ? applySeriesIdRemap(state.seasonPicks, state.favorites, seasonId, seriesIdRemap)
+              : null;
+
+            return {
+              status: "ready",
+              currentSeasonId: data.currentSeasonId,
+              availableSeasons: data.availableSeasons,
+              seasonCache: { ...state.seasonCache, [seasonId]: data.season },
+              // Always reset the viewed season to current on load.
+              viewingSeasonId: data.currentSeasonId,
+              ...(remapped ?? {}),
+              ...(shouldRemap
+                ? { appliedSeriesRemaps: [...state.appliedSeriesRemaps, seasonId] }
+                : {}),
+            };
+          });
         } catch (e) {
           set({
             status: "error",
@@ -145,6 +208,7 @@ export const useAppStore = create<AppStore>()(
 
       seasonPicks: {},
       favorites: [],
+      appliedSeriesRemaps: [],
 
       toggleFavorite: (seriesId) =>
         set((state) => ({
@@ -273,6 +337,7 @@ export const useAppStore = create<AppStore>()(
       partialize: (state) => ({
         seasonPicks: state.seasonPicks,
         favorites: state.favorites,
+        appliedSeriesRemaps: state.appliedSeriesRemaps,
         modalShowAllSeries: state.modalShowAllSeries,
         filters: state.filters,
       }),
@@ -308,5 +373,18 @@ export function useCurrentPicks(): SeasonPicks {
   return useAppStore((s) => {
     const id = s.currentSeasonId;
     return (id ? s.seasonPicks[id] : undefined) ?? EMPTY_PICKS;
+  });
+}
+
+/**
+ * Whether the season currently on screen came from iRacing's preliminary
+ * schedule PDF rather than the Data API. Read from `availableSeasons` so it is
+ * known for past seasons too, without fetching their archive.
+ */
+export function useViewingSeasonIsProvisional(): boolean {
+  return useAppStore((s) => {
+    const id = s.viewingSeasonId;
+    if (!id) return false;
+    return s.availableSeasons.find((season) => season.id === id)?.provisional ?? false;
   });
 }

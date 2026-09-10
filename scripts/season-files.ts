@@ -8,6 +8,18 @@ export interface SeasonFile {
   seasonName: string;
   seasonStartDate: string;
   series: Series[];
+  /**
+   * Set when the data was scraped from iRacing's preliminary schedule PDF
+   * rather than fetched from the Data API. Provisional archives are the one
+   * kind that may be overwritten, and the app labels them in the UI.
+   */
+  provisional?: boolean;
+  /**
+   * Written once, when official data replaces a provisional archive: maps the
+   * provisional `seriesId` to the real one. Picks and favourites are keyed by
+   * series id, so the app replays this to carry them across the swap.
+   */
+  seriesIdRemap?: Record<string, number>;
 }
 
 /** Lightweight season descriptor used to populate the season switcher. */
@@ -15,6 +27,7 @@ export interface SeasonMeta {
   id: string;
   name: string;
   startDate: string;
+  provisional?: boolean;
 }
 
 /** The entry-point blob fetched on app load. */
@@ -26,6 +39,15 @@ export interface CurrentSeasonFile {
 
 const CURRENT_FILE = "current-season.json";
 
+/** Read one season archive, or undefined if it is absent or unreadable. */
+export function readSeasonFile(dir: string, seasonId: string): SeasonFile | undefined {
+  try {
+    return JSON.parse(readFileSync(join(dir, `${seasonId}.json`), "utf8")) as SeasonFile;
+  } catch {
+    return undefined;
+  }
+}
+
 /**
  * Write the current season's archive (public/seasons/<id>.json) and rebuild
  * current-season.json from every archive present in the directory.
@@ -33,9 +55,22 @@ const CURRENT_FILE = "current-season.json";
  * Archives are immutable once written — prior seasons are never overwritten,
  * so running this each build accumulates history in the repo. The just-written
  * current season is always included in availableSeasons.
+ *
+ * The single exception is a provisional (PDF-derived) archive, which exists to
+ * be replaced by official data. Replacing official data with provisional data
+ * is always a mistake, so it is refused.
  */
 export function writeSeasonFiles(dir: string, current: SeasonFile): CurrentSeasonFile {
   mkdirSync(dir, { recursive: true });
+
+  const existing = readSeasonFile(dir, current.seasonId);
+  if (current.provisional && existing && !existing.provisional) {
+    throw new Error(
+      `Refusing to overwrite official ${current.seasonId} data with a provisional ` +
+        `schedule. The Data API has already published this season — run ` +
+        `\`npm run fetch-data\` instead.`,
+    );
+  }
 
   // Write (or refresh) the current season's own addressable archive.
   writeFileSync(join(dir, `${current.seasonId}.json`), JSON.stringify(current, null, 2));
@@ -51,6 +86,7 @@ export function writeSeasonFiles(dir: string, current: SeasonFile): CurrentSeaso
           id: data.seasonId,
           name: data.seasonName,
           startDate: data.seasonStartDate,
+          ...(data.provisional ? { provisional: true } : {}),
         });
       }
     } catch {
@@ -62,6 +98,7 @@ export function writeSeasonFiles(dir: string, current: SeasonFile): CurrentSeaso
     id: current.seasonId,
     name: current.seasonName,
     startDate: current.seasonStartDate,
+    ...(current.provisional ? { provisional: true } : {}),
   });
 
   const availableSeasons = [...byId.values()].sort((a, b) =>

@@ -9,6 +9,7 @@ npm run dev          # Vite dev server with HMR
 npm run build        # tsc + vite build (local, no data fetch)
 npm run build:prod   # fetch-data + tsc + vite build (CI/production)
 npm run fetch-data   # Fetch iRacing API data via 1Password (op run), can be run anytime and credentials will be injected
+npm run fetch-prelim -- <pdf-url-or-path>   # Build next season from iRacing's preliminary schedule PDF (add --dry-run to preview)
 npm run test         # Vitest single run
 npm run test:watch   # Vitest watch mode
 npm run lint         # ESLint (flat config)
@@ -28,6 +29,22 @@ Static SPA that fetches iRacing schedule data and serves it as static JSON blobs
 3. `scripts/season-files.ts` (`writeSeasonFiles`) — writes the per-season archive `public/seasons/<id>.json` (immutable; never overwrites prior seasons) and rebuilds `public/seasons/current-season.json` (`{ currentSeasonId, availableSeasons, season }`) by scanning the directory
 
 `npm run fetch-data` / `build:prod` are run **locally** (creds injected via 1Password `op run`); the resulting `public/seasons/` files are **committed to git**, which is what keeps past-season archives durable. CI only builds and deploys committed data (it does not fetch).
+
+### Preliminary (pre-season) pipeline
+
+iRacing publishes the next season's schedule as a PDF about a week before the Data API switches over. `npm run fetch-prelim -- <pdf-url-or-path>` turns that PDF into the same `Series[]` so the new season is pickable during the gap:
+
+1. `scripts/pdf-schedule.ts` — segments the PDF by geometry (headings at x=56, series blocks at x=58, race-week columns at x=58/158/358/518). Returns names verbatim.
+2. `scripts/prelim-transform.ts` — resolves those names to real iRacing ids. **Only schedules are season-gated**: cars, tracks and track assets are fetched live and resolve ~100%. Series ids come from matching against committed archives plus the live series catalogue (Sørensen–Dice over name tokens, hard-constrained by category + licence, greedy and 1:1 so sibling series can't share an id). Unmatched series get a deterministic **negative** synthetic id.
+3. Output is written by `writeSeasonFiles` flagged `provisional: true`, and committed like any other season data.
+
+Things the PDF does not state, and where they come from:
+- **Setup type** — never printed; inherited from the matched series (stable across every archived season boundary), else inferred from a "Fixed" in the title.
+- **Race duration** — only given for time-limited races ("40 mins"); lap- and heat-limited ones inherit the matched series' duration so sprint/endurance classification survives.
+- **Multiclass** — derived from "Grid by class" in the conditions column.
+- **Category for the trailing "UNRANKED" section** — inherited from the match (iRacing files those under `oval`).
+
+**Cutover:** when `npm run fetch-data` later finds a provisional archive for the same season, it writes a `seriesIdRemap` (provisional id → official id) into the new season file. The store replays it **once** per season (tracked in `appliedSeriesRemaps`) so picks and favourites survive. Picks are remapped in full; favourites only for negative ids, since a real id there may predate the import. `writeSeasonFiles` refuses to overwrite official data with provisional data.
 
 ### Frontend
 
