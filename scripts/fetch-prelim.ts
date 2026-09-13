@@ -11,6 +11,7 @@ import {
   type TrackCatalogEntry,
 } from "./prelim-transform";
 import { writeSeasonFiles, type SeasonFile } from "./season-files";
+import { updateTrackCategoryCatalogue } from "./track-categories";
 import {
   mapCategory,
   mapLicenseClassFromAllowedLicenses,
@@ -35,6 +36,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SEASONS_DIR = resolve(__dirname, "../public/seasons");
+const TRACK_CATEGORIES_FILE = resolve(__dirname, "../data/track-categories.json");
 const CURRENT_FILE = "current-season.json";
 
 interface Args {
@@ -173,6 +175,7 @@ async function main() {
   console.log("Fetching tracks...");
   const tracks = await fetchData<TrackCatalogEntry[]>(accessToken, "/data/track/get");
   console.log(`  Found ${tracks.length} tracks`);
+  updateTrackCategoryCatalogue(TRACK_CATEGORIES_FILE, tracks);
 
   console.log("Fetching track assets...");
   const trackAssets = await fetchData<Record<string, RawTrackAsset>>(

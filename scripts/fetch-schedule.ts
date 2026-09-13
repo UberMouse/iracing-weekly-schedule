@@ -11,11 +11,13 @@ import { authenticate } from "./iracing-api";
 import { transformToSeries, type RawDetailedSchedule, type RawSeason } from "./transform";
 import { buildSeriesIdRemap } from "./prelim-transform";
 import { readSeasonFile, writeSeasonFiles, type SeasonFile } from "./season-files";
+import { updateTrackCategoryCatalogue, type RawTrackLayout } from "./track-categories";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Per-season archives + current-season.json, served as static blobs by GitHub Pages.
 const SEASONS_DIR = resolve(__dirname, "../public/seasons");
+const TRACK_CATEGORIES_FILE = resolve(__dirname, "../data/track-categories.json");
 
 // --- API Helpers ---
 // iRacing API returns { link, expires } — must fetch the link for actual data
@@ -62,6 +64,12 @@ async function main() {
   const trackAssetsLink = await trackApi.getTrackAssets();
   const rawTrackAssets = await fetchLink<Record<string, unknown>>(trackAssetsLink);
   console.log(`  Found ${Object.keys(rawTrackAssets).length} track assets`);
+
+  console.log("Fetching tracks...");
+  const trackLink = await trackApi.getTrack();
+  const rawTracks = await fetchLink<RawTrackLayout[]>(trackLink);
+  console.log(`  Found ${rawTracks.length} track layouts`);
+  updateTrackCategoryCatalogue(TRACK_CATEGORIES_FILE, rawTracks);
 
   // Fetch detailed schedules per season for session_minutes (covers lap-limited races)
   const typedSeasons = rawSeasons as RawSeason[];

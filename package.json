@@ -6,6 +6,7 @@
   "scripts": {
     "fetch-data": "op run --account my.1password.com --env-file=.env -- tsx scripts/fetch-schedule.ts",
     "fetch-prelim": "op run --account my.1password.com --env-file=.env -- tsx scripts/fetch-prelim.ts",
+    "fetch-track-categories": "op run --account my.1password.com --env-file=.env -- tsx scripts/fetch-track-categories.ts",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:prod": "op run --account my.1password.com --env-file=.env -- sh -c 'tsx scripts/fetch-schedule.ts && tsc -b && vite build'",

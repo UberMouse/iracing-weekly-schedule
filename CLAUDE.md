@@ -10,6 +10,7 @@ npm run build        # tsc + vite build (local, no data fetch)
 npm run build:prod   # fetch-data + tsc + vite build (CI/production)
 npm run fetch-data   # Fetch iRacing API data via 1Password (op run), can be run anytime and credentials will be injected
 npm run fetch-prelim -- <pdf-url-or-path>   # Build next season from iRacing's preliminary schedule PDF (add --dry-run to preview)
+npm run fetch-track-categories   # Refresh data/track-categories.json from the Data API (also done by fetch-data/fetch-prelim)
 npm run test         # Vitest single run
 npm run test:watch   # Vitest watch mode
 npm run lint         # ESLint (flat config)
@@ -45,6 +46,11 @@ Things the PDF does not state, and where they come from:
 - **Category for the trailing "UNRANKED" section** — inherited from the match (iRacing files those under `oval`).
 
 **Cutover:** when `npm run fetch-data` later finds a provisional archive for the same season, it writes a `seriesIdRemap` (provisional id → official id) into the new season file. The store replays it **once** per season (tracked in `appliedSeriesRemaps`) so picks and favourites survive. Picks are remapped in full; favourites only for negative ids, since a real id there may predate the import. `writeSeasonFiles` refuses to overwrite official data with provisional data.
+
+### Track usage
+
+- `data/track-categories.json` — a committed catalogue mapping every track *layout* id (config) to its surface (`"road" | "oval" | "dirt_road" | "dirt_oval"`), sourced from the Data API's `/data/track/get` (its per-layout `category` field). Deliberately outside `public/seasons/`, which is scanned as season archives. `npm run fetch-data`, `fetch-prelim` and the standalone `fetch-track-categories` all refresh it by **merging** (`scripts/track-categories.ts`) — fresh data wins on id conflicts, but an id only the catalogue still knows about (a layout the live API no longer lists) is never dropped, since old archives still reference it.
+- `track-usage.json` — generated at build time only (never committed) by a Vite plugin in `vite.config.ts`, from `scripts/track-usage.ts`'s `buildTrackUsageFile`: every committed `public/seasons/*.json` archive (chronological, provisional flag carried through) plus the category catalogue, grouped by `trackName.trim()`, counted in series-weeks and split by layout category. A layout id missing from the catalogue is counted under `"unknown"` and logged as a warning rather than failing the build. Served by `vite build` (emitted asset) and by `npm run dev` (a `configureServer` middleware recomputes it per request). Type: `TrackUsageFile` in `src/types/track-usage.ts`.
 
 ### Frontend
 

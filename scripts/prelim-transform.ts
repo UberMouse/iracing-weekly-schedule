@@ -26,6 +26,8 @@ export interface TrackCatalogEntry {
   track_id: number;
   track_name: string;
   config_name?: string;
+  /** Layout surface ("road" | "oval" | "dirt_road" | "dirt_oval"); unused here — see track-categories.ts. */
+  category?: string;
 }
 
 /**

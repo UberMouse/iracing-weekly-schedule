@@ -1,3 +1,5 @@
+export * from "./track-usage";
+
 export type Category = "oval" | "dirt_oval" | "dirt_road" | "sports_car" | "formula";
 export type LicenseClass = "R" | "D" | "C" | "B" | "A";
 export type SetupType = "fixed" | "open";
