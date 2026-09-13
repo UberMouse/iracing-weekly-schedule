@@ -1,5 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
-import { computeTrackUsage, type SeasonUsageInput } from "../track-usage";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { computeTrackUsage, buildTrackUsageFile, type SeasonUsageInput } from "../track-usage";
+import { writeSeasonFiles, type SeasonFile } from "../season-files";
 import type { TrackCategoryCatalogue } from "../track-categories";
 import type { Series, WeekSchedule } from "../../src/types";
 
@@ -170,5 +174,74 @@ describe("computeTrackUsage", () => {
     );
 
     expect(usage.seasons.map((s) => s.id)).toEqual(["2026-S2", "2026-S3", "2026-S4"]);
+  });
+});
+
+describe("buildTrackUsageFile", () => {
+  const seasonFile = (overrides: Partial<SeasonFile> = {}): SeasonFile => ({
+    seasonId: "2026-S2",
+    seasonName: "2026 Season 2",
+    seasonStartDate: "2026-03-17T00:00:00.000Z",
+    series: [series()],
+    ...overrides,
+  });
+
+  let seasonsDir: string;
+  let catalogueFile: string;
+
+  beforeEach(() => {
+    seasonsDir = mkdtempSync(join(tmpdir(), "seasons-"));
+    catalogueFile = join(mkdtempSync(join(tmpdir(), "catalogue-")), "track-categories.json");
+    writeFileSync(catalogueFile, JSON.stringify(catalogue));
+  });
+  afterEach(() => {
+    rmSync(seasonsDir, { recursive: true, force: true });
+  });
+
+  it("does not count current-season.json as its own season", () => {
+    // writeSeasonFiles always derives current-season.json alongside the archive.
+    writeSeasonFiles(seasonsDir, seasonFile());
+
+    const usage = buildTrackUsageFile(seasonsDir, catalogueFile);
+    expect(usage.seasons).toEqual([{ id: "2026-S2", name: "2026 Season 2" }]);
+  });
+
+  it("skips a malformed or missing-field archive rather than failing the build", () => {
+    writeSeasonFiles(seasonsDir, seasonFile());
+    writeFileSync(join(seasonsDir, "broken.json"), "{ not valid json");
+    writeFileSync(
+      join(seasonsDir, "incomplete.json"),
+      JSON.stringify({ seasonId: "2026-S3", seasonName: "2026 Season 3" }),
+    );
+
+    const usage = buildTrackUsageFile(seasonsDir, catalogueFile);
+    expect(usage.seasons.map((s) => s.id)).toEqual(["2026-S2"]);
+  });
+
+  it("warns once per uncatalogued track id and buckets it under unknown", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    writeSeasonFiles(
+      seasonsDir,
+      seasonFile({
+        series: [
+          series({
+            scheduleWeeks: [
+              week({ trackId: 999, trackName: "Mystery Track" }),
+              week({ trackId: 999, trackName: "Mystery Track", weekNumber: 2, seasonWeek: 2 }),
+            ],
+          }),
+        ],
+      }),
+    );
+
+    const usage = buildTrackUsageFile(seasonsDir, catalogueFile);
+
+    const mystery = usage.tracks.find((t) => t.trackName === "Mystery Track");
+    expect(mystery?.counts).toEqual({ unknown: { "2026-S2": 2 } });
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toMatch(/999/);
+
+    warn.mockRestore();
   });
 });

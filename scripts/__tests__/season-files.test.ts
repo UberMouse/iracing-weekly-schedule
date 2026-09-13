@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { mkdtempSync, rmSync, readFileSync } from "node:fs";
+import { mkdtempSync, rmSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { writeSeasonFiles, readSeasonFile, type SeasonFile } from "../season-files";
+import { writeSeasonFiles, readSeasonFile, readAllSeasonFiles, type SeasonFile } from "../season-files";
 
 const season = (overrides: Partial<SeasonFile> = {}): SeasonFile => ({
   seasonId: "2026-S4",
@@ -70,5 +70,43 @@ describe("writeSeasonFiles with provisional archives", () => {
     writeSeasonFiles(dir, season({ provisional: true }));
     const written = JSON.parse(readFileSync(join(dir, "current-season.json"), "utf8"));
     expect(written.season.provisional).toBe(true);
+  });
+});
+
+describe("readAllSeasonFiles", () => {
+  it("returns every parseable archive in the directory", () => {
+    writeSeasonFiles(dir, season());
+    writeSeasonFiles(
+      dir,
+      season({ seasonId: "2026-S3", seasonName: "2026 Season 3", seasonStartDate: "2026-06-16T00:00:00.000Z" }),
+    );
+
+    const seasons = readAllSeasonFiles(dir).map((s) => s.seasonId).sort();
+    expect(seasons).toEqual(["2026-S3", "2026-S4"]);
+  });
+
+  it("does not treat current-season.json as an archive", () => {
+    writeSeasonFiles(dir, season());
+
+    const seasons = readAllSeasonFiles(dir);
+    expect(seasons.some((s) => s.seasonId === undefined)).toBe(false);
+    expect(seasons).toHaveLength(1);
+  });
+
+  it("skips a file that fails to parse", () => {
+    writeSeasonFiles(dir, season());
+    writeFileSync(join(dir, "broken.json"), "{ not valid json");
+
+    expect(readAllSeasonFiles(dir).map((s) => s.seasonId)).toEqual(["2026-S4"]);
+  });
+
+  it("skips a file missing a required field", () => {
+    writeSeasonFiles(dir, season());
+    writeFileSync(
+      join(dir, "incomplete.json"),
+      JSON.stringify({ seasonId: "2026-S5", seasonName: "2026 Season 5" }),
+    );
+
+    expect(readAllSeasonFiles(dir).map((s) => s.seasonId)).toEqual(["2026-S4"]);
   });
 });

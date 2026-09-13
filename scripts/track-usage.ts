@@ -1,7 +1,5 @@
-import { readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
 import type { TrackUsageBucket, TrackUsageFile } from "../src/types";
-import type { SeasonFile } from "./season-files";
+import { readAllSeasonFiles, type SeasonFile } from "./season-files";
 import { readTrackCategoryCatalogue, type TrackCategoryCatalogue } from "./track-categories";
 
 /**
@@ -50,6 +48,7 @@ export function computeTrackUsage(
           tracks.set(trackName, entry);
         }
 
+        // Catalogue keys are stringified track ids.
         const category = trackCategories[String(week.trackId)]?.category;
         const bucket: TrackUsageBucket = category ?? "unknown";
         if (!category) onUnknownTrack?.(week.trackId, trackName);
@@ -70,40 +69,19 @@ export function computeTrackUsage(
   };
 }
 
-const CURRENT_FILE = "current-season.json";
-
 /**
- * Read every season archive in `seasonsDir` (skipping `current-season.json`,
- * which is a derived index rather than an archive of its own). Unreadable
- * files are skipped rather than failing the build, matching the tolerance
- * `season-files.ts` and `fetch-prelim.ts` already apply to this directory.
+ * Read every season archive in `seasonsDir` as `SeasonUsageInput`s, via the
+ * shared scan in `season-files.ts` (which already skips `current-season.json`
+ * and malformed files).
  */
 function readAllSeasonArchives(seasonsDir: string): SeasonUsageInput[] {
-  let names: string[];
-  try {
-    names = readdirSync(seasonsDir);
-  } catch {
-    return [];
-  }
-
-  const seasons: SeasonUsageInput[] = [];
-  for (const name of names) {
-    if (!name.endsWith(".json") || name === CURRENT_FILE) continue;
-    try {
-      const data = JSON.parse(readFileSync(join(seasonsDir, name), "utf8")) as SeasonFile;
-      if (!data.seasonId || !data.series) continue;
-      seasons.push({
-        id: data.seasonId,
-        name: data.seasonName,
-        startDate: data.seasonStartDate,
-        ...(data.provisional ? { provisional: true } : {}),
-        series: data.series,
-      });
-    } catch {
-      // Skip unreadable archives rather than failing the build.
-    }
-  }
-  return seasons;
+  return readAllSeasonFiles(seasonsDir).map((data: SeasonFile) => ({
+    id: data.seasonId,
+    name: data.seasonName,
+    startDate: data.seasonStartDate,
+    ...(data.provisional ? { provisional: true } : {}),
+    series: data.series,
+  }));
 }
 
 /**

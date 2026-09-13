@@ -49,6 +49,39 @@ export function readSeasonFile(dir: string, seasonId: string): SeasonFile | unde
 }
 
 /**
+ * Read every season archive in `dir`: every `<id>.json` file that parses and
+ * has the required `SeasonFile` fields. Skips `current-season.json` (a
+ * derived index, not an archive of its own) and any file that fails to parse
+ * or is missing a required field, rather than failing the whole build.
+ *
+ * Shared by `writeSeasonFiles` (to rebuild `current-season.json`'s
+ * `availableSeasons`) and `track-usage.ts` (to compute usage across every
+ * archived season).
+ */
+export function readAllSeasonFiles(dir: string): SeasonFile[] {
+  let names: string[];
+  try {
+    names = readdirSync(dir);
+  } catch {
+    return [];
+  }
+
+  const seasons: SeasonFile[] = [];
+  for (const name of names) {
+    if (!name.endsWith(".json") || name === CURRENT_FILE) continue;
+    try {
+      const data = JSON.parse(readFileSync(join(dir, name), "utf8")) as Partial<SeasonFile>;
+      if (data.seasonId && data.seasonName && data.seasonStartDate && data.series) {
+        seasons.push(data as SeasonFile);
+      }
+    } catch {
+      // Skip unparseable files rather than failing the whole build.
+    }
+  }
+  return seasons;
+}
+
+/**
  * Write the current season's archive (public/seasons/<id>.json) and rebuild
  * current-season.json from every archive present in the directory.
  *
@@ -77,21 +110,13 @@ export function writeSeasonFiles(dir: string, current: SeasonFile): CurrentSeaso
 
   // Collect metadata from every season archive in the directory.
   const byId = new Map<string, SeasonMeta>();
-  for (const name of readdirSync(dir)) {
-    if (!name.endsWith(".json") || name === CURRENT_FILE) continue;
-    try {
-      const data = JSON.parse(readFileSync(join(dir, name), "utf8")) as Partial<SeasonFile>;
-      if (data.seasonId && data.seasonName && data.seasonStartDate) {
-        byId.set(data.seasonId, {
-          id: data.seasonId,
-          name: data.seasonName,
-          startDate: data.seasonStartDate,
-          ...(data.provisional ? { provisional: true } : {}),
-        });
-      }
-    } catch {
-      // Skip unparseable files rather than failing the whole build.
-    }
+  for (const data of readAllSeasonFiles(dir)) {
+    byId.set(data.seasonId, {
+      id: data.seasonId,
+      name: data.seasonName,
+      startDate: data.seasonStartDate,
+      ...(data.provisional ? { provisional: true } : {}),
+    });
   }
   // Guarantee the current season is present even if the read missed it.
   byId.set(current.seasonId, {
