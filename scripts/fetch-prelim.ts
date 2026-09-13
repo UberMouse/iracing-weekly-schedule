@@ -175,7 +175,6 @@ async function main() {
   console.log("Fetching tracks...");
   const tracks = await fetchData<TrackCatalogEntry[]>(accessToken, "/data/track/get");
   console.log(`  Found ${tracks.length} tracks`);
-  updateTrackCategoryCatalogue(TRACK_CATEGORIES_FILE, tracks);
 
   console.log("Fetching track assets...");
   const trackAssets = await fetchData<Record<string, RawTrackAsset>>(
@@ -246,6 +245,8 @@ async function main() {
     console.log("\nDry run — nothing written.");
     return;
   }
+
+  updateTrackCategoryCatalogue(TRACK_CATEGORIES_FILE, tracks);
 
   const seasonFile: SeasonFile = {
     seasonId: result.seasonId,

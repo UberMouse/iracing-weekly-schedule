@@ -7,7 +7,7 @@ export default function Layout() {
   const location = useLocation();
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `px-3 sm:px-4 py-2 font-display text-sm font-semibold uppercase tracking-wider transition-all ${
+    `shrink-0 px-2 sm:px-4 py-2 font-display text-xs sm:text-sm font-semibold uppercase tracking-normal sm:tracking-wider transition-all ${
       isActive
         ? "text-[var(--color-accent)] border-b-2 border-[var(--color-accent)]"
         : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] border-b-2 border-transparent"
@@ -19,10 +19,10 @@ export default function Layout() {
       <div className="h-0.5 bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent" />
       <nav className="sticky top-0 z-40 bg-[var(--color-surface)]/80 backdrop-blur-xl border-b border-[var(--color-border)]">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-3 sm:gap-8">
-          <span className="font-display text-base sm:text-lg font-bold uppercase tracking-widest text-[var(--color-text-primary)] shrink-0">
+          <span className="font-display text-sm sm:text-lg font-bold uppercase tracking-wider sm:tracking-widest text-[var(--color-text-primary)] shrink-0">
             iRacing Planner
           </span>
-          <div className="flex gap-1">
+          <div className="flex gap-0.5 sm:gap-1 min-w-0 overflow-x-auto [scrollbar-width:none]">
             <NavLink to="/series" className={linkClass}>Series</NavLink>
             <NavLink to="/schedule" className={linkClass}>Schedule</NavLink>
             <NavLink to="/tracks" className={linkClass}>Tracks</NavLink>
