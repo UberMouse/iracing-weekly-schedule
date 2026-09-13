@@ -73,6 +73,7 @@ Things the PDF does not state, and where they come from:
 - **ScheduleBuilder** — 12 WeekRows; each shows picked series for that week with add/remove
 - **SeriesCard** — Series metadata, cars, schedule weeks with track info
 - **AddSeriesModal** — Modal for picking series into a specific week
+- **TrackUsage** (`/tracks`) — Table of per-season track appearance counts (series-weeks) fetched from `track-usage.json`, filterable by track type (all/road/oval/dirt road/dirt oval); pure sort/filter/aggregate logic lives in `TrackUsage/aggregate.ts`
 
 ### Transform Logic
 

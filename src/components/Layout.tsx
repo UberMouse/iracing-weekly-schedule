@@ -25,6 +25,7 @@ export default function Layout() {
           <div className="flex gap-1">
             <NavLink to="/series" className={linkClass}>Series</NavLink>
             <NavLink to="/schedule" className={linkClass}>Schedule</NavLink>
+            <NavLink to="/tracks" className={linkClass}>Tracks</NavLink>
             <NavLink to="/about" className={linkClass}>About</NavLink>
           </div>
           <div className="ml-auto hidden sm:block">
