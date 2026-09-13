@@ -1,4 +1,5 @@
 import { useAppStore } from "../../store/useAppStore";
+import FilterPill from "../FilterPill";
 import type { Category, LicenseClass, SetupType } from "../../types";
 
 const categories: { value: Category; label: string; color: string }[] = [
@@ -38,23 +39,15 @@ export default function FilterBar() {
     <div className="sticky top-[53px] sm:top-[63px] z-30 flex flex-wrap items-center gap-2 sm:gap-4 pb-3 sm:pb-4 mb-2 bg-[var(--color-bg)] pt-3 sm:pt-4 -mt-3 sm:-mt-4 border-b border-[var(--color-border)]">
       {/* Category pills */}
       <div className="flex flex-wrap gap-1.5">
-        {categories.map(({ value, label, color }) => {
-          const active = filters.categories.includes(value);
-          return (
-            <button
-              key={value}
-              onClick={() => toggleCategory(value)}
-              className="text-xs sm:text-sm px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-colors"
-              style={
-                active
-                  ? { backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`, borderColor: color, color }
-                  : { borderColor: "var(--color-border)", color: "var(--color-text-secondary)" }
-              }
-            >
-              {label}
-            </button>
-          );
-        })}
+        {categories.map(({ value, label, color }) => (
+          <FilterPill
+            key={value}
+            label={label}
+            color={color}
+            active={filters.categories.includes(value)}
+            onClick={() => toggleCategory(value)}
+          />
+        ))}
       </div>
 
       {/* License class pills */}

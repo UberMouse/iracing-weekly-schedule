@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { TrackUsageFile } from "../../types";
+import { LoadingState, ErrorState } from "../StatusMessage";
+import FilterPill from "../FilterPill";
 import { aggregateTrackUsage, type TrackUsageFilterValue } from "./aggregate";
 
 const TRACK_USAGE_URL = `${import.meta.env.BASE_URL}track-usage.json`;
@@ -61,29 +63,11 @@ export default function TrackUsage() {
   const aggregated = useMemo(() => (data ? aggregateTrackUsage(data, filter) : null), [data, filter]);
 
   if (status === "loading") {
-    return (
-      <div className="flex flex-col items-center justify-center gap-4 py-24 text-[var(--color-text-secondary)]">
-        <div className="h-8 w-8 rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-accent)] animate-spin" />
-        <p className="font-display uppercase tracking-widest text-sm">Loading track usage…</p>
-      </div>
-    );
+    return <LoadingState label="Loading track usage…" />;
   }
 
   if (status === "error" || !aggregated) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-4 px-6 py-24 text-center">
-        <p className="font-display uppercase tracking-widest text-sm text-[var(--color-text-primary)]">
-          Couldn't load track usage
-        </p>
-        {error && <p className="text-xs text-[var(--color-text-secondary)] font-mono">{error}</p>}
-        <button
-          onClick={retry}
-          className="text-xs px-4 py-2 rounded-md border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-hover)] transition-colors font-display uppercase tracking-wider"
-        >
-          Retry
-        </button>
-      </div>
-    );
+    return <ErrorState title="Couldn't load track usage" message={error} onRetry={retry} />;
   }
 
   const { seasons, rows } = aggregated;
@@ -95,35 +79,15 @@ export default function TrackUsage() {
       </h1>
 
       <div className="flex flex-wrap gap-1.5 mb-4">
-        {FILTERS.map(({ value, label, color }) => {
-          const active = filter === value;
-          return (
-            <button
-              key={value}
-              type="button"
-              onClick={() => setFilter(value)}
-              aria-pressed={active}
-              className="text-xs sm:text-sm px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-colors"
-              style={
-                active
-                  ? color
-                    ? {
-                        backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`,
-                        borderColor: color,
-                        color,
-                      }
-                    : {
-                        backgroundColor: "var(--color-accent-dim)",
-                        borderColor: "var(--color-accent)",
-                        color: "var(--color-accent)",
-                      }
-                  : { borderColor: "var(--color-border)", color: "var(--color-text-secondary)" }
-              }
-            >
-              {label}
-            </button>
-          );
-        })}
+        {FILTERS.map(({ value, label, color }) => (
+          <FilterPill
+            key={value}
+            label={label}
+            color={color}
+            active={filter === value}
+            onClick={() => setFilter(value)}
+          />
+        ))}
       </div>
 
       {rows.length === 0 ? (
@@ -135,12 +99,16 @@ export default function TrackUsage() {
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-                <th className="text-left font-display uppercase tracking-wider text-xs text-[var(--color-text-secondary)] px-3 py-2.5 whitespace-nowrap">
+                <th
+                  scope="col"
+                  className="text-left font-display uppercase tracking-wider text-xs text-[var(--color-text-secondary)] px-3 py-2.5 whitespace-nowrap"
+                >
                   Track
                 </th>
                 {seasons.map((season) => (
                   <th
                     key={season.id}
+                    scope="col"
                     className="text-right font-display uppercase tracking-wider text-xs text-[var(--color-text-secondary)] px-3 py-2.5 whitespace-nowrap"
                   >
                     {season.name}
@@ -151,7 +119,10 @@ export default function TrackUsage() {
                     )}
                   </th>
                 ))}
-                <th className="text-right font-display uppercase tracking-wider text-xs text-[var(--color-text-primary)] px-3 py-2.5 whitespace-nowrap">
+                <th
+                  scope="col"
+                  className="text-right font-display uppercase tracking-wider text-xs text-[var(--color-text-primary)] px-3 py-2.5 whitespace-nowrap"
+                >
                   Total
                 </th>
               </tr>
@@ -162,9 +133,12 @@ export default function TrackUsage() {
                   key={row.trackName}
                   className="border-b border-[var(--color-border)] last:border-b-0 hover:bg-[var(--color-surface)]/60"
                 >
-                  <td className="px-3 py-2 text-[var(--color-text-primary)] whitespace-nowrap">
+                  <th
+                    scope="row"
+                    className="px-3 py-2 text-left font-normal text-[var(--color-text-primary)] whitespace-nowrap"
+                  >
                     {row.trackName}
-                  </td>
+                  </th>
                   {seasons.map((season) => {
                     const count = row.perSeason[season.id] ?? 0;
                     return (

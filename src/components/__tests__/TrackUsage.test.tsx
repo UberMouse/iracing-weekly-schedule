@@ -72,7 +72,7 @@ describe("TrackUsage", () => {
     await waitFor(() => expect(screen.getByText("Charlotte Motor Speedway")).toBeInTheDocument());
 
     const rows = screen.getAllByRole("row").slice(1); // drop header row
-    const names = rows.map((r) => r.querySelector("td")?.textContent);
+    const names = rows.map((r) => r.querySelector("th")?.textContent);
     // Lanier (20) > Charlotte (12) > Mystery (5)
     expect(names).toEqual(["Lanier National Speedway", "Charlotte Motor Speedway", "Mystery Track"]);
   });
@@ -82,7 +82,7 @@ describe("TrackUsage", () => {
     render(<TrackUsage />);
     await waitFor(() => expect(screen.getByText("Lanier National Speedway")).toBeInTheDocument());
     const lanierRow = screen.getByText("Lanier National Speedway").closest("tr")!;
-    const cells = Array.from(lanierRow.querySelectorAll("td")).map((td) => td.textContent);
+    const cells = Array.from(lanierRow.querySelectorAll("th, td")).map((cell) => cell.textContent);
     // Track, S2, S3, S4, Total
     expect(cells).toEqual(["Lanier National Speedway", "10", "10", "0", "20"]);
   });

@@ -32,6 +32,9 @@ function perSeasonCounts(
   seasons: TrackUsageSeason[],
   buckets: TrackUsageBucket[],
 ): Record<string, number> {
+  // Only sums counts for season ids present in `file.seasons` — both are
+  // produced from the same archive scan (see scripts/track-usage.ts), so
+  // there's nothing in `entry.counts` for a season missing from that list.
   const perSeason: Record<string, number> = {};
   for (const season of seasons) {
     let sum = 0;
