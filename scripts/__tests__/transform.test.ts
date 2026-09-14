@@ -886,6 +886,44 @@ describe("raceTimes", () => {
     expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
   });
 
+  it("omits raceTimes for a scheduled descriptor with a non-array session_times", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{
+            repeating: false,
+            session_minutes: 69,
+            session_times: "2026-02-04T02:00:00Z" as unknown as string[],
+          }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it.each(["45", "25:00:00"])(
+    "omits raceTimes for a repeating descriptor with a malformed first_session_time (%s)",
+    (firstSessionTime) => {
+      const detailed = new Map<number, RawDetailedSchedule>([
+        [6001, {
+          schedules: [{
+            race_week_num: 0,
+            race_time_descriptors: [{
+              repeating: true,
+              session_minutes: 154,
+              first_session_time: firstSessionTime,
+              repeat_minutes: 120,
+            }],
+          }],
+        }],
+      ]);
+      const series = transform(detailed);
+      expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+    },
+  );
+
   it("maps each week to its own raceTimes independently", () => {
     const detailed = new Map<number, RawDetailedSchedule>([
       [6001, {

@@ -293,10 +293,13 @@ function resolveSessionMinutes(
   return null;
 }
 
-/** "00:45:00" -> "00:45" */
-function formatFirstSessionTime(time: string): string {
-  const [hh, mm] = time.split(":");
-  return `${hh}:${mm}`;
+const TIME_SHAPE = /^([01]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/;
+
+/** "00:45:00" -> "00:45", or null if the shape doesn't hold up (not "HH:MM[:SS]", hours 00-23, minutes 00-59). */
+function formatFirstSessionTime(time: string): string | null {
+  const match = TIME_SHAPE.exec(time);
+  if (!match) return null;
+  return `${match[1]}:${match[2]}`;
 }
 
 /**
@@ -316,15 +319,17 @@ function resolveWeekRaceTimes(
     if (!descriptor.first_session_time || !descriptor.repeat_minutes || descriptor.repeat_minutes <= 0) {
       return undefined;
     }
+    const firstSessionTime = formatFirstSessionTime(descriptor.first_session_time);
+    if (!firstSessionTime) return undefined;
     return {
       kind: "repeating",
-      firstSessionTime: formatFirstSessionTime(descriptor.first_session_time),
+      firstSessionTime,
       repeatMinutes: descriptor.repeat_minutes,
       sessionMinutes,
     };
   }
 
-  if (!descriptor.session_times || descriptor.session_times.length === 0) {
+  if (!Array.isArray(descriptor.session_times) || descriptor.session_times.length === 0) {
     return undefined;
   }
   return {
