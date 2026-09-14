@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
 import { findBackToBacks, formatBackToBackMatches } from "./backToBack";
@@ -18,6 +18,8 @@ interface Props {
 }
 
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+/** Stable fallback so a week without picks doesn't defeat the memos below. */
+const NO_IDS: number[] = [];
 
 function formatWeekStartDate(seasonStartDate: string, week: number): string {
   const start = new Date(seasonStartDate).getTime();
@@ -63,19 +65,32 @@ export default function WeekRow({
   const [showBackToBacks, setShowBackToBacks] = useState(false);
   const backToBacksId = useId();
 
-  const pickedIds = weeklyPicks[week] ?? [];
-  const maybeIds = weeklyMaybes[week] ?? [];
-  const entries: { seriesId: number; isMaybe: boolean }[] = [
-    ...pickedIds.map((id) => ({ seriesId: id, isMaybe: false })),
-    ...maybeIds.map((id) => ({ seriesId: id, isMaybe: true })),
-  ];
-  const pickedSeries = entries
-    .map((e) => {
-      const s = series.find((s) => s.seriesId === e.seriesId);
-      return s ? { ...s, isMaybe: e.isMaybe } : null;
-    })
-    .filter((s): s is Series & { isMaybe: boolean } => s !== null);
-  const backToBacks = pickedSeries.length >= 2 ? findBackToBacks(pickedSeries, week) : null;
+  // Every row re-renders on any store change, but the store keeps untouched
+  // weeks' id arrays, so these memos only recompute when this week changes.
+  const pickedIds = weeklyPicks[week] ?? NO_IDS;
+  const maybeIds = weeklyMaybes[week] ?? NO_IDS;
+  const pickedSeries = useMemo(() => {
+    const entries: { seriesId: number; isMaybe: boolean }[] = [
+      ...pickedIds.map((id) => ({ seriesId: id, isMaybe: false })),
+      ...maybeIds.map((id) => ({ seriesId: id, isMaybe: true })),
+    ];
+    return entries
+      .map((e) => {
+        const s = series.find((s) => s.seriesId === e.seriesId);
+        return s ? { ...s, isMaybe: e.isMaybe } : null;
+      })
+      .filter((s): s is Series & { isMaybe: boolean } => s !== null);
+  }, [series, pickedIds, maybeIds]);
+  const backToBacks = useMemo(
+    () => (pickedSeries.length >= 2 ? findBackToBacks(pickedSeries, week) : null),
+    [pickedSeries, week],
+  );
+  // Formatting is the expensive part, so only do it while the panel is open.
+  const backToBackLines = useMemo(() => {
+    if (!showBackToBacks || !backToBacks) return null;
+    const referenceDate = new Date(new Date(seasonStartDate).getTime() + (week - 1) * MS_PER_WEEK);
+    return backToBacks.pairs.map((pair) => formatBackToBackMatches(pair.matches, { referenceDate }));
+  }, [showBackToBacks, backToBacks, seasonStartDate, week]);
 
   return (
     <div
@@ -201,31 +216,35 @@ export default function WeekRow({
             </span>
             Back-2-backs ({backToBacks.pairs.length})
           </button>
+          {/* The panel stays mounted so aria-controls always resolves; its
+              contents only render while open. */}
           <div id={backToBacksId} hidden={!showBackToBacks} className="mt-2 flex flex-col gap-2">
-            {backToBacks.pairs.length === 0 ? (
-              <p className="text-[var(--color-text-muted)]">No back-2-backs this week</p>
-            ) : (
-              <ul className="flex flex-col gap-2">
-                {backToBacks.pairs.map((pair) => (
-                  <li key={`${pair.from.seriesId}-${pair.to.seriesId}`}>
-                    <div className="font-medium text-[var(--color-text-primary)]">
-                      {pair.from.seriesName} → {pair.to.seriesName}
-                    </div>
-                    <div className="flex flex-wrap gap-x-3 font-mono text-[var(--color-text-secondary)]">
-                      {formatBackToBackMatches(pair.matches, {
-                        referenceDate: new Date(new Date(seasonStartDate).getTime() + (week - 1) * MS_PER_WEEK),
-                      }).map((line) => (
-                        <span key={line}>{line}</span>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {backToBacks.missingStartTimes.length > 0 && (
-              <p className="text-[var(--color-text-muted)]">
-                No start times: {backToBacks.missingStartTimes.map((s) => s.seriesName).join(", ")}
-              </p>
+            {backToBackLines && (
+              <>
+                {backToBacks.pairs.length === 0 ? (
+                  <p className="text-[var(--color-text-muted)]">No back-2-backs this week</p>
+                ) : (
+                  <ul className="flex flex-col gap-2">
+                    {backToBacks.pairs.map((pair, i) => (
+                      <li key={`${pair.from.seriesId}-${pair.to.seriesId}`}>
+                        <div className="font-medium text-[var(--color-text-primary)]">
+                          {pair.from.seriesName} → {pair.to.seriesName}
+                        </div>
+                        <div className="flex flex-wrap gap-x-3 font-mono text-[var(--color-text-secondary)]">
+                          {backToBackLines[i].map((line) => (
+                            <span key={line}>{line}</span>
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {backToBacks.missingStartTimes.length > 0 && (
+                  <p className="text-[var(--color-text-muted)]">
+                    No start times: {backToBacks.missingStartTimes.map((s) => s.seriesName).join(", ")}
+                  </p>
+                )}
+              </>
             )}
           </div>
         </div>

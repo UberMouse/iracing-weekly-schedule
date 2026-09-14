@@ -173,17 +173,31 @@ interface LocalParts {
   minuteOfDay: number;
 }
 
+// Building an Intl.DateTimeFormat costs ~10x formatting with one, and every
+// formatted time goes through here, so keep one per zone ("" = runtime local).
+const localPartsFormatters = new Map<string, Intl.DateTimeFormat>();
+
+function localPartsFormatter(timeZone: string | undefined): Intl.DateTimeFormat {
+  const key = timeZone ?? "";
+  let formatter = localPartsFormatters.get(key);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      weekday: "short",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    });
+    localPartsFormatters.set(key, formatter);
+  }
+  return formatter;
+}
+
 function localParts(ms: number, timeZone: string | undefined): LocalParts {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone,
-    weekday: "short",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).formatToParts(new Date(ms));
+  const parts = localPartsFormatter(timeZone).formatToParts(new Date(ms));
   const get = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? "";
   return {
     weekday: get("weekday"),
@@ -234,27 +248,48 @@ function formatDaily(
   return patterns.map(({ from, gap, cadence }) => {
     const hourly = 60 % cadence === 0;
     const show = (m: number) => (hourly ? `:${clock(m).slice(3)}` : clock(m));
-    return `${show(from)} → ${show(from + gap)} · ${cadenceLabel(cadence)}`;
+    // Minutes past the hour hide whole hours of the gap (":30 → :30" when B
+    // starts an hour later), so spell those out. A shorter gap that wraps
+    // (":45 → :15") reads naturally as the next hour.
+    const extraHours = hourly && gap >= 60 ? ` (+${Math.floor(gap / 60)}h)` : "";
+    return `${show(from)} → ${show(from + gap)}${extraHours} · ${cadenceLabel(cadence)}`;
   });
 }
 
 /**
  * Concise display lines for a pair's matches in `timeZone`: one line per
  * periodic pattern for daily matches (":30 → :45 · hourly",
- * "01:45 → 03:00 · every 2 h"), or one per occurrence for dated matches
- * ("Sat 19:00 → 20:15", with B's weekday added when it falls on another day).
+ * ":30 → :30 (+1h) · hourly", "01:45 → 03:00 · every 2 h"), or one per A start
+ * for dated matches, listing every B start after it ("Sat 19:00 → 20:15, 20:30",
+ * with a weekday added whenever a B start falls on a later day than the time
+ * before it).
  */
 export function formatBackToBackMatches(
   matches: BackToBackMatches,
   { timeZone, referenceDate = new Date() }: FormatBackToBackOptions = {},
 ): string[] {
   if (matches.kind === "daily") {
+    // Daily patterns are shown with the zone's UTC offset at a single instant
+    // (callers pass the week's start), so a DST change part-way through the
+    // week is approximated: later days display an hour off.
     return formatDaily(matches.occurrences, utcOffsetMinutes(referenceDate, timeZone));
   }
-  return matches.occurrences.map(({ fromStart, toStart }) => {
-    const from = localParts(fromStart, timeZone);
+  // Occurrences are sorted by A start, then B start, so each A start's B
+  // starts are adjacent and ascending.
+  const lines: { fromStart: number; text: string; lastDateKey: string }[] = [];
+  for (const { fromStart, toStart } of matches.occurrences) {
     const to = localParts(toStart, timeZone);
-    const toDay = to.dateKey === from.dateKey ? "" : `${to.weekday} `;
-    return `${from.weekday} ${clock(from.minuteOfDay)} → ${toDay}${clock(to.minuteOfDay)}`;
-  });
+    let line = lines.at(-1);
+    if (line?.fromStart !== fromStart) {
+      const from = localParts(fromStart, timeZone);
+      line = { fromStart, text: `${from.weekday} ${clock(from.minuteOfDay)} →`, lastDateKey: from.dateKey };
+      lines.push(line);
+    } else {
+      line.text += ",";
+    }
+    const toDay = to.dateKey === line.lastDateKey ? "" : `${to.weekday} `;
+    line.text += ` ${toDay}${clock(to.minuteOfDay)}`;
+    line.lastDateKey = to.dateKey;
+  }
+  return lines.map((line) => line.text);
 }

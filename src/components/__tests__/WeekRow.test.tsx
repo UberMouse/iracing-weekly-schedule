@@ -146,7 +146,23 @@ describe("WeekRow", () => {
       renderWeek([early.seriesId, late.seriesId]);
       const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
       expect(toggle).toHaveAttribute("aria-expanded", "false");
-      expect(screen.getByText("Early Sprint → Late Sprint")).not.toBeVisible();
+      // The controlled panel exists but stays empty until opened.
+      const region = document.getElementById(toggle.getAttribute("aria-controls")!);
+      expect(region).not.toBeNull();
+      expect(region).not.toBeVisible();
+      expect(screen.queryByText("Early Sprint → Late Sprint")).not.toBeInTheDocument();
+    });
+
+    it("renders the panel contents again after collapsing and reopening", async () => {
+      renderWeek([early.seriesId, late.seriesId]);
+      const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
+      await userEvent.click(toggle);
+      expect(screen.getByText("Early Sprint → Late Sprint")).toBeVisible();
+      await userEvent.click(toggle);
+      expect(toggle).toHaveAttribute("aria-expanded", "false");
+      expect(screen.queryByText("Early Sprint → Late Sprint")).not.toBeInTheDocument();
+      await userEvent.click(toggle);
+      expect(screen.getByText("Early Sprint → Late Sprint")).toBeVisible();
     });
 
     it("expands on click to show pairs and series without start times", async () => {
