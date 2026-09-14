@@ -77,8 +77,9 @@ describe("TrackUsage", () => {
     const rows = screen.getAllByRole("row").slice(1); // drop header row
     const names = rows.map((r) => r.querySelector("th")?.textContent);
     // Lanier (20) > Charlotte (12) > Mystery (5). Lanier is free, so its cell
-    // also carries the "Free" badge text.
-    expect(names).toEqual(["Lanier National SpeedwayFree", "Charlotte Motor Speedway", "Mystery Track"]);
+    // also carries the "Free" badge text, separated by a visually-hidden ", "
+    // so assistive tech doesn't run the name and badge together.
+    expect(names).toEqual(["Lanier National Speedway, Free", "Charlotte Motor Speedway", "Mystery Track"]);
   });
 
   it("shows a 0 for seasons with no usage rather than a blank cell", async () => {
@@ -87,8 +88,8 @@ describe("TrackUsage", () => {
     await waitFor(() => expect(screen.getByText("Lanier National Speedway")).toBeInTheDocument());
     const lanierRow = screen.getByText("Lanier National Speedway").closest("tr")!;
     const cells = Array.from(lanierRow.querySelectorAll("th, td")).map((cell) => cell.textContent);
-    // Track (+ "Free" badge text), S2, S3, S4, Total
-    expect(cells).toEqual(["Lanier National SpeedwayFree", "10", "10", "0", "20"]);
+    // Track (+ visually-hidden separator and "Free" badge text), S2, S3, S4, Total
+    expect(cells).toEqual(["Lanier National Speedway, Free", "10", "10", "0", "20"]);
   });
 
   it("filtering to a single type counts only that bucket, hides zero rows, and re-sorts", async () => {

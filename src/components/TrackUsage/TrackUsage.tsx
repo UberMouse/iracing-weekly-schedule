@@ -97,7 +97,7 @@ export default function TrackUsage() {
         <div className="w-px self-stretch bg-[var(--color-border)] mx-1" aria-hidden="true" />
         <FilterPill
           label="Hide free tracks"
-          color="var(--color-current-week)"
+          color="var(--color-free)"
           active={hideFree}
           onClick={() => setHideFree((h) => !h)}
         />
@@ -127,6 +127,7 @@ export default function TrackUsage() {
                     {season.name}
                     {season.provisional && (
                       <span className="ml-1.5 align-middle text-[9px] normal-case font-body font-semibold tracking-normal rounded-full px-1.5 py-0.5 border border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+                        <span className="sr-only">, </span>
                         Provisional
                       </span>
                     )}
@@ -152,7 +153,8 @@ export default function TrackUsage() {
                   >
                     {row.trackName}
                     {row.free && (
-                      <span className="ml-1.5 align-middle text-[9px] normal-case font-body font-semibold tracking-normal rounded-full px-1.5 py-0.5 border border-[var(--color-current-week)]/40 bg-[var(--color-current-week)]/10 text-[var(--color-current-week)]">
+                      <span className="ml-1.5 align-middle text-[9px] normal-case font-body font-semibold tracking-normal rounded-full px-1.5 py-0.5 border border-[var(--color-free)]/40 bg-[var(--color-free)]/10 text-[var(--color-free)]">
+                        <span className="sr-only">, </span>
                         Free
                       </span>
                     )}
