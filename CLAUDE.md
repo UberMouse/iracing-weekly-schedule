@@ -44,6 +44,7 @@ Things the PDF does not state, and where they come from:
 - **Race duration** — only given for time-limited races ("40 mins"); lap- and heat-limited ones inherit the matched series' duration so sprint/endurance classification survives.
 - **Multiclass** — derived from "Grid by class" in the conditions column.
 - **Category for the trailing "UNRANKED" section** — inherited from the match (iRacing files those under `oval`).
+- **Race start times** — only for interval wordings ("Races every 2 hours at :15 past"), parsed by `parseRaceSchedule` into a `raceTimes: { kind: "repeating" }` on every week; day-specific wordings (naming a weekday, or "GMT") are out of scope and leave `raceTimes` unset. `sessionMinutes` is the week's time-limited race length + 15 (approximating iRacing's whole-event duration), else the matched prior series' `raceTimeMinutes`, else `null`.
 
 **Cutover:** when `npm run fetch-data` later finds a provisional archive for the same season, it writes a `seriesIdRemap` (provisional id → official id) into the new season file. The store replays it **once** per season (tracked in `appliedSeriesRemaps`) so picks and favourites survive. Picks are remapped in full; favourites only for negative ids, since a real id there may predate the import. `writeSeasonFiles` refuses to overwrite official data with provisional data.
 

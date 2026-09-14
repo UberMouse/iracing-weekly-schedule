@@ -1,4 +1,4 @@
-import type { Car, Category, LicenseClass, Series, SetupType, WeekSchedule } from "../src/types";
+import type { Car, Category, LicenseClass, RaceTimes, Series, SetupType, WeekSchedule } from "../src/types";
 import type { PrelimSeries, PrelimWeek } from "./pdf-schedule";
 import { buildTrackMapLayers, buildTrackMapUrl, computeSeasonWeek, type RawTrackAsset } from "./transform";
 
@@ -231,15 +231,95 @@ function parseRaceMinutes(raceLength: string): number | null {
   return match ? Number(match[1]) : null;
 }
 
+/** Day-naming wording ("Saturday", "Thur & Sat", "other Saturday"), which this parser never attempts. */
+const WEEKDAY_RE = /\b(mon|tues?|wed|weds|wednesday|thur|thurs|thursday|fri|sat|sun)\w*\b/i;
+
 /**
  * Repeating series advertise an interval ("Races every 2 hours at :15 past");
  * scheduled ones name the days they run ("Races every other Saturday at 7 GMT").
  */
 function parseIsRepeating(racesDescription: string): boolean | undefined {
   if (!racesDescription.trim()) return undefined;
-  return !/\b(mon|tues?|wed|weds|wednesday|thur|thurs|thursday|fri|sat|sun)\w*\b/i.test(
-    racesDescription,
-  );
+  return !WEEKDAY_RE.test(racesDescription);
+}
+
+const TWO_HOURLY_RE = /every\s+(odd|even)?\s*2\s*hours?/i;
+const THIRTY_MINUTE_RE = /every\s+(?:30|thirty)\s+minutes?\b/i;
+const HOURLY_RE = /every\s+hour\b|\bhourly\b/i;
+
+/**
+ * Minute-of-hour wording: "on the hour" / "top of the hour" / "on the 00"
+ * (group 1, value 0), "half past" (group 2, value 30), ":MM" (group 3), or
+ * "MM past" (group 4). Matched globally so several minutes ("`:15 & :45`")
+ * can be collected and the smallest taken.
+ */
+const MINUTE_TOKEN_RE =
+  /(on the hour|top of the hour|on the 00)|(half past)|:(\d{2})|(\d{1,2})\s*past/gi;
+
+/**
+ * Parse the PDF's "Races ..." wording for an *interval* series into its
+ * repeat cadence and first session's minute-of-hour. Day-specific schedules
+ * (naming a weekday, or "GMT") are out of scope and yield undefined, as does
+ * anything else this doesn't recognise.
+ *
+ * Only the part before "|" is read ("Races ... | Qualifying ...").
+ */
+export function parseRaceSchedule(
+  racesDescription: string,
+): { firstSessionTime: string; repeatMinutes: number } | undefined {
+  const text = racesDescription.split("|")[0]?.trim() ?? "";
+  if (!text) return undefined;
+  if (WEEKDAY_RE.test(text) || /\bgmt\b/i.test(text)) return undefined;
+
+  const twoHourly = TWO_HOURLY_RE.exec(text);
+  let repeatMinutes: number | undefined;
+  let hour = 0;
+  if (twoHourly) {
+    repeatMinutes = 120;
+    hour = twoHourly[1]?.toLowerCase() === "odd" ? 1 : 0;
+  } else if (THIRTY_MINUTE_RE.test(text)) {
+    repeatMinutes = 30;
+  } else if (HOURLY_RE.test(text)) {
+    repeatMinutes = 60;
+  }
+
+  const minutes: number[] = [];
+  for (const match of text.matchAll(MINUTE_TOKEN_RE)) {
+    if (match[3] !== undefined) minutes.push(Number(match[3]));
+    else if (match[4] !== undefined) minutes.push(Number(match[4]));
+    else if (match[2] !== undefined) minutes.push(30);
+    else minutes.push(0);
+  }
+
+  if (repeatMinutes === undefined) {
+    // No stated interval word: the only wording this handles without one is
+    // two minutes 30 apart ("Races at :15 and :45"), which implies :30.
+    const unique = [...new Set(minutes)];
+    if (unique.length === 2 && Math.abs(unique[0] - unique[1]) === 30) {
+      repeatMinutes = 30;
+    } else {
+      return undefined;
+    }
+  }
+
+  const minute = minutes.length ? Math.min(...minutes) : 0;
+  return {
+    firstSessionTime: `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`,
+    repeatMinutes,
+  };
+}
+
+/**
+ * The PDF gives no session length. When the week's race is time-limited its
+ * length plus the ~15 min pre-race/warmup/cooldown overhead approximates
+ * iRacing's whole-event `session_minutes`; otherwise fall back to the matched
+ * prior series' own `raceTimeMinutes`, which *is* session_minutes (official
+ * archives only — provisional ones never feed `priorSeries`).
+ */
+function computeWeekSessionMinutes(raceLength: string, prior?: PriorSeries): number | null {
+  const timedMinutes = parseRaceMinutes(raceLength);
+  if (timedMinutes !== null) return timedMinutes + 15;
+  return prior?.raceTimeMinutes ?? null;
 }
 
 /** Season start is the earliest week-1 date printed by a full-length series. */
@@ -337,6 +417,10 @@ export function transformPrelimToSeries(input: {
       diagnostics.newSeries.push(entry.seriesName);
     }
 
+    // Only interval wordings resolve to a start time; day-specific ones (out
+    // of scope) leave every week without `raceTimes`.
+    const raceSchedule = parseRaceSchedule(entry.racesDescription);
+
     const scheduleWeeks = entry.weeks
       .map((week): WeekSchedule | null => {
         const seasonWeek = computeSeasonWeek(week.startDate, seasonStart, week.weekNumber);
@@ -352,6 +436,14 @@ export function transformPrelimToSeries(input: {
           ? resolveCars(carText, carIndex, unresolvedCars)
           : [];
         const rainChance = parseRainChance(week.conditions);
+        const raceTimes: RaceTimes | undefined = raceSchedule
+          ? {
+              kind: "repeating",
+              firstSessionTime: raceSchedule.firstSessionTime,
+              repeatMinutes: raceSchedule.repeatMinutes,
+              sessionMinutes: computeWeekSessionMinutes(week.raceLength, prior),
+            }
+          : undefined;
 
         return {
           weekNumber: week.weekNumber,
@@ -367,6 +459,7 @@ export function transformPrelimToSeries(input: {
           ...(trackMapUrl ? { trackMapUrl } : {}),
           ...(trackMapLayers ? { trackMapLayers } : {}),
           ...(entry.isCarRotation ? { cars: weekCars } : {}),
+          ...(raceTimes ? { raceTimes } : {}),
         };
       })
       .filter((week): week is WeekSchedule => week !== null);

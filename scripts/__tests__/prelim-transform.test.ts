@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   buildSeriesIdRemap,
+  parseRaceSchedule,
   syntheticSeriesId,
   transformPrelimToSeries,
   type PriorSeries,
@@ -332,5 +333,151 @@ describe("buildSeriesIdRemap", () => {
       [{ seriesId: 519, seriesName: "Renault Clio Cup", category: "sports_car", licenseClass: "D" }],
     );
     expect(remap).toEqual({});
+  });
+});
+
+describe("parseRaceSchedule", () => {
+  const cases: [string, { firstSessionTime: string; repeatMinutes: number } | undefined][] = [
+    ["Races every 2 hours on the hour", { firstSessionTime: "00:00", repeatMinutes: 120 }],
+    ["Races every hour at :45 past", { firstSessionTime: "00:45", repeatMinutes: 60 }],
+    ["Races every 2 hours at :15 past", { firstSessionTime: "00:15", repeatMinutes: 120 }],
+    ["Races every hour at :30 past", { firstSessionTime: "00:30", repeatMinutes: 60 }],
+    ["Races every 2 hours at :30 past", { firstSessionTime: "00:30", repeatMinutes: 120 }],
+    ["Races every 2 hours at :45 past", { firstSessionTime: "00:45", repeatMinutes: 120 }],
+    ["Races every hour on the hour", { firstSessionTime: "00:00", repeatMinutes: 60 }],
+    ["Races hourly at :15", { firstSessionTime: "00:15", repeatMinutes: 60 }],
+    ["Races every hour at :15 past", { firstSessionTime: "00:15", repeatMinutes: 60 }],
+    ["Races hourly at :45", { firstSessionTime: "00:45", repeatMinutes: 60 }],
+    ["Races every hour at :30", { firstSessionTime: "00:30", repeatMinutes: 60 }],
+    ["Races every 2 hours at :45", { firstSessionTime: "00:45", repeatMinutes: 120 }],
+    ["Races every hour at :00", { firstSessionTime: "00:00", repeatMinutes: 60 }],
+    ["Races every hour at :45", { firstSessionTime: "00:45", repeatMinutes: 60 }],
+    ["Races hourly at :30", { firstSessionTime: "00:30", repeatMinutes: 60 }],
+    ["Races hourly at :00", { firstSessionTime: "00:00", repeatMinutes: 60 }],
+    ["Races every 30 minutes", { firstSessionTime: "00:00", repeatMinutes: 30 }],
+    ["Races hourly at :45 past", { firstSessionTime: "00:45", repeatMinutes: 60 }],
+    ["Races at 15 past every 2 hours", { firstSessionTime: "00:15", repeatMinutes: 120 }],
+    ["Races hourly at the top of the hour", { firstSessionTime: "00:00", repeatMinutes: 60 }],
+    ["Races every 2 hours at :30", { firstSessionTime: "00:30", repeatMinutes: 120 }],
+    ["Races every 30 minutes at :15 & :45", { firstSessionTime: "00:15", repeatMinutes: 30 }],
+    ["Races every hour at :15 after", { firstSessionTime: "00:15", repeatMinutes: 60 }],
+    ["Races every hour at :15", { firstSessionTime: "00:15", repeatMinutes: 60 }],
+    [
+      "Races every other Saturday at 4 & 15 GMT and Sunday at 0 GMT, 20 GMT",
+      undefined,
+    ],
+    ["Races every 2 hours at :00", { firstSessionTime: "00:00", repeatMinutes: 120 }],
+    ["Races every 30 minutes at :15 and :45", { firstSessionTime: "00:15", repeatMinutes: 30 }],
+    ["Races 45 past every 2 hours", { firstSessionTime: "00:45", repeatMinutes: 120 }],
+    ["Races on the hour every hour", { firstSessionTime: "00:00", repeatMinutes: 60 }],
+    ["Races every 2 hours at the :30", { firstSessionTime: "00:30", repeatMinutes: 120 }],
+    ["Races every odd 2 hours on the hour", { firstSessionTime: "01:00", repeatMinutes: 120 }],
+    ["Races every even 2 hours at :30 past", { firstSessionTime: "00:30", repeatMinutes: 120 }],
+    ["Races every even 2 hours on the hour", { firstSessionTime: "00:00", repeatMinutes: 120 }],
+    ["Races every 30 minutes at :00 & :30", { firstSessionTime: "00:00", repeatMinutes: 30 }],
+    [
+      "Races on Saturday at 7 & 17:00 GMT & Sunday at 0 & 13 GMT",
+      undefined,
+    ],
+    ["Races Friday at 19 GMT, Saturday at 7 GMT, Sunday at 18 GMT", undefined],
+    [
+      "Races every 30 minutes at :15 and :45 past",
+      { firstSessionTime: "00:15", repeatMinutes: 30 },
+    ],
+    ["Races on Saturday at 1 & 13 GMT", undefined],
+    ["Races Saturdays 9 and 19 GMT and Sundays 17 GMT", undefined],
+    [
+      "Races on every hour on the hour | Qualifying every hour at :30",
+      { firstSessionTime: "00:00", repeatMinutes: 60 },
+    ],
+    [
+      "Races every other Saturday at 7, 18 GMT and Sunday at 14 GMT",
+      undefined,
+    ],
+    [
+      "Races every other Saturday at 2, 7, 18 GMT and Sunday at 14 GMT",
+      undefined,
+    ],
+    ["Races Thursday at 10 & 18 GMT and Friday at 00 & 3 GMT", undefined],
+    ["Races every 30 minutes at :00 & 30", { firstSessionTime: "00:00", repeatMinutes: 30 }],
+    ["Races at every hour at :15", { firstSessionTime: "00:15", repeatMinutes: 60 }],
+    ["Races Thur & Sat at 10, 19 GMT & Fri & Sun at 1,4 GMT", undefined],
+    ["Races Fri & Sun at 10, 19 GMT & Sat & Mon at 1, 4 GMT", undefined],
+    ["Races Weds 2 GMT, Sat 8 GMT, Sun 19 GMT, & Mon at 18 GMT", undefined],
+    ["Races every hour at half past", { firstSessionTime: "00:30", repeatMinutes: 60 }],
+    ["Races hourly on the 00", { firstSessionTime: "00:00", repeatMinutes: 60 }],
+    ["Races at :15 and :45", { firstSessionTime: "00:15", repeatMinutes: 30 }],
+    [
+      "Races every thirty minutes on the hour and :30 past",
+      { firstSessionTime: "00:00", repeatMinutes: 30 },
+    ],
+    ["", undefined],
+  ];
+
+  it.each(cases)("%s", (racesDescription, expected) => {
+    expect(parseRaceSchedule(racesDescription)).toEqual(expected);
+  });
+});
+
+describe("provisional raceTimes", () => {
+  it("sets raceTimes on every week of an interval series", () => {
+    const result = run([series({ racesDescription: "Races every 2 hours on the hour" })]);
+    const [entry] = result.series;
+    expect(entry.scheduleWeeks).toHaveLength(12);
+    for (const week of entry.scheduleWeeks) {
+      expect(week.raceTimes).toMatchObject({
+        kind: "repeating",
+        firstSessionTime: "00:00",
+        repeatMinutes: 120,
+      });
+    }
+  });
+
+  it("leaves raceTimes unset for a day-specific series", () => {
+    const result = run([
+      series({ racesDescription: "Races every other Saturday at 2, 7, 18 GMT and Sunday at 14 GMT" }),
+    ]);
+    expect(result.series[0].scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("takes sessionMinutes from a time-limited week's length plus 15", () => {
+    const result = run([
+      series({
+        racesDescription: "Races every 2 hours on the hour",
+        weeks: [week({ raceLength: "40 mins" })],
+      }),
+    ]);
+    expect(result.series[0].scheduleWeeks[0].raceTimes).toMatchObject({ sessionMinutes: 55 });
+  });
+
+  it("falls back to the matched prior series' raceTimeMinutes for a lap-limited week", () => {
+    const prior: PriorSeries = {
+      seriesId: 519,
+      seriesName: "Mini Stock Rookie Series",
+      category: "oval",
+      licenseClass: "R",
+      raceTimeMinutes: 25,
+    };
+    const result = run(
+      [
+        series({
+          racesDescription: "Races every 2 hours on the hour",
+          weeks: [week({ raceLength: "15 laps" })],
+        }),
+      ],
+      [prior],
+    );
+    expect(result.series[0].seriesId).toBe(519);
+    expect(result.series[0].scheduleWeeks[0].raceTimes).toMatchObject({ sessionMinutes: 25 });
+  });
+
+  it("is null when the week has no time limit and there is no matched prior duration", () => {
+    const result = run([
+      series({
+        racesDescription: "Races every 2 hours on the hour",
+        weeks: [week({ raceLength: "15 laps" })],
+      }),
+    ]);
+    expect(result.series[0].scheduleWeeks[0].raceTimes).toMatchObject({ sessionMinutes: null });
   });
 });
