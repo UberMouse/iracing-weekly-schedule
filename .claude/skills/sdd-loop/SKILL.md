@@ -69,8 +69,8 @@ Give running commentary throughout: say what you're doing and why before each st
   `npm run fetch-prelim` hit the iRacing API with credentials injected by 1Password (`op run`)
   and can be run anytime. CI never has credentials — anything needed at deploy time must be
   derivable from committed files.
-- **Browser checks:** use the `agent-browser` CLI against `npm run dev` (base path
-  `/iracing-weekly-schedule/`), not Chrome MCP tools.
+- **Browser checks:** use the `playwright-cli` skill against `npm run dev` (base path
+  `/iracing-weekly-schedule/`), not Chrome MCP tools. Its "This repo" section has the recipe.
 - **Debug logging:** tag it with a greppable string and report a regex matching all of it.
 
 ## State you carry
@@ -191,6 +191,12 @@ Run it yourself (not via a subagent) and read the output:
 ```bash
 npm run test && npm run lint && npm run build
 ```
+
+**If the change touches anything under `src/`** (components, store, styles, routing), also run a
+browser pass yourself with `playwright-cli` (recipe in that skill's "This repo" section): load
+every route the change affects, exercise each acceptance criterion that's visible in the UI,
+and check `playwright-cli console warning` shows no new warnings or errors. Skip it for changes
+confined to `scripts/`, `data/` or docs, and say you skipped it.
 
 Do not proceed to §5 with anything red.
 
