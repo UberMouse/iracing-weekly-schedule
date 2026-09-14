@@ -126,7 +126,14 @@ describe("WeekRow", () => {
     const late = timedSeries(302, "Late Sprint", {
       kind: "repeating", firstSessionTime: "00:45", repeatMinutes: 60, sessionMinutes: 15,
     });
-    const b2bSeries = [early, late, normalSeries, carRotationSeries];
+    // Mini :15 ends :35 → ARCA :45 ends :16 → Mini :15, every hour: a loop, and a pair each way.
+    const mini = timedSeries(303, "Mini Stock", {
+      kind: "repeating", firstSessionTime: "00:15", repeatMinutes: 30, sessionMinutes: 20,
+    });
+    const arca = timedSeries(304, "ARCA", {
+      kind: "repeating", firstSessionTime: "00:45", repeatMinutes: 60, sessionMinutes: 31,
+    });
+    const b2bSeries = [early, late, normalSeries, carRotationSeries, mini, arca];
     const earlyToLate = "Early Sprint (15 min) → Late Sprint";
 
     /**
@@ -158,7 +165,7 @@ describe("WeekRow", () => {
 
     it("is collapsed by default with the number of qualifying pairs", () => {
       renderWeek([early.seriesId, late.seriesId]);
-      const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
+      const toggle = screen.getByRole("button", { name: "Back-2-backs (1) · Loops (0)" });
       expect(toggle).toHaveAttribute("aria-expanded", "false");
       // The controlled panel exists but stays empty until opened.
       const region = document.getElementById(toggle.getAttribute("aria-controls")!);
@@ -169,7 +176,7 @@ describe("WeekRow", () => {
 
     it("renders the panel contents again after collapsing and reopening", async () => {
       renderWeek([early.seriesId, late.seriesId]);
-      const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
+      const toggle = screen.getByRole("button", { name: "Back-2-backs (1) · Loops (0)" });
       await userEvent.click(toggle);
       expect(pairHeading(earlyToLate)).toBeVisible();
       await userEvent.click(toggle);
@@ -181,7 +188,7 @@ describe("WeekRow", () => {
 
     it("expands on click to show pairs with A's length, end and gap, and series without start times", async () => {
       renderWeek([early.seriesId, late.seriesId], [normalSeries.seriesId]);
-      const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
+      const toggle = screen.getByRole("button", { name: "Back-2-backs (1) · Loops (0)" });
       await userEvent.click(toggle);
       expect(toggle).toHaveAttribute("aria-expanded", "true");
       const region = document.getElementById(toggle.getAttribute("aria-controls")!);
@@ -194,7 +201,7 @@ describe("WeekRow", () => {
 
     it("shows official session lengths plainly, without a tooltip or screen-reader note", async () => {
       renderWeek([early.seriesId, late.seriesId]);
-      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1)" }));
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1) · Loops (0)" }));
       const length = screen.getByText("(15 min)");
       expect(length).not.toHaveAttribute("title");
       expect(screen.queryByText("(~15 min)")).not.toBeInTheDocument();
@@ -203,7 +210,7 @@ describe("WeekRow", () => {
 
     it("marks provisional session lengths as estimates with a tooltip and screen-reader note", async () => {
       renderWeek([early.seriesId, late.seriesId], [], false, true);
-      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1)" }));
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1) · Loops (0)" }));
       expect(
         pairHeading(
           "Early Sprint (~15 min) (estimated from iRacing's preliminary schedule) → Late Sprint",
@@ -220,14 +227,54 @@ describe("WeekRow", () => {
 
     it("includes maybes and is shown for read-only seasons", () => {
       renderWeek([early.seriesId], [late.seriesId], true);
-      expect(screen.getByRole("button", { name: "Back-2-backs (1)" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Back-2-backs (1) · Loops (0)" })).toBeInTheDocument();
     });
 
     it("says when nothing qualifies", async () => {
       renderWeek([normalSeries.seriesId, carRotationSeries.seriesId]);
-      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (0)" }));
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (0) · Loops (0)" }));
       expect(screen.getByText("No back-2-backs this week")).toBeVisible();
+      expect(screen.getByText("No loops this week")).toBeVisible();
       expect(screen.getByText("No start times: GT3 Sprint, Ring Meister")).toBeVisible();
+    });
+
+    it("counts pairs and loops in the label", () => {
+      renderWeek([mini.seriesId], [arca.seriesId]);
+      // Mini → ARCA and ARCA → Mini; the Mini ⇄ ARCA loop (maybes count too).
+      expect(screen.getByRole("button", { name: "Back-2-backs (2) · Loops (1)" })).toBeInTheDocument();
+    });
+
+    it("shows a Loops section above the Pairs section", async () => {
+      renderWeek([mini.seriesId, arca.seriesId]);
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (2) · Loops (1)" }));
+      const loopsHeading = screen.getByRole("heading", { name: "Loops" });
+      const pairsHeading = screen.getByRole("heading", { name: "Pairs" });
+      expect(loopsHeading.compareDocumentPosition(pairsHeading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      const loop = pairHeading("Mini Stock (20 min) ⇄ ARCA (31 min)");
+      expect(loop).toBeVisible();
+      expect(loop!.compareDocumentPosition(pairsHeading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(pairsHeading.compareDocumentPosition(pairHeading("Mini Stock (20 min) → ARCA")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(screen.queryByText("No loops this week")).not.toBeInTheDocument();
+    });
+
+    it("says when there are no loops, still listing the pairs", async () => {
+      renderWeek([early.seriesId, late.seriesId]);
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1) · Loops (0)" }));
+      expect(screen.getByText("No loops this week")).toBeVisible();
+      expect(pairHeading(earlyToLate)).toBeVisible();
+    });
+
+    it("marks provisional session lengths in loop headings as estimates", async () => {
+      renderWeek([mini.seriesId, arca.seriesId], [], false, true);
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (2) · Loops (1)" }));
+      const note = "(estimated from iRacing's preliminary schedule)";
+      expect(pairHeading(`Mini Stock (~20 min) ${note} ⇄ ARCA (~31 min) ${note}`)).toBeVisible();
+      // ARCA's length shows in the loop heading and in the ARCA → Mini pair.
+      const arcaLengths = screen.getAllByText("(~31 min)");
+      expect(arcaLengths).toHaveLength(2);
+      for (const length of arcaLengths) {
+        expect(length).toHaveAttribute("title", "Estimated from iRacing's preliminary schedule");
+      }
     });
 
     it("is not rendered with fewer than two series", () => {

@@ -1,7 +1,7 @@
-import { useId, useMemo, useState } from "react";
+import { Fragment, useId, useMemo, useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
-import { findBackToBacks, formatBackToBackMatches } from "./backToBack";
+import { findBackToBackLoops, findBackToBacks, formatBackToBackLoop, formatBackToBackMatches } from "./backToBack";
 import TrackMapPopover from "../TrackMapPopover";
 import { isCarRotation } from "../../types";
 import type { Category, LicenseClass, WeekSchedule, Series } from "../../types";
@@ -85,16 +85,22 @@ export default function WeekRow({
       .filter((s): s is Series & { isMaybe: boolean } => s !== null);
   }, [series, pickedIds, maybeIds]);
   const backToBacks = useMemo(
-    () => (pickedSeries.length >= 2 ? findBackToBacks(pickedSeries, week) : null),
+    () =>
+      pickedSeries.length >= 2
+        ? { ...findBackToBacks(pickedSeries, week), loops: findBackToBackLoops(pickedSeries, week) }
+        : null,
     [pickedSeries, week],
   );
   // Formatting is the expensive part, so only do it while the panel is open.
   const backToBackLines = useMemo(() => {
     if (!showBackToBacks || !backToBacks) return null;
     const referenceDate = new Date(new Date(seasonStartDate).getTime() + (week - 1) * MS_PER_WEEK);
-    return backToBacks.pairs.map((pair) =>
-      formatBackToBackMatches(pair.matches, pair.sessionMinutes, { referenceDate }),
-    );
+    return {
+      loops: backToBacks.loops.map((loop) => formatBackToBackLoop(loop, { referenceDate })),
+      pairs: backToBacks.pairs.map((pair) =>
+        formatBackToBackMatches(pair.matches, pair.sessionMinutes, { referenceDate }),
+      ),
+    };
   }, [showBackToBacks, backToBacks, seasonStartDate, week]);
 
   return (
@@ -219,13 +225,40 @@ export default function WeekRow({
             <span aria-hidden="true" className={`inline-block transition-transform ${showBackToBacks ? "rotate-90" : ""}`}>
               ▸
             </span>
-            Back-2-backs ({backToBacks.pairs.length})
+            Back-2-backs ({backToBacks.pairs.length}) · Loops ({backToBacks.loops.length})
           </button>
           {/* The panel stays mounted so aria-controls always resolves; its
               contents only render while open. */}
           <div id={backToBacksId} hidden={!showBackToBacks} className="mt-2 flex flex-col gap-2">
             {backToBackLines && (
               <>
+                <h3 className={sectionHeadingClass}>Loops</h3>
+                {backToBacks.loops.length === 0 ? (
+                  <p className="text-[var(--color-text-muted)]">No loops this week</p>
+                ) : (
+                  <ul className="flex flex-col gap-2">
+                    {backToBacks.loops.map((loop, i) => (
+                      <li key={loop.series.map((s) => s.seriesId).join("-")}>
+                        <div className="font-medium text-[var(--color-text-primary)]">
+                          {loop.series.map((s, position) => (
+                            <Fragment key={s.seriesId}>
+                              {position > 0 && (loop.series.length === 2 ? " ⇄ " : " → ")}
+                              {s.seriesName}{" "}
+                              <SessionLength minutes={loop.sessionMinutes[position]} provisional={provisional} />
+                            </Fragment>
+                          ))}
+                          {loop.series.length > 2 && ` → ${loop.series[0].seriesName}`}
+                        </div>
+                        <div className="flex flex-wrap gap-x-3 font-mono text-[var(--color-text-secondary)]">
+                          {backToBackLines.loops[i].map((line) => (
+                            <span key={line}>{line}</span>
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <h3 className={sectionHeadingClass}>Pairs</h3>
                 {backToBacks.pairs.length === 0 ? (
                   <p className="text-[var(--color-text-muted)]">No back-2-backs this week</p>
                 ) : (
@@ -234,21 +267,11 @@ export default function WeekRow({
                       <li key={`${pair.from.seriesId}-${pair.to.seriesId}`}>
                         <div className="font-medium text-[var(--color-text-primary)]">
                           {pair.from.seriesName}{" "}
-                          <span
-                            className={`font-normal text-[var(--color-text-secondary)] ${
-                              provisional ? "cursor-help underline decoration-dotted underline-offset-2" : ""
-                            }`}
-                            title={provisional ? "Estimated from iRacing's preliminary schedule" : undefined}
-                          >
-                            {`(${provisional ? "~" : ""}${pair.sessionMinutes} min)`}
-                          </span>
-                          {provisional && (
-                            <span className="sr-only"> (estimated from iRacing's preliminary schedule)</span>
-                          )}{" "}
+                          <SessionLength minutes={pair.sessionMinutes} provisional={provisional} />{" "}
                           → {pair.to.seriesName}
                         </div>
                         <div className="flex flex-wrap gap-x-3 font-mono text-[var(--color-text-secondary)]">
-                          {backToBackLines[i].map((line) => (
+                          {backToBackLines.pairs[i].map((line) => (
                             <span key={line}>{line}</span>
                           ))}
                         </div>
@@ -276,6 +299,26 @@ export default function WeekRow({
         />
       )}
     </div>
+  );
+}
+
+const sectionHeadingClass =
+  "text-[10px] font-semibold uppercase tracking-wide text-[var(--color-text-muted)]";
+
+/** A back-2-back session length; provisional ones are marked as estimates. */
+function SessionLength({ minutes, provisional }: { minutes: number; provisional: boolean }) {
+  return (
+    <>
+      <span
+        className={`font-normal text-[var(--color-text-secondary)] ${
+          provisional ? "cursor-help underline decoration-dotted underline-offset-2" : ""
+        }`}
+        title={provisional ? "Estimated from iRacing's preliminary schedule" : undefined}
+      >
+        {`(${provisional ? "~" : ""}${minutes} min)`}
+      </span>
+      {provisional && <span className="sr-only"> (estimated from iRacing's preliminary schedule)</span>}
+    </>
   );
 }
 

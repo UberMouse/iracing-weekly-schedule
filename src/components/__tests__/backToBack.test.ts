@@ -2,7 +2,9 @@ import { describe, it, expect } from "vitest";
 import {
   WINDOW_AFTER_END_MINUTES,
   WINDOW_BEFORE_END_MINUTES,
+  findBackToBackLoops,
   findBackToBacks,
+  formatBackToBackLoop,
   formatBackToBackMatches,
 } from "../ScheduleBuilder/backToBack";
 import type { RaceTimes, Series } from "../../types";
@@ -343,5 +345,160 @@ describe("formatBackToBackMatches", () => {
       }
     }
     expect(checked).toBeGreaterThan(100);
+  });
+});
+
+describe("findBackToBackLoops", () => {
+  // Real 2026-S4 week 1: Mini Stock at :15/:45 for ~20 min, ARCA hourly at :45 for ~31 min.
+  const mini = makeSeries(564, "Mini Stock", { 1: repeating("00:15", 30, 20) });
+  const arca = makeSeries(167, "ARCA", { 1: repeating("00:45", 60, 31) });
+  const loopNames = (loops: { series: Series[] }[]) => loops.map((l) => l.series.map((s) => s.seriesName).join(" → "));
+  const utcLines = (series: Series[]) =>
+    findBackToBackLoops(series, 1).map((loop) => formatBackToBackLoop(loop, { timeZone: "UTC" }));
+
+  it("finds the real Mini Stock ⇄ ARCA loop, once, whichever series comes first", () => {
+    const loops = findBackToBackLoops([mini, arca], 1);
+    expect(loops).toEqual([
+      {
+        series: [mini, arca],
+        sessionMinutes: [20, 31],
+        gridMinutes: 60,
+        // Mini :15 ends :35 → ARCA :45 ends :16 → Mini :15; Mini :45 can't reach ARCA.
+        variants: [{ starts: [15, 45], repeatMinutes: 60 }],
+      },
+    ]);
+    expect(formatBackToBackLoop(loops[0], { timeZone: "UTC" })).toEqual([
+      ":15 → ends :35 → :45 (10 min gap) → ends :16 (+1h) → :15 (+1h) (1 min overlap) · repeats every 1 h",
+    ]);
+    // Listing ARCA first anchors the same loop on ARCA instead.
+    expect(utcLines([arca, mini])).toEqual([
+      [":45 → ends :16 → :15 (1 min overlap) → ends :35 → :45 (+1h) (10 min gap) · repeats every 1 h"],
+    ]);
+  });
+
+  it("finds no loop when the return hop misses the window", () => {
+    // ARCA for 40 min ends at :25: Mini's :15 is 10 min early and :45 20 min late.
+    const longArca = makeSeries(167, "ARCA", { 1: repeating("00:45", 60, 40) });
+    expect(findBackToBacks([mini, longArca], 1).pairs).toHaveLength(1);
+    expect(findBackToBackLoops([mini, longArca], 1)).toEqual([]);
+  });
+
+  it("finds a 3-series loop in the only direction that works, listed once for all rotations", () => {
+    // A :00 ends :20 → B :30 ends :40 → C :45 ends :57 → A :00. No hop runs the other way round.
+    const a = makeSeries(1, "A", { 1: repeating("00:00", 60, 20) });
+    const b = makeSeries(2, "B", { 1: repeating("00:30", 60, 10) });
+    const c = makeSeries(3, "C", { 1: repeating("00:45", 60, 12) });
+    const loops = findBackToBackLoops([a, b, c], 1);
+    expect(loopNames(loops)).toEqual(["A → B → C"]);
+    expect(loops[0].variants).toEqual([{ starts: [0, 30, 45], repeatMinutes: 60 }]);
+    // The loop starts from whichever of its series is listed first.
+    expect(loopNames(findBackToBackLoops([b, c, a], 1))).toEqual(["B → C → A"]);
+    expect(loopNames(findBackToBackLoops([c, a, b], 1))).toEqual(["C → A → B"]);
+  });
+
+  it("lists both directions of a 3-series loop separately when both work", () => {
+    // Every hop: 25 min then 5 min to the next half hour, so any order loops.
+    const [a, b, c] = ["A", "B", "C"].map((name, i) => makeSeries(i + 1, name, { 1: repeating("00:00", 30, 25) }));
+    const loops = findBackToBackLoops([a, b, c], 1);
+    expect(loopNames(loops)).toEqual(["A → B", "A → C", "B → C", "A → B → C", "A → C → B"]);
+    expect(loops[3].variants).toEqual([{ starts: [0, 30, 60], repeatMinutes: 90 }]);
+    expect(formatBackToBackLoop(loops[3], { timeZone: "UTC" })).toEqual([
+      ":00 → ends :25 → :30 (5 min gap) → ends :55 → :00 (+1h) (5 min gap) → ends :25 (+1h) → :30 (+1h) (5 min gap) · repeats every 1 h 30 min",
+    ]);
+  });
+
+  it("groups distinct cycles of one series order under one loop, by start", () => {
+    // B every 20 min for 40: A :00 → B :20 → A :00 next hour, and A :30 → B :40 → A :30 next hour.
+    const a = makeSeries(1, "A", { 1: repeating("00:00", 30, 12) });
+    const b = makeSeries(2, "B", { 1: repeating("00:00", 20, 40) });
+    const loops = findBackToBackLoops([a, b], 1);
+    expect(loops).toHaveLength(1);
+    expect(loops[0].gridMinutes).toBe(60);
+    expect(loops[0].variants).toEqual([
+      { starts: [0, 20], repeatMinutes: 60 },
+      { starts: [30, 40], repeatMinutes: 60 },
+    ]);
+    expect(formatBackToBackLoop(loops[0], { timeZone: "UTC" })).toEqual([
+      ":00 → ends :12 → :20 (8 min gap) → ends :00 (+1h) → :00 (+1h) (0 min gap) · repeats every 1 h",
+      ":30 → ends :42 → :40 (2 min overlap) → ends :20 → :30 (+1h) (10 min gap) · repeats every 1 h",
+    ]);
+  });
+
+  it("follows a cycle whose laps differ in timing until it realigns", () => {
+    // B every 20 min for 15: A :00 → B :20 → A :30 → B :40 → A :00, a gap one lap and an overlap the next.
+    const a = makeSeries(1, "A", { 1: repeating("00:00", 30, 12) });
+    const b = makeSeries(2, "B", { 1: repeating("00:00", 20, 15) });
+    const [loop] = findBackToBackLoops([a, b], 1);
+    expect(loop.variants).toEqual([{ starts: [0, 20, 30, 40], repeatMinutes: 60 }]);
+    expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
+      ":00 → ends :12 → :20 (8 min gap) → ends :35 → :30 (5 min overlap) → ends :42 → :40 (2 min overlap) → ends :55 → :00 (+1h) (5 min gap) · repeats every 1 h",
+    ]);
+    // +05:30 puts the second lap on the hour, so the chain starts there.
+    expect(formatBackToBackLoop(loop, { timeZone: "Asia/Kolkata" })).toEqual([
+      ":00 → ends :12 → :10 (2 min overlap) → ends :25 → :30 (5 min gap) → ends :42 → :50 (8 min gap) → ends :05 (+1h) → :00 (+1h) (5 min overlap) · repeats every 1 h",
+    ]);
+  });
+
+  it("wraps hops past midnight", () => {
+    // Daily: A 23:30 for 700 min ends 11:10 → B 11:20 for 725 min ends 23:25 → A 23:30.
+    const a = makeSeries(1, "A", { 1: repeating("23:30", 1440, 700) });
+    const b = makeSeries(2, "B", { 1: repeating("11:20", 1440, 725) });
+    const [loop] = findBackToBackLoops([a, b], 1);
+    expect(loop.gridMinutes).toBe(1440);
+    expect(loop.variants).toEqual([{ starts: [1410, 2120], repeatMinutes: 1440 }]);
+    expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
+      "23:30 → ends 11:10 → 11:20 (10 min gap) → ends 23:25 → 23:30 (5 min gap) · repeats every 24 h",
+    ]);
+  });
+
+  it("aligns mixed 60/120-min grids on a 2-hour period, shown in local clock time", () => {
+    // A on odd hours ends :50 → B :55 ends :55 an hour on → A on the next odd hour.
+    const a = makeSeries(1, "A", { 1: repeating("05:00", 120, 50) });
+    const b = makeSeries(2, "B", { 1: repeating("00:55", 60, 60) });
+    const [loop] = findBackToBackLoops([a, b], 1);
+    expect(loop.gridMinutes).toBe(120);
+    expect(loop.variants).toEqual([{ starts: [60, 115], repeatMinutes: 120 }]);
+    expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
+      "01:00 → ends 01:50 → 01:55 (5 min gap) → ends 02:55 → 03:00 (5 min gap) · repeats every 2 h",
+    ]);
+    // +05:30: 01:00 UTC is 06:30 local, whose first 2-hourly slot after midnight is 00:30.
+    expect(formatBackToBackLoop(loop, { timeZone: "Asia/Kolkata" })).toEqual([
+      "00:30 → ends 01:20 → 01:25 (5 min gap) → ends 02:25 → 02:30 (5 min gap) · repeats every 2 h",
+    ]);
+  });
+
+  it("shows sub-hour loops in minutes past the local hour in a half-hour offset zone", () => {
+    const [loop] = findBackToBackLoops([mini, arca], 1);
+    expect(formatBackToBackLoop(loop, { timeZone: "Asia/Kolkata" })).toEqual([
+      ":45 → ends :05 → :15 (10 min gap) → ends :46 (+1h) → :45 (+1h) (1 min overlap) · repeats every 1 h",
+    ]);
+  });
+
+  it("leaves out scheduled series and series without a session length", () => {
+    // Race-for-race the same as ARCA's week, but at fixed instants.
+    const scheduledArca = makeSeries(167, "ARCA", {
+      1: scheduled(
+        Array.from({ length: 24 }, (_, h) => `2026-02-14T${String(h).padStart(2, "0")}:45:00Z`),
+        31,
+      ),
+    });
+    expect(findBackToBacks([mini, scheduledArca], 1).pairs).toHaveLength(2);
+    expect(findBackToBackLoops([mini, scheduledArca], 1)).toEqual([]);
+    const noLength = makeSeries(167, "ARCA", { 1: repeating("00:45", 60, null) });
+    expect(findBackToBackLoops([mini, noLength], 1)).toEqual([]);
+  });
+
+  it("stays fast with 15 series on 15/30/60-min grids", () => {
+    const grids = [15, 30, 60];
+    const series = Array.from({ length: 15 }, (_, i) =>
+      makeSeries(i + 1, `S${i + 1}`, {
+        1: repeating(`00:${String((i * 7) % 60).padStart(2, "0")}`, grids[i % 3], 12 + ((i * 11) % 40)),
+      }),
+    );
+    const started = performance.now();
+    const loops = findBackToBackLoops(series, 1);
+    const elapsed = performance.now() - started;
+    expect(loops.length).toBeGreaterThan(0);
+    expect(elapsed).toBeLessThan(200);
   });
 });
