@@ -72,6 +72,7 @@ Things the PDF does not state, and where they come from:
 - **Layout** — Sticky nav, page transitions, export/import controls
 - **SeriesBrowser** — Filterable grid of SeriesCards (category, license, setup, search, favorites-only)
 - **ScheduleBuilder** — 12 WeekRows; each shows picked series for that week with add/remove
+- **WeekRow back-2-backs** — with ≥ 2 picks + maybes in a week, a collapsed "Back-2-backs (N)" expander (also on read-only seasons) lists ordered pairs A → B where some B start lies in [A end − 5 min, A end + 15 min], A end = start + the week's `raceTimes.sessionMinutes` (the whole event); repeating series compare on UTC time of day (wrapping midnight), scheduled ones on instants. Times show in the viewer's zone (repeating pairs as one line per cadence pattern); series lacking `raceTimes`/`sessionMinutes` are listed as "No start times". Pure logic in `ScheduleBuilder/backToBack.ts`
 - **SeriesCard** — Series metadata, cars, schedule weeks with track info
 - **AddSeriesModal** — Modal for picking series into a specific week
 - **TrackUsage** (`/tracks`) — Table of per-season track appearance counts (series-weeks) fetched from `track-usage.json`, filterable by track type (all/road/oval/dirt road/dirt oval) and by a "Hide free tracks" toggle (ANDed with the type filter, off by default, local component state) that drops tracks marked `free` and shows a "Free" badge beside the name of any that remain; pure sort/filter/aggregate logic (including the hide-free rule) lives in `TrackUsage/aggregate.ts`

@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
 import WeekRow from "../ScheduleBuilder/WeekRow";
-import type { Series } from "../../types";
+import type { RaceTimes, Series } from "../../types";
 
 const carRotationSeries: Series = {
   seriesId: 100,
@@ -109,5 +110,72 @@ describe("WeekRow", () => {
     );
     expect(screen.queryByRole("button", { name: /add series/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /remove series/i })).not.toBeInTheDocument();
+  });
+
+  describe("back-2-backs", () => {
+    const timedSeries = (seriesId: number, seriesName: string, raceTimes: RaceTimes): Series => ({
+      ...normalSeries,
+      seriesId,
+      seriesName,
+      scheduleWeeks: [{ ...normalSeries.scheduleWeeks[0], raceTimes }],
+    });
+    // Early ends on the quarter hour, exactly when Late starts; not the reverse.
+    const early = timedSeries(301, "Early Sprint", {
+      kind: "repeating", firstSessionTime: "00:30", repeatMinutes: 60, sessionMinutes: 15,
+    });
+    const late = timedSeries(302, "Late Sprint", {
+      kind: "repeating", firstSessionTime: "00:45", repeatMinutes: 60, sessionMinutes: 15,
+    });
+    const b2bSeries = [early, late, normalSeries, carRotationSeries];
+
+    function renderWeek(picks: number[], maybes: number[] = [], readOnly = false) {
+      render(
+        <WeekRow
+          week={1}
+          isCurrentWeek={false}
+          seasonStartDate="2026-03-10T00:00:00.000Z"
+          series={b2bSeries}
+          weeklyPicks={{ 1: picks }}
+          weeklyMaybes={{ 1: maybes }}
+          readOnly={readOnly}
+        />,
+      );
+    }
+
+    it("is collapsed by default with the number of qualifying pairs", () => {
+      renderWeek([early.seriesId, late.seriesId]);
+      const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
+      expect(toggle).toHaveAttribute("aria-expanded", "false");
+      expect(screen.getByText("Early Sprint → Late Sprint")).not.toBeVisible();
+    });
+
+    it("expands on click to show pairs and series without start times", async () => {
+      renderWeek([early.seriesId, late.seriesId], [normalSeries.seriesId]);
+      const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
+      await userEvent.click(toggle);
+      expect(toggle).toHaveAttribute("aria-expanded", "true");
+      const region = document.getElementById(toggle.getAttribute("aria-controls")!);
+      expect(region).toBeVisible();
+      expect(screen.getByText("Early Sprint → Late Sprint")).toBeVisible();
+      expect(screen.queryByText("Late Sprint → Early Sprint")).not.toBeInTheDocument();
+      expect(screen.getByText("No start times: GT3 Sprint")).toBeVisible();
+    });
+
+    it("includes maybes and is shown for read-only seasons", () => {
+      renderWeek([early.seriesId], [late.seriesId], true);
+      expect(screen.getByRole("button", { name: "Back-2-backs (1)" })).toBeInTheDocument();
+    });
+
+    it("says when nothing qualifies", async () => {
+      renderWeek([normalSeries.seriesId, carRotationSeries.seriesId]);
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (0)" }));
+      expect(screen.getByText("No back-2-backs this week")).toBeVisible();
+      expect(screen.getByText("No start times: GT3 Sprint, Ring Meister")).toBeVisible();
+    });
+
+    it("is not rendered with fewer than two series", () => {
+      renderWeek([early.seriesId]);
+      expect(screen.queryByRole("button", { name: /back-2-backs/i })).not.toBeInTheDocument();
+    });
   });
 });

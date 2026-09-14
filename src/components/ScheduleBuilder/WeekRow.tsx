@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import AddSeriesModal from "./AddSeriesModal";
+import { findBackToBacks, formatBackToBackMatches } from "./backToBack";
 import TrackMapPopover from "../TrackMapPopover";
 import { isCarRotation } from "../../types";
 import type { Category, LicenseClass, WeekSchedule, Series } from "../../types";
@@ -59,6 +60,8 @@ export default function WeekRow({
 }: Props) {
   const { removeWeeklyPick, removeWeeklyMaybe, toggleMaybe } = useAppStore();
   const [showModal, setShowModal] = useState(false);
+  const [showBackToBacks, setShowBackToBacks] = useState(false);
+  const backToBacksId = useId();
 
   const pickedIds = weeklyPicks[week] ?? [];
   const maybeIds = weeklyMaybes[week] ?? [];
@@ -71,7 +74,8 @@ export default function WeekRow({
       const s = series.find((s) => s.seriesId === e.seriesId);
       return s ? { ...s, isMaybe: e.isMaybe } : null;
     })
-    .filter(Boolean);
+    .filter((s): s is Series & { isMaybe: boolean } => s !== null);
+  const backToBacks = pickedSeries.length >= 2 ? findBackToBacks(pickedSeries, week) : null;
 
   return (
     <div
@@ -95,7 +99,6 @@ export default function WeekRow({
         </div>
         <div className="flex-1 flex flex-wrap gap-2 sm:gap-3 items-center">
           {pickedSeries.map((s) => {
-            if (!s) return null;
             const weekTrack = s.scheduleWeeks.find((w) => w.seasonWeek === week);
             const catColor = categoryColors[s.category];
             const licColor = licenseColors[s.licenseClass];
@@ -184,6 +187,49 @@ export default function WeekRow({
           )}
         </div>
       </div>
+      {backToBacks && (
+        <div className="border-t border-[var(--color-border)] px-3 sm:px-5 py-2 text-xs">
+          <button
+            type="button"
+            onClick={() => setShowBackToBacks((open) => !open)}
+            aria-expanded={showBackToBacks}
+            aria-controls={backToBacksId}
+            className="flex items-center gap-1.5 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+          >
+            <span aria-hidden="true" className={`inline-block transition-transform ${showBackToBacks ? "rotate-90" : ""}`}>
+              ▸
+            </span>
+            Back-2-backs ({backToBacks.pairs.length})
+          </button>
+          <div id={backToBacksId} hidden={!showBackToBacks} className="mt-2 flex flex-col gap-2">
+            {backToBacks.pairs.length === 0 ? (
+              <p className="text-[var(--color-text-muted)]">No back-2-backs this week</p>
+            ) : (
+              <ul className="flex flex-col gap-2">
+                {backToBacks.pairs.map((pair) => (
+                  <li key={`${pair.from.seriesId}-${pair.to.seriesId}`}>
+                    <div className="font-medium text-[var(--color-text-primary)]">
+                      {pair.from.seriesName} → {pair.to.seriesName}
+                    </div>
+                    <div className="flex flex-wrap gap-x-3 font-mono text-[var(--color-text-secondary)]">
+                      {formatBackToBackMatches(pair.matches, {
+                        referenceDate: new Date(new Date(seasonStartDate).getTime() + (week - 1) * MS_PER_WEEK),
+                      }).map((line) => (
+                        <span key={line}>{line}</span>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {backToBacks.missingStartTimes.length > 0 && (
+              <p className="text-[var(--color-text-muted)]">
+                No start times: {backToBacks.missingStartTimes.map((s) => s.seriesName).join(", ")}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
       {!readOnly && showModal && (
         <AddSeriesModal
           week={week}
