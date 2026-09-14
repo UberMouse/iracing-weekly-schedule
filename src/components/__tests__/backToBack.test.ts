@@ -403,7 +403,36 @@ describe("findBackToBackLoops", () => {
     expect(loopNames(loops)).toEqual(["A → B", "A → C", "B → C", "A → B → C", "A → C → B"]);
     expect(loops[3].variants).toEqual([{ starts: [0, 30, 60], repeatMinutes: 90 }]);
     expect(formatBackToBackLoop(loops[3], { timeZone: "UTC" })).toEqual([
-      ":00 → ends :25 → :30 (5 min gap) → ends :55 → :00 (+1h) (5 min gap) → ends :25 (+1h) → :30 (+1h) (5 min gap) · repeats every 1 h 30 min",
+      ":00 → ends :25 → :30 (5 min gap) → ends :55 → :00 (+1h) (5 min gap) → ends :25 (+1h) → :30 (+1h) (5 min gap) · repeats every 1 h 30 min · starts every 30 min",
+    ]);
+  });
+
+  it("says how often a loop can be joined when every grid repeats within the cycle", () => {
+    // Both every 30 min for 25: the :00 → :30 → :00 cycle takes an hour but works from :30 too.
+    const a = makeSeries(1, "A", { 1: repeating("00:00", 30, 25) });
+    const b = makeSeries(2, "B", { 1: repeating("00:00", 30, 25) });
+    const [loop] = findBackToBackLoops([a, b], 1);
+    expect(loop.gridMinutes).toBe(30);
+    // Starting at :30 is the same cycle shifted by the grid, not a second line.
+    expect(loop.variants).toEqual([{ starts: [0, 30], repeatMinutes: 60 }]);
+    expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
+      ":00 → ends :25 → :30 (5 min gap) → ends :55 → :00 (+1h) (5 min gap) · repeats every 1 h · starts every 30 min",
+    ]);
+  });
+
+  it("doesn't say how often a loop can be joined when only once per cycle or per day", () => {
+    // Mini Stock's 30-min grid alone doesn't count: shifting by 30 breaks ARCA's hourly hop.
+    expect(utcLines([mini, arca])).toEqual([
+      [":15 → ends :35 → :45 (10 min gap) → ends :16 (+1h) → :15 (+1h) (1 min overlap) · repeats every 1 h"],
+    ]);
+    // Daily grids: A 00:00 for 1435 ends 23:55 → B 00:00 for 24 h → A 00:00, a two-day cycle.
+    const a = makeSeries(1, "A", { 1: repeating("00:00", 1440, 1435) });
+    const b = makeSeries(2, "B", { 1: repeating("00:00", 1440, 1440) });
+    const [loop] = findBackToBackLoops([a, b], 1);
+    expect(loop.gridMinutes).toBe(1440);
+    expect(loop.variants).toEqual([{ starts: [0, 1440], repeatMinutes: 2880 }]);
+    expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
+      "00:00 → ends 23:55 → 00:00 (5 min gap) → ends 00:00 → 00:00 (0 min gap) · repeats every 48 h",
     ]);
   });
 
@@ -500,5 +529,91 @@ describe("findBackToBackLoops", () => {
     const elapsed = performance.now() - started;
     expect(loops.length).toBeGreaterThan(0);
     expect(elapsed).toBeLessThan(200);
+  });
+
+  it("finds exactly the cycles a brute-force search finds, on random small inputs", () => {
+    // Seeded LCG, so any failure reproduces.
+    let seed = 20260914;
+    const random = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+    const choose = <T,>(items: T[]) => items[Math.floor(random() * items.length)];
+    const mod = (n: number, m: number) => ((n % m) + m) % m;
+    const hhmm = (m: number) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+    type Spec = { first: number; repeat: number; session: number };
+    // Every repeat below divides a day, so a grid is simply its first time modulo the repeat.
+    const startsAt = (spec: Spec, minute: number) => mod(minute - spec.first, spec.repeat) === 0;
+
+    /**
+     * Cycles of one ordered tuple of spec indices, by naive DFS over absolute
+     * minutes. A cycle is simple in the first series' races (mod the period),
+     * so the tuple must start with its earliest series, as loops do.
+     */
+    const bruteForce = (specs: Spec[], tuple: number[], found: Set<string>) => {
+      const k = tuple.length;
+      // Smallest day-dividing shift that leaves every grid in the tuple unchanged.
+      let period = 1;
+      while (1440 % period !== 0 || tuple.some((i) => period % specs[i].repeat !== 0)) period++;
+      const record = (chain: number[], duration: number) => {
+        // Rotate to whichever lap starts first mod the period, then shift into the first period.
+        let best = chain;
+        for (let j = k; j < chain.length; j += k) {
+          const rotated = [...chain.slice(j), ...chain.slice(0, j).map((m) => m + duration)];
+          if (mod(rotated[0], period) < mod(best[0], period)) best = rotated;
+        }
+        const base = best[0] - mod(best[0], period);
+        found.add(JSON.stringify([tuple.map((i) => i + 1), best.map((m) => m - base), duration]));
+      };
+      for (let origin = 0; origin < period; origin++) {
+        if (!startsAt(specs[tuple[0]], origin)) continue;
+        const visited = new Set([origin]);
+        // `chain` holds every start so far; the last is where the current race begins.
+        const race = (chain: number[]) => {
+          const position = (chain.length - 1) % k;
+          const end = chain.at(-1)! + specs[tuple[position]].session;
+          const next = tuple[(position + 1) % k];
+          for (let u = end - 5; u <= end + 15; u++) {
+            if (!startsAt(specs[next], u)) continue;
+            if (position < k - 1) {
+              race([...chain, u]);
+            } else if (mod(u, period) === origin) {
+              if (u > origin) record(chain, u - origin);
+            } else if (!visited.has(mod(u, period))) {
+              visited.add(mod(u, period));
+              race([...chain, u]);
+              visited.delete(mod(u, period));
+            }
+          }
+        };
+        race([origin]);
+      }
+    };
+
+    let cycles = 0;
+    for (let trial = 0; trial < 200; trial++) {
+      const specs: Spec[] = Array.from({ length: 2 + Math.floor(random() * 2) }, () => ({
+        first: 5 * Math.floor(random() * 288),
+        repeat: choose([15, 20, 30, 45, 60, 90, 120]),
+        session: 5 + Math.floor(random() * 96),
+      }));
+      const series = specs.map((spec, i) =>
+        makeSeries(i + 1, `S${i + 1}`, { 1: repeating(hhmm(spec.first), spec.repeat, spec.session) }),
+      );
+      const expected = new Set<string>();
+      // Every ordered tuple of 2 or 3 distinct series led by its earliest one.
+      const indices = specs.map((_, i) => i);
+      for (const i of indices) {
+        for (const j of indices) {
+          if (j <= i) continue;
+          bruteForce(specs, [i, j], expected);
+          for (const l of indices) if (l > i && l !== j) bruteForce(specs, [i, j, l], expected);
+        }
+      }
+      const actual = findBackToBackLoops(series, 1).flatMap((loop) =>
+        loop.variants.map((v) => JSON.stringify([loop.series.map((s) => s.seriesId), v.starts, v.repeatMinutes])),
+      );
+      expect({ trial, specs, cycles: actual.sort() }).toEqual({ trial, specs, cycles: [...expected].sort() });
+      cycles += actual.length;
+    }
+    // Guard against a generator that never produces loops.
+    expect(cycles).toBeGreaterThan(200);
   });
 });

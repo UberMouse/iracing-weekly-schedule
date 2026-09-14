@@ -523,6 +523,9 @@ function periodLabel(minutes: number): string {
  * chain of start → end → next start (with its gap or overlap) back to the
  * first series' start, then the period:
  * ":15 → ends :35 → :45 (10 min gap) → ends :16 (+1h) → :15 (+1h) (1 min overlap) · repeats every 1 h".
+ * When the shift every grid in the loop shares (`gridMinutes`) is shorter than
+ * both the cycle and a day, the same cycle can be joined that often too, so
+ * that is appended: "… · repeats every 1 h · starts every 30 min".
  * Loops whose grids repeat within the hour read in minutes past the hour,
  * with whole hours since the chain's first time spelled out; longer ones in
  * local HH:MM from the first occurrence at/after local midnight. A multi-lap
@@ -560,7 +563,11 @@ export function formatBackToBackLoop(
       previousEnd = end;
     });
     parts.push(`${show(repeatMinutes)} ${gapLabel(chain[0] + repeatMinutes - previousEnd)}`);
-    return { from, text: `${parts.join(" → ")} · repeats ${periodLabel(repeatMinutes)}` };
+    // Every grid in the loop is invariant under `gridMinutes`, so the whole
+    // cycle can also be joined that much later; not worth saying for a day.
+    const joinable = gridMinutes < MINUTES_PER_DAY && gridMinutes < repeatMinutes;
+    const joins = joinable ? ` · starts ${periodLabel(gridMinutes)}` : "";
+    return { from, text: `${parts.join(" → ")} · repeats ${periodLabel(repeatMinutes)}${joins}` };
   });
   lines.sort((a, b) => a.from - b.from);
   return lines.map((line) => line.text);
