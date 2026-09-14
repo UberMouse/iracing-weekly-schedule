@@ -8,14 +8,27 @@ import {
 describe("buildTrackCategoryCatalogue", () => {
   it("keys entries by track_id and carries name/config for readability", () => {
     const catalogue = buildTrackCategoryCatalogue([
-      { track_id: 355, track_name: "Lime Rock Park", config_name: "West Bend Chicane", category: "road" },
-      { track_id: 9, track_name: "USA International Speedway", category: "oval" },
+      {
+        track_id: 355,
+        track_name: "Lime Rock Park",
+        config_name: "West Bend Chicane",
+        category: "road",
+        free_with_subscription: false,
+      },
+      { track_id: 9, track_name: "USA International Speedway", category: "oval", free_with_subscription: true },
     ]);
 
     expect(catalogue).toEqual({
-      "355": { category: "road", name: "Lime Rock Park", config: "West Bend Chicane" },
-      "9": { category: "oval", name: "USA International Speedway" },
+      "355": { category: "road", name: "Lime Rock Park", config: "West Bend Chicane", free: false },
+      "9": { category: "oval", name: "USA International Speedway", free: true },
     });
+  });
+
+  it("treats a missing free_with_subscription as not-free rather than undefined", () => {
+    const catalogue = buildTrackCategoryCatalogue([
+      { track_id: 1, track_name: "No Free Field", category: "road" },
+    ]);
+    expect(catalogue["1"].free).toBe(false);
   });
 
   it("skips a layout with an unrecognised category rather than throwing", () => {
@@ -53,6 +66,15 @@ describe("mergeTrackCategoryCatalogues", () => {
 
     expect(mergeTrackCategoryCatalogues(existing, fresh)).toEqual({
       "1": { category: "road", name: "New Name" },
+    });
+  });
+
+  it("lets fresh data update a stale free flag", () => {
+    const existing: TrackCategoryCatalogue = { "1": { category: "road", name: "Track", free: false } };
+    const fresh: TrackCategoryCatalogue = { "1": { category: "road", name: "Track", free: true } };
+
+    expect(mergeTrackCategoryCatalogues(existing, fresh)).toEqual({
+      "1": { category: "road", name: "Track", free: true },
     });
   });
 });

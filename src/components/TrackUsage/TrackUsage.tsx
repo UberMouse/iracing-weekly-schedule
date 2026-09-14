@@ -27,6 +27,7 @@ export default function TrackUsage() {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<TrackUsageFile | null>(null);
   const [filter, setFilter] = useState<TrackUsageFilterValue>("all");
+  const [hideFree, setHideFree] = useState(false);
   // Bumped on retry to re-trigger the fetch effect below; the effect itself
   // only sets state from its fetch's async callbacks, never synchronously
   // from the effect body (react-hooks/set-state-in-effect).
@@ -60,7 +61,10 @@ export default function TrackUsage() {
     };
   }, [reloadToken]);
 
-  const aggregated = useMemo(() => (data ? aggregateTrackUsage(data, filter) : null), [data, filter]);
+  const aggregated = useMemo(
+    () => (data ? aggregateTrackUsage(data, filter, { hideFree }) : null),
+    [data, filter, hideFree],
+  );
 
   if (status === "loading") {
     return <LoadingState label="Loading track usage…" />;
@@ -78,7 +82,7 @@ export default function TrackUsage() {
         Track Usage
       </h1>
 
-      <div className="flex flex-wrap gap-1.5 mb-4">
+      <div className="flex flex-wrap items-center gap-1.5 mb-4">
         {FILTERS.map(({ value, label, color }) => (
           <FilterPill
             key={value}
@@ -88,6 +92,15 @@ export default function TrackUsage() {
             onClick={() => setFilter(value)}
           />
         ))}
+        {/* Separated from the type filters since it combines (AND) with them
+            rather than being another mutually-exclusive option. */}
+        <div className="w-px self-stretch bg-[var(--color-border)] mx-1" aria-hidden="true" />
+        <FilterPill
+          label="Hide free tracks"
+          color="var(--color-current-week)"
+          active={hideFree}
+          onClick={() => setHideFree((h) => !h)}
+        />
       </div>
 
       {rows.length === 0 ? (
@@ -138,6 +151,11 @@ export default function TrackUsage() {
                     className="px-3 py-2 text-left font-normal text-[var(--color-text-primary)] whitespace-nowrap"
                   >
                     {row.trackName}
+                    {row.free && (
+                      <span className="ml-1.5 align-middle text-[9px] normal-case font-body font-semibold tracking-normal rounded-full px-1.5 py-0.5 border border-[var(--color-current-week)]/40 bg-[var(--color-current-week)]/10 text-[var(--color-current-week)]">
+                        Free
+                      </span>
+                    )}
                   </th>
                   {seasons.map((season) => {
                     const count = row.perSeason[season.id] ?? 0;

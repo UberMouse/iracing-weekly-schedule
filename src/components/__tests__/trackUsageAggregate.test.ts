@@ -15,12 +15,14 @@ const file: TrackUsageFile = {
         oval: { "2026-S2": 4, "2026-S3": 6 },
         road: { "2026-S4": 2 },
       },
+      free: false,
     },
     {
       trackName: "Lanier National Speedway",
       counts: {
         dirt_oval: { "2026-S2": 10, "2026-S3": 10 },
       },
+      free: true,
     },
     {
       trackName: "Daytona International Speedway",
@@ -28,20 +30,24 @@ const file: TrackUsageFile = {
         oval: { "2026-S2": 1 },
         road: { "2026-S3": 3 },
       },
+      free: false,
     },
     {
       trackName: "Mystery Track",
       counts: {
         unknown: { "2026-S2": 5 },
       },
+      free: false,
     },
     {
       trackName: "Tie A",
       counts: { oval: { "2026-S2": 3 } },
+      free: false,
     },
     {
       trackName: "Tie B",
       counts: { oval: { "2026-S2": 3 } },
+      free: true,
     },
   ],
 };
@@ -109,5 +115,32 @@ describe("aggregateTrackUsage", () => {
   it("excludes unknown from a single-category filter", () => {
     const { rows } = aggregateTrackUsage(file, "oval");
     expect(rows.find((r) => r.trackName === "Mystery Track")).toBeUndefined();
+  });
+
+  it("passes the free flag through onto each row", () => {
+    const { rows } = aggregateTrackUsage(file, "all");
+    expect(rows.find((r) => r.trackName === "Lanier National Speedway")?.free).toBe(true);
+    expect(rows.find((r) => r.trackName === "Charlotte Motor Speedway")?.free).toBe(false);
+  });
+
+  it("keeps free tracks by default (hideFree omitted)", () => {
+    const { rows } = aggregateTrackUsage(file, "all");
+    expect(rows.find((r) => r.trackName === "Lanier National Speedway")).toBeDefined();
+  });
+
+  it("hideFree removes free tracks and re-sorts the remaining rows", () => {
+    const { rows } = aggregateTrackUsage(file, "all", { hideFree: true });
+
+    expect(rows.find((r) => r.trackName === "Lanier National Speedway")).toBeUndefined();
+    expect(rows.find((r) => r.trackName === "Tie B")).toBeUndefined();
+    // With Lanier (free, 20) gone, Charlotte (12) is now the top row.
+    expect(rows[0].trackName).toBe("Charlotte Motor Speedway");
+  });
+
+  it("hideFree combines (AND) with the type filter", () => {
+    const { rows } = aggregateTrackUsage(file, "oval", { hideFree: true });
+    // Tie B is oval and free — dropped by hideFree even though it matches the type filter.
+    expect(rows.find((r) => r.trackName === "Tie B")).toBeUndefined();
+    expect(rows.find((r) => r.trackName === "Tie A")).toBeDefined();
   });
 });

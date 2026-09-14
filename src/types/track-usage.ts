@@ -28,6 +28,18 @@ export interface TrackUsageEntry {
   trackName: string;
   /** counts[bucket][seasonId] = series-weeks run on that bucket's layouts that season. */
   counts: Partial<Record<TrackUsageBucket, Record<string, number>>>;
+  /**
+   * True only if every layout id this track used, across every archived
+   * season, is present in the catalogue and marked `free` there. A single
+   * uncatalogued or paid layout — or a legacy catalogue entry with no `free`
+   * field — makes the whole track `false`.
+   *
+   * Assumption: this reflects the track's *current* free-with-subscription
+   * status (from the latest catalogue refresh) applied retroactively to
+   * every season shown, past ones included — iRacing doesn't expose
+   * historical pricing, and a track's inclusion rarely changes.
+   */
+  free: boolean;
 }
 
 export interface TrackUsageFile {

@@ -25,6 +25,9 @@ export interface SeasonUsageInput {
  * so an uncatalogued track still shows up in an "All categories" total
  * without inflating any single category's count.
  *
+ * Also derives `free` per track: true only if every layout id it was ever
+ * scheduled on is catalogued and marked free (see `TrackUsageEntry.free`).
+ *
  * Pure and season-order-agnostic: `seasons` is sorted here by `startDate` so
  * the output is chronological regardless of input order.
  */
@@ -44,14 +47,21 @@ export function computeTrackUsage(
 
         let entry = tracks.get(trackName);
         if (!entry) {
-          entry = { trackName, counts: {} };
+          entry = { trackName, counts: {}, free: true };
           tracks.set(trackName, entry);
         }
 
         // Catalogue keys are stringified track ids.
-        const category = trackCategories[String(week.trackId)]?.category;
+        const catalogueEntry = trackCategories[String(week.trackId)];
+        const category = catalogueEntry?.category;
         const bucket: TrackUsageBucket = category ?? "unknown";
         if (!category) onUnknownTrack?.(week.trackId, trackName);
+
+        // `free` starts true and is AND-ed down by every layout id the track
+        // is seen on: an uncatalogued layout (`catalogueEntry` undefined), a
+        // paid one (`free: false`), or a legacy entry with no `free` field
+        // all read as not-free, per the assumption on `TrackUsageEntry.free`.
+        entry.free = entry.free && catalogueEntry?.free === true;
 
         const bySeason = (entry.counts[bucket] ??= {});
         bySeason[season.id] = (bySeason[season.id] ?? 0) + 1;

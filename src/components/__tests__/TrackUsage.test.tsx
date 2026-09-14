@@ -17,18 +17,21 @@ const file: TrackUsageFile = {
         oval: { "2026-S2": 4, "2026-S3": 6 },
         road: { "2026-S4": 2 },
       },
+      free: false,
     },
     {
       trackName: "Lanier National Speedway",
       counts: {
         dirt_oval: { "2026-S2": 10, "2026-S3": 10 },
       },
+      free: true,
     },
     {
       trackName: "Mystery Track",
       counts: {
         unknown: { "2026-S2": 5 },
       },
+      free: false,
     },
   ],
 };
@@ -73,8 +76,9 @@ describe("TrackUsage", () => {
 
     const rows = screen.getAllByRole("row").slice(1); // drop header row
     const names = rows.map((r) => r.querySelector("th")?.textContent);
-    // Lanier (20) > Charlotte (12) > Mystery (5)
-    expect(names).toEqual(["Lanier National Speedway", "Charlotte Motor Speedway", "Mystery Track"]);
+    // Lanier (20) > Charlotte (12) > Mystery (5). Lanier is free, so its cell
+    // also carries the "Free" badge text.
+    expect(names).toEqual(["Lanier National SpeedwayFree", "Charlotte Motor Speedway", "Mystery Track"]);
   });
 
   it("shows a 0 for seasons with no usage rather than a blank cell", async () => {
@@ -83,8 +87,8 @@ describe("TrackUsage", () => {
     await waitFor(() => expect(screen.getByText("Lanier National Speedway")).toBeInTheDocument());
     const lanierRow = screen.getByText("Lanier National Speedway").closest("tr")!;
     const cells = Array.from(lanierRow.querySelectorAll("th, td")).map((cell) => cell.textContent);
-    // Track, S2, S3, S4, Total
-    expect(cells).toEqual(["Lanier National Speedway", "10", "10", "0", "20"]);
+    // Track (+ "Free" badge text), S2, S3, S4, Total
+    expect(cells).toEqual(["Lanier National SpeedwayFree", "10", "10", "0", "20"]);
   });
 
   it("filtering to a single type counts only that bucket, hides zero rows, and re-sorts", async () => {
@@ -119,6 +123,48 @@ describe("TrackUsage", () => {
 
     await userEvent.click(screen.getByRole("button", { name: "Dirt Road" }));
 
+    expect(screen.getByText(/no tracks match/i)).toBeInTheDocument();
+  });
+
+  it("shows a Free badge only for tracks marked free", async () => {
+    mockFetchOnce({ ok: true, json: async () => file });
+    render(<TrackUsage />);
+    await waitFor(() => expect(screen.getByText("Charlotte Motor Speedway")).toBeInTheDocument());
+
+    const lanierRow = screen.getByText("Lanier National Speedway").closest("tr")!;
+    expect(lanierRow.querySelector("th")?.textContent).toContain("Free");
+
+    const charlotteRow = screen.getByText("Charlotte Motor Speedway").closest("tr")!;
+    expect(charlotteRow.querySelector("th")?.textContent).not.toContain("Free");
+  });
+
+  it("'Hide free tracks' removes free tracks and re-sorts, off by default", async () => {
+    mockFetchOnce({ ok: true, json: async () => file });
+    render(<TrackUsage />);
+    await waitFor(() => expect(screen.getByText("Charlotte Motor Speedway")).toBeInTheDocument());
+
+    const toggle = screen.getByRole("button", { name: "Hide free tracks" });
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByText("Lanier National Speedway")).toBeInTheDocument();
+
+    await userEvent.click(toggle);
+
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
+    expect(screen.queryByText("Lanier National Speedway")).not.toBeInTheDocument();
+    // Charlotte moves to the top now that Lanier (free) is gone.
+    const rows = screen.getAllByRole("row").slice(1);
+    expect(rows[0].querySelector("th")?.textContent).toContain("Charlotte Motor Speedway");
+  });
+
+  it("combines 'Hide free tracks' (AND) with the type filter", async () => {
+    mockFetchOnce({ ok: true, json: async () => file });
+    render(<TrackUsage />);
+    await waitFor(() => expect(screen.getByText("Charlotte Motor Speedway")).toBeInTheDocument());
+
+    await userEvent.click(screen.getByRole("button", { name: "Hide free tracks" }));
+    await userEvent.click(screen.getByRole("button", { name: "Dirt Oval" }));
+
+    // Lanier is the only dirt-oval track but it's free, so hiding free tracks empties the list.
     expect(screen.getByText(/no tracks match/i)).toBeInTheDocument();
   });
 

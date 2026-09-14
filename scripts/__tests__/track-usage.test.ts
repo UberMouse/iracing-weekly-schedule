@@ -177,6 +177,70 @@ describe("computeTrackUsage", () => {
   });
 });
 
+describe("computeTrackUsage free flag", () => {
+  const freeCatalogue: TrackCategoryCatalogue = {
+    "10": { category: "oval", name: "All Free Track", free: true },
+    "11": { category: "oval", name: "All Free Track", config: "Layout 2", free: true },
+    "20": { category: "road", name: "Mixed Track", free: true },
+    "21": { category: "road", name: "Mixed Track", config: "Layout 2", free: false },
+    "30": { category: "road", name: "Legacy Track" }, // no `free` field at all
+  };
+
+  it("is true when every layout id the track used is catalogued and free", () => {
+    const usage = computeTrackUsage(
+      [
+        season({
+          series: [
+            series({
+              scheduleWeeks: [
+                week({ trackId: 10, trackName: "All Free Track" }),
+                week({ trackId: 11, trackName: "All Free Track", weekNumber: 2, seasonWeek: 2 }),
+              ],
+            }),
+          ],
+        }),
+      ],
+      freeCatalogue,
+    );
+    expect(usage.tracks.find((t) => t.trackName === "All Free Track")?.free).toBe(true);
+  });
+
+  it("is false if even one layout the track used is paid", () => {
+    const usage = computeTrackUsage(
+      [
+        season({
+          series: [
+            series({
+              scheduleWeeks: [
+                week({ trackId: 20, trackName: "Mixed Track" }),
+                week({ trackId: 21, trackName: "Mixed Track", weekNumber: 2, seasonWeek: 2 }),
+              ],
+            }),
+          ],
+        }),
+      ],
+      freeCatalogue,
+    );
+    expect(usage.tracks.find((t) => t.trackName === "Mixed Track")?.free).toBe(false);
+  });
+
+  it("is false for a layout id missing from the catalogue entirely", () => {
+    const usage = computeTrackUsage(
+      [season({ series: [series({ scheduleWeeks: [week({ trackId: 999, trackName: "Unknown Track" })] })] })],
+      freeCatalogue,
+    );
+    expect(usage.tracks.find((t) => t.trackName === "Unknown Track")?.free).toBe(false);
+  });
+
+  it("is false for a legacy catalogue entry with no free field", () => {
+    const usage = computeTrackUsage(
+      [season({ series: [series({ scheduleWeeks: [week({ trackId: 30, trackName: "Legacy Track" })] })] })],
+      freeCatalogue,
+    );
+    expect(usage.tracks.find((t) => t.trackName === "Legacy Track")?.free).toBe(false);
+  });
+});
+
 describe("buildTrackUsageFile", () => {
   const seasonFile = (overrides: Partial<SeasonFile> = {}): SeasonFile => ({
     seasonId: "2026-S2",

@@ -2,2330 +2,2807 @@
   "1": {
     "category": "road",
     "name": "[Retired] Lime Rock Park - 2008",
-    "config": "[Retired] Full Course"
+    "config": "[Retired] Full Course",
+    "free": false
   },
   "2": {
     "category": "road",
     "name": "[Retired] Virginia International Raceway",
-    "config": "[Retired] Full Course"
+    "config": "[Retired] Full Course",
+    "free": true
   },
   "3": {
     "category": "road",
     "name": "[Retired] Virginia International Raceway",
-    "config": "[Retired] Patriot"
+    "config": "[Retired] Patriot",
+    "free": true
   },
   "4": {
     "category": "road",
     "name": "[Retired] Virginia International Raceway",
-    "config": "[Retired] North"
+    "config": "[Retired] North",
+    "free": true
   },
   "5": {
     "category": "road",
     "name": "[Retired] Virginia International Raceway",
-    "config": "[Retired] Grand West"
+    "config": "[Retired] Grand West",
+    "free": true
   },
   "6": {
     "category": "road",
     "name": "[Retired] Virginia International Raceway",
-    "config": "[Retired] Grand East"
+    "config": "[Retired] Grand East",
+    "free": true
   },
   "7": {
     "category": "road",
     "name": "[Retired] Virginia International Raceway",
-    "config": "[Retired] South"
+    "config": "[Retired] South",
+    "free": true
   },
   "8": {
     "category": "road",
     "name": "Summit Point Raceway",
-    "config": "Jefferson Circuit"
+    "config": "Jefferson Circuit",
+    "free": true
   },
   "9": {
     "category": "road",
     "name": "Summit Point Raceway",
-    "config": "Summit Point Raceway"
+    "config": "Summit Point Raceway",
+    "free": true
   },
   "11": {
     "category": "oval",
     "name": "Stafford Motor Speedway",
-    "config": "Full Course"
+    "config": "Full Course",
+    "free": false
   },
   "12": {
     "category": "oval",
-    "name": "Oxford Plains Speedway"
+    "name": "Oxford Plains Speedway",
+    "free": true
   },
   "14": {
     "category": "oval",
-    "name": "South Boston Speedway"
+    "name": "South Boston Speedway",
+    "free": true
   },
   "15": {
     "category": "oval",
-    "name": "Concord Speedway"
+    "name": "Concord Speedway",
+    "free": true
   },
   "16": {
     "category": "oval",
     "name": "USA International Speedway",
-    "config": "Asphalt"
+    "config": "Asphalt",
+    "free": true
   },
   "17": {
     "category": "oval",
     "name": "Lanier National Speedway",
-    "config": "Asphalt"
+    "config": "Asphalt",
+    "free": true
   },
   "18": {
     "category": "road",
     "name": "[Retired] Road America",
-    "config": "[Retired] Full Course"
+    "config": "[Retired] Full Course",
+    "free": false
   },
   "19": {
     "category": "oval",
     "name": "Irwindale Speedway",
-    "config": "Inner"
+    "config": "Inner",
+    "free": false
   },
   "20": {
     "category": "oval",
     "name": "Homestead Miami Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "21": {
     "category": "road",
     "name": "Homestead Miami Speedway",
-    "config": "Road Course A"
+    "config": "Road Course A",
+    "free": false
   },
   "22": {
     "category": "road",
     "name": "Homestead Miami Speedway",
-    "config": "Road Course B"
+    "config": "Road Course B",
+    "free": false
   },
   "23": {
     "category": "oval",
     "name": "Irwindale Speedway",
-    "config": "Outer"
+    "config": "Outer",
+    "free": false
   },
   "24": {
     "category": "road",
     "name": "Summit Point Raceway",
-    "config": "Short"
+    "config": "Short",
+    "free": true
   },
   "26": {
     "category": "road",
     "name": "Daytona International Speedway",
-    "config": "Road Course - 2008"
+    "config": "Road Course - 2008",
+    "free": false
   },
   "27": {
     "category": "oval",
     "name": "Daytona International Speedway",
-    "config": "Oval - 2008"
+    "config": "Oval - 2008",
+    "free": false
   },
   "28": {
     "category": "road",
     "name": "Daytona International Speedway",
-    "config": "Moto - 2008"
+    "config": "Moto - 2008",
+    "free": false
   },
   "29": {
     "category": "road",
     "name": "Daytona International Speedway",
-    "config": "Short - 2008"
+    "config": "Short - 2008",
+    "free": false
   },
   "30": {
     "category": "oval",
     "name": "Irwindale Speedway",
-    "config": "Outer - Inner"
+    "config": "Outer - Inner",
+    "free": false
   },
   "31": {
     "category": "oval",
     "name": "Richmond Raceway",
-    "config": "[Retired] Richmond - 2007"
+    "config": "[Retired] Richmond - 2007",
+    "free": false
   },
   "33": {
     "category": "oval",
-    "name": "Martinsville Speedway"
+    "name": "Martinsville Speedway",
+    "free": false
   },
   "34": {
     "category": "road",
     "name": "[Retired] Lime Rock Park - 2008",
-    "config": "[Retired] Chicane"
+    "config": "[Retired] Chicane",
+    "free": false
   },
   "37": {
     "category": "road",
     "name": "[Legacy] Charlotte Motor Speedway - 2008",
-    "config": "[Retired] Road Course"
+    "config": "[Retired] Road Course",
+    "free": true
   },
   "38": {
     "category": "road",
     "name": "[Legacy] Charlotte Motor Speedway - 2008",
-    "config": "[Retired] Infield Road Course"
+    "config": "[Retired] Infield Road Course",
+    "free": true
   },
   "39": {
     "category": "oval",
     "name": "[Legacy] Charlotte Motor Speedway - 2008",
-    "config": "[Retired] Legends Oval"
+    "config": "[Retired] Legends Oval",
+    "free": true
   },
   "40": {
     "category": "oval",
     "name": "[Legacy] Charlotte Motor Speedway - 2008",
-    "config": "[Retired] Oval"
+    "config": "[Retired] Oval",
+    "free": true
   },
   "41": {
     "category": "road",
     "name": "[Legacy] Silverstone Circuit - 2008",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "42": {
     "category": "road",
     "name": "[Legacy] Silverstone Circuit - 2008",
-    "config": "Historical Grand Prix"
+    "config": "Historical Grand Prix",
+    "free": false
   },
   "43": {
     "category": "road",
     "name": "[Legacy] Silverstone Circuit - 2008",
-    "config": "International"
+    "config": "International",
+    "free": false
   },
   "44": {
     "category": "road",
     "name": "[Legacy] Silverstone Circuit - 2008",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "45": {
     "category": "road",
     "name": "[Legacy] Silverstone Circuit - 2008",
-    "config": "Southern"
+    "config": "Southern",
+    "free": false
   },
   "46": {
     "category": "road",
     "name": "[Retired] Barber Motorsports Park",
-    "config": "[Retired] Full Course"
+    "config": "[Retired] Full Course",
+    "free": false
   },
   "47": {
     "category": "road",
     "name": "[Retired] WeatherTech Raceway at Laguna Seca",
-    "config": "[Retired] Full Course"
+    "config": "[Retired] Full Course",
+    "free": false
   },
   "48": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "[Retired] NASCAR Short"
+    "config": "[Retired] NASCAR Short",
+    "free": false
   },
   "49": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "[Retired] Open Wheel pre-2008"
+    "config": "[Retired] Open Wheel pre-2008",
+    "free": false
   },
   "50": {
     "category": "road",
     "name": "[Retired] Road America",
-    "config": "[Retired] Bend"
+    "config": "[Retired] Bend",
+    "free": false
   },
   "51": {
     "category": "road",
     "name": "EchoPark Speedway (Atlanta)",
-    "config": "Road - 2008"
+    "config": "Road - 2008",
+    "free": false
   },
   "52": {
     "category": "oval",
     "name": "EchoPark Speedway (Atlanta)",
-    "config": "Legends Oval - 2008"
+    "config": "Legends Oval - 2008",
+    "free": false
   },
   "53": {
     "category": "oval",
     "name": "EchoPark Speedway (Atlanta)",
-    "config": "Oval - 2008"
+    "config": "Oval - 2008",
+    "free": false
   },
   "94": {
     "category": "oval",
     "name": "[Retired] The Milwaukee Mile",
-    "config": "[Retired] Old"
+    "config": "[Retired] Old",
+    "free": false
   },
   "95": {
     "category": "road",
     "name": "Sebring International Raceway",
-    "config": "International"
+    "config": "International",
+    "free": false
   },
   "96": {
     "category": "road",
     "name": "Sebring International Raceway",
-    "config": "Modified"
+    "config": "Modified",
+    "free": false
   },
   "97": {
     "category": "road",
     "name": "Sebring International Raceway",
-    "config": "Club"
+    "config": "Club",
+    "free": false
   },
   "98": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "[Retired] NASCAR Long"
+    "config": "[Retired] NASCAR Long",
+    "free": false
   },
   "99": {
     "category": "road",
     "name": "[Retired] Barber Motorsports Park",
-    "config": "[Retired] Short A"
+    "config": "[Retired] Short A",
+    "free": false
   },
   "100": {
     "category": "road",
     "name": "[Retired] Barber Motorsports Park",
-    "config": "[Retired] Short B"
+    "config": "[Retired] Short B",
+    "free": false
   },
   "101": {
     "category": "oval",
     "name": "Bristol Motor Speedway",
-    "config": "Dual Pit Roads"
+    "config": "Dual Pit Roads",
+    "free": false
   },
   "102": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "[Retired] Open Wheel 2008-2011"
+    "config": "[Retired] Open Wheel 2008-2011",
+    "free": false
   },
   "103": {
     "category": "oval",
     "name": "Las Vegas Motor Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "104": {
     "category": "oval",
     "name": "[Legacy] Phoenix Raceway - 2008",
-    "config": "Oval"
+    "config": "Oval",
+    "free": true
   },
   "105": {
     "category": "road",
     "name": "[Legacy] Phoenix Raceway - 2008",
-    "config": "Road Course"
+    "config": "Road Course",
+    "free": true
   },
   "106": {
     "category": "road",
     "name": "[Retired] Watkins Glen International",
-    "config": "[Retired] Cup"
+    "config": "[Retired] Cup",
+    "free": false
   },
   "107": {
     "category": "road",
     "name": "[Retired] Watkins Glen International",
-    "config": "[Retired] Boot"
+    "config": "[Retired] Boot",
+    "free": false
   },
   "108": {
     "category": "road",
     "name": "[Retired] Watkins Glen International",
-    "config": "[Retired] Classic Boot"
+    "config": "[Retired] Classic Boot",
+    "free": false
   },
   "109": {
     "category": "road",
     "name": "[Retired] Watkins Glen International",
-    "config": "[Retired] Classic"
+    "config": "[Retired] Classic",
+    "free": false
   },
   "110": {
     "category": "oval",
     "name": "Las Vegas Motor Speedway",
-    "config": "Legends Oval"
+    "config": "Legends Oval",
+    "free": false
   },
   "111": {
     "category": "road",
     "name": "Las Vegas Motor Speedway",
-    "config": "Road Course Long"
+    "config": "Road Course Long",
+    "free": false
   },
   "112": {
     "category": "road",
     "name": "Las Vegas Motor Speedway",
-    "config": "Road Course Short"
+    "config": "Road Course Short",
+    "free": false
   },
   "113": {
     "category": "oval",
     "name": "Las Vegas Motor Speedway",
-    "config": "Infield Legends Oval"
+    "config": "Infield Legends Oval",
+    "free": false
   },
   "114": {
     "category": "road",
     "name": "Las Vegas Motor Speedway",
-    "config": "Road Course Combined"
+    "config": "Road Course Combined",
+    "free": false
   },
   "115": {
     "category": "oval",
-    "name": "Darlington Raceway"
+    "name": "Darlington Raceway",
+    "free": false
   },
   "116": {
     "category": "oval",
-    "name": "Talladega Superspeedway"
+    "name": "Talladega Superspeedway",
+    "free": false
   },
   "117": {
     "category": "road",
     "name": "[Legacy] Texas Motor Speedway - 2009",
-    "config": "Road Course Long"
+    "config": "Road Course Long",
+    "free": false
   },
   "118": {
     "category": "road",
     "name": "[Legacy] Texas Motor Speedway - 2009",
-    "config": "Road Course Short A"
+    "config": "Road Course Short A",
+    "free": false
   },
   "119": {
     "category": "road",
     "name": "[Legacy] Texas Motor Speedway - 2009",
-    "config": "Road Course Short B"
+    "config": "Road Course Short B",
+    "free": false
   },
   "120": {
     "category": "oval",
     "name": "[Legacy] Texas Motor Speedway - 2009",
-    "config": "Legends Oval"
+    "config": "Legends Oval",
+    "free": false
   },
   "121": {
     "category": "oval",
     "name": "[Legacy] Texas Motor Speedway - 2009",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "122": {
     "category": "road",
     "name": "[Legacy] Texas Motor Speedway - 2009",
-    "config": "Road Course Combined"
+    "config": "Road Course Combined",
+    "free": false
   },
   "123": {
     "category": "oval",
-    "name": "Chicagoland Speedway"
+    "name": "Chicagoland Speedway",
+    "free": false
   },
   "124": {
     "category": "oval",
-    "name": "[Legacy] Michigan International Speedway - 2009"
+    "name": "[Legacy] Michigan International Speedway - 2009",
+    "free": false
   },
   "126": {
     "category": "road",
     "name": "Road Atlanta",
-    "config": "Club"
+    "config": "Club",
+    "free": false
   },
   "127": {
     "category": "road",
     "name": "Road Atlanta",
-    "config": "Full Course"
+    "config": "Full Course",
+    "free": false
   },
   "128": {
     "category": "road",
     "name": "Road Atlanta",
-    "config": "Short"
+    "config": "Short",
+    "free": false
   },
   "129": {
     "category": "road",
     "name": "New Hampshire Motor Speedway",
-    "config": "Road Course"
+    "config": "Road Course",
+    "free": false
   },
   "130": {
     "category": "road",
     "name": "New Hampshire Motor Speedway",
-    "config": "Road Course with North Oval"
+    "config": "Road Course with North Oval",
+    "free": false
   },
   "131": {
     "category": "oval",
     "name": "New Hampshire Motor Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "132": {
     "category": "road",
     "name": "New Hampshire Motor Speedway",
-    "config": "Road Course with South Oval"
+    "config": "Road Course with South Oval",
+    "free": false
   },
   "133": {
     "category": "oval",
     "name": "Indianapolis Motor Speedway",
-    "config": "NASCAR Oval - 2009"
+    "config": "NASCAR Oval - 2009",
+    "free": false
   },
   "134": {
     "category": "road",
     "name": "Indianapolis Motor Speedway",
-    "config": "Road Course - 2009"
+    "config": "Road Course - 2009",
+    "free": false
   },
   "135": {
     "category": "road",
     "name": "Indianapolis Motor Speedway",
-    "config": "Bike - 2009"
+    "config": "Bike - 2009",
+    "free": false
   },
   "136": {
     "category": "oval",
     "name": "[Legacy] Pocono Raceway - 2009",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "137": {
     "category": "road",
     "name": "[Legacy] Pocono Raceway - 2009",
-    "config": "East"
+    "config": "East",
+    "free": false
   },
   "138": {
     "category": "road",
     "name": "[Legacy] Pocono Raceway - 2009",
-    "config": "South"
+    "config": "South",
+    "free": false
   },
   "139": {
     "category": "road",
     "name": "[Legacy] Pocono Raceway - 2009",
-    "config": "North"
+    "config": "North",
+    "free": false
   },
   "140": {
     "category": "road",
     "name": "[Legacy] Pocono Raceway - 2009",
-    "config": "International"
+    "config": "International",
+    "free": false
   },
   "141": {
     "category": "road",
     "name": "[Retired] Virginia International Raceway",
-    "config": "[Retired] Patriot Reverse"
+    "config": "[Retired] Patriot Reverse",
+    "free": true
   },
   "142": {
     "category": "road",
     "name": "Summit Point Raceway",
-    "config": "Jefferson Reverse"
+    "config": "Jefferson Reverse",
+    "free": true
   },
   "143": {
     "category": "oval",
-    "name": "Centripetal Circuit"
+    "name": "Centripetal Circuit",
+    "free": true
   },
   "144": {
     "category": "road",
-    "name": "Canadian Tire Motorsports Park"
+    "name": "Canadian Tire Motorsports Park",
+    "free": false
   },
   "145": {
     "category": "road",
     "name": "Brands Hatch Circuit",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "146": {
     "category": "road",
     "name": "Brands Hatch Circuit",
-    "config": "Indy"
+    "config": "Indy",
+    "free": false
   },
   "147": {
     "category": "road",
     "name": "Circuit Park Zandvoort",
-    "config": "Chicane - 2009"
+    "config": "Chicane - 2009",
+    "free": false
   },
   "148": {
     "category": "road",
     "name": "Circuit Park Zandvoort",
-    "config": "Club - 2009"
+    "config": "Club - 2009",
+    "free": false
   },
   "149": {
     "category": "road",
     "name": "Circuit Park Zandvoort",
-    "config": "Grand Prix - 2009"
+    "config": "Grand Prix - 2009",
+    "free": false
   },
   "150": {
     "category": "road",
     "name": "Circuit Park Zandvoort",
-    "config": "Nationaal - 2009"
+    "config": "Nationaal - 2009",
+    "free": false
   },
   "151": {
     "category": "road",
     "name": "Circuit Park Zandvoort",
-    "config": "Oostelijk - 2009"
+    "config": "Oostelijk - 2009",
+    "free": false
   },
   "152": {
     "category": "road",
-    "name": "Phillip Island Circuit"
+    "name": "Phillip Island Circuit",
+    "free": false
   },
   "153": {
     "category": "road",
     "name": "[Retired] Mid-Ohio Sports Car Course",
-    "config": "[Retired] Full Course"
+    "config": "[Retired] Full Course",
+    "free": false
   },
   "154": {
     "category": "road",
     "name": "[Retired] Mid-Ohio Sports Car Course",
-    "config": "[Retired] Chicane"
+    "config": "[Retired] Chicane",
+    "free": false
   },
   "155": {
     "category": "road",
     "name": "[Retired] Mid-Ohio Sports Car Course",
-    "config": "[Retired] Short"
+    "config": "[Retired] Short",
+    "free": false
   },
   "156": {
     "category": "oval",
     "name": "[Retired] Mid-Ohio Sports Car Course",
-    "config": "[Retired] Oval"
+    "config": "[Retired] Oval",
+    "free": false
   },
   "157": {
     "category": "oval",
     "name": "[Retired] Mid-Ohio Sports Car Course",
-    "config": "[Retired] Alt Oval"
+    "config": "[Retired] Alt Oval",
+    "free": false
   },
   "158": {
     "category": "road",
     "name": "[Retired] WeatherTech Raceway at Laguna Seca",
-    "config": "[Retired] School"
+    "config": "[Retired] School",
+    "free": false
   },
   "159": {
     "category": "road",
     "name": "Summit Point Raceway",
-    "config": "School"
+    "config": "School",
+    "free": true
   },
   "160": {
     "category": "road",
     "name": "[Retired] Lime Rock Park - 2008",
-    "config": "[Retired] School"
+    "config": "[Retired] School",
+    "free": false
   },
   "161": {
     "category": "oval",
     "name": "Thompson Speedway Motorsports Park",
-    "config": "Oval"
+    "config": "Oval",
+    "free": true
   },
   "162": {
     "category": "oval",
-    "name": "Dover Motor Speedway"
+    "name": "Dover Motor Speedway",
+    "free": false
   },
   "163": {
     "category": "road",
     "name": "Circuit de Spa-Francorchamps",
-    "config": "Grand Prix Pits - 2010"
+    "config": "Grand Prix Pits - 2010",
+    "free": false
   },
   "164": {
     "category": "road",
     "name": "Circuit de Spa-Francorchamps",
-    "config": "Classic Pits - 2010"
+    "config": "Classic Pits - 2010",
+    "free": false
   },
   "165": {
     "category": "road",
     "name": "Circuit de Spa-Francorchamps",
-    "config": "Endurance - 2010"
+    "config": "Endurance - 2010",
+    "free": false
   },
   "166": {
     "category": "road",
     "name": "Okayama International Circuit",
-    "config": "Full Course"
+    "config": "Full Course",
+    "free": true
   },
   "167": {
     "category": "road",
     "name": "Okayama International Circuit",
-    "config": "Short"
+    "config": "Short",
+    "free": true
   },
   "168": {
     "category": "road",
     "name": "Suzuka International Racing Course",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "169": {
     "category": "oval",
     "name": "Iowa Speedway - Oval - 2011",
-    "config": "Oval - 2011"
+    "config": "Oval - 2011",
+    "free": false
   },
   "170": {
     "category": "road",
     "name": "Iowa Speedway",
-    "config": "Road Course - 2011"
+    "config": "Road Course - 2011",
+    "free": false
   },
   "171": {
     "category": "oval",
     "name": "Iowa Speedway",
-    "config": "Legends - 2011"
+    "config": "Legends - 2011",
+    "free": false
   },
   "172": {
     "category": "oval",
     "name": "Iowa Speedway",
-    "config": "Infield Legends - 2011"
+    "config": "Infield Legends - 2011",
+    "free": false
   },
   "173": {
     "category": "road",
     "name": "Suzuka International Racing Course",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "174": {
     "category": "road",
     "name": "Suzuka International Racing Course",
-    "config": "East"
+    "config": "East",
+    "free": false
   },
   "175": {
     "category": "road",
     "name": "Suzuka International Racing Course",
-    "config": "West"
+    "config": "West",
+    "free": false
   },
   "176": {
     "category": "road",
     "name": "Suzuka International Racing Course",
-    "config": "West w/chicane"
+    "config": "West w/chicane",
+    "free": false
   },
   "178": {
     "category": "oval",
     "name": "Indianapolis Motor Speedway",
-    "config": "Open Wheel Oval - 2009"
+    "config": "Open Wheel Oval - 2009",
+    "free": false
   },
   "179": {
     "category": "road",
-    "name": "Long Beach Street Circuit"
+    "name": "Long Beach Street Circuit",
+    "free": false
   },
   "180": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "International"
+    "config": "International",
+    "free": true
   },
   "181": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "Fosters"
+    "config": "Fosters",
+    "free": true
   },
   "182": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "Island"
+    "config": "Island",
+    "free": true
   },
   "183": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "Intl w/out Hislop"
+    "config": "Intl w/out Hislop",
+    "free": true
   },
   "184": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "Intl w/out Brittens"
+    "config": "Intl w/out Brittens",
+    "free": true
   },
   "185": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "Intl w/no Chicanes"
+    "config": "Intl w/no Chicanes",
+    "free": true
   },
   "186": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "Fosters w/Hislop"
+    "config": "Fosters w/Hislop",
+    "free": true
   },
   "187": {
     "category": "road",
     "name": "Oulton Park Circuit",
-    "config": "Island Historic"
+    "config": "Island Historic",
+    "free": true
   },
   "188": {
     "category": "oval",
     "name": "[Legacy] Kentucky Speedway - 2011",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "189": {
     "category": "oval",
     "name": "[Legacy] Kentucky Speedway - 2011",
-    "config": "Legends"
+    "config": "Legends",
+    "free": false
   },
   "190": {
     "category": "oval",
-    "name": "New Smyrna Speedway"
+    "name": "New Smyrna Speedway",
+    "free": false
   },
   "191": {
     "category": "oval",
     "name": "Daytona International Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "192": {
     "category": "road",
     "name": "Daytona International Speedway",
-    "config": "Road Course"
+    "config": "Road Course",
+    "free": false
   },
   "193": {
     "category": "road",
     "name": "Daytona International Speedway",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "194": {
     "category": "road",
     "name": "Daytona International Speedway",
-    "config": "Short"
+    "config": "Short",
+    "free": false
   },
   "195": {
     "category": "road",
     "name": "Mobility Resort Motegi",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "196": {
     "category": "road",
     "name": "Mobility Resort Motegi",
-    "config": "East"
+    "config": "East",
+    "free": false
   },
   "197": {
     "category": "road",
     "name": "Mobility Resort Motegi",
-    "config": "West"
+    "config": "West",
+    "free": false
   },
   "198": {
     "category": "oval",
     "name": "Mobility Resort Motegi",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "199": {
     "category": "road",
     "name": "Circuit Zolder",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "200": {
     "category": "road",
     "name": "Circuit Zolder",
-    "config": "Alternate"
+    "config": "Alternate",
+    "free": false
   },
   "201": {
     "category": "oval",
-    "name": "Langley Speedway"
+    "name": "Langley Speedway",
+    "free": true
   },
   "202": {
     "category": "road",
     "name": "Oran Park Raceway",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": true
   },
   "203": {
     "category": "oval",
     "name": "Rockingham Speedway",
-    "config": "Oval - 2012"
+    "config": "Oval - 2012",
+    "free": false
   },
   "204": {
     "category": "road",
     "name": "Rockingham Speedway",
-    "config": "Road Course"
+    "config": "Road Course",
+    "free": false
   },
   "205": {
     "category": "road",
     "name": "Rockingham Speedway",
-    "config": "Infield Road Course"
+    "config": "Infield Road Course",
+    "free": false
   },
   "206": {
     "category": "road",
     "name": "Rockingham Speedway",
-    "config": "Short Road Course"
+    "config": "Short Road Course",
+    "free": false
   },
   "207": {
     "category": "road",
     "name": "Oran Park Raceway",
-    "config": "North"
+    "config": "North",
+    "free": true
   },
   "208": {
     "category": "road",
     "name": "Oran Park Raceway",
-    "config": "South"
+    "config": "South",
+    "free": true
   },
   "209": {
     "category": "road",
     "name": "Oran Park Raceway",
-    "config": "North A"
+    "config": "North A",
+    "free": true
   },
   "210": {
     "category": "road",
     "name": "Oran Park Raceway",
-    "config": "North B"
+    "config": "North B",
+    "free": true
   },
   "211": {
     "category": "road",
     "name": "Oran Park Raceway",
-    "config": "Moto"
+    "config": "Moto",
+    "free": true
   },
   "212": {
     "category": "road",
     "name": "Autódromo José Carlos Pace",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "213": {
     "category": "road",
     "name": "Autódromo José Carlos Pace",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "214": {
     "category": "oval",
     "name": "Kansas Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "215": {
     "category": "road",
     "name": "Kansas Speedway",
-    "config": "Road Course"
+    "config": "Road Course",
+    "free": false
   },
   "216": {
     "category": "road",
     "name": "Kansas Speedway",
-    "config": "Infield Road Course"
+    "config": "Infield Road Course",
+    "free": false
   },
   "217": {
     "category": "road",
     "name": "Irwindale Speedway",
-    "config": "Figure Eight"
+    "config": "Figure Eight",
+    "free": false
   },
   "218": {
     "category": "road",
-    "name": "Circuit Gilles Villeneuve"
+    "name": "Circuit Gilles Villeneuve",
+    "free": false
   },
   "219": {
     "category": "road",
-    "name": "Mount Panorama Circuit"
+    "name": "Mount Panorama Circuit",
+    "free": false
   },
   "220": {
     "category": "road",
     "name": "New Jersey Motorsports Park",
-    "config": "Thunderbolt"
+    "config": "Thunderbolt",
+    "free": false
   },
   "221": {
     "category": "road",
     "name": "New Jersey Motorsports Park",
-    "config": "Thunderbolt w/both chicanes"
+    "config": "Thunderbolt w/both chicanes",
+    "free": false
   },
   "222": {
     "category": "oval",
     "name": "New Hampshire Motor Speedway",
-    "config": "Legends"
+    "config": "Legends",
+    "free": false
   },
   "223": {
     "category": "road",
     "name": "New Jersey Motorsports Park",
-    "config": "Thunderbolt w/first chicane"
+    "config": "Thunderbolt w/first chicane",
+    "free": false
   },
   "224": {
     "category": "road",
     "name": "New Jersey Motorsports Park",
-    "config": "Thunderbolt w/second chicane"
+    "config": "Thunderbolt w/second chicane",
+    "free": false
   },
   "225": {
     "category": "oval",
     "name": "Auto Club Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "226": {
     "category": "road",
     "name": "Auto Club Speedway",
-    "config": "Competition"
+    "config": "Competition",
+    "free": false
   },
   "227": {
     "category": "road",
     "name": "Auto Club Speedway",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "228": {
     "category": "road",
     "name": "Auto Club Speedway",
-    "config": "Interior"
+    "config": "Interior",
+    "free": false
   },
   "229": {
     "category": "road",
     "name": "Circuit of the Americas",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "230": {
     "category": "road",
     "name": "Circuit of the Americas",
-    "config": "East"
+    "config": "East",
+    "free": false
   },
   "231": {
     "category": "road",
     "name": "Circuit of the Americas",
-    "config": "West"
+    "config": "West",
+    "free": false
   },
   "232": {
     "category": "oval",
     "name": "Lucas Oil Indianapolis Raceway Park",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "233": {
     "category": "road",
     "name": "Donington Park Racing Circuit",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "234": {
     "category": "road",
     "name": "Donington Park Racing Circuit",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "235": {
     "category": "oval",
     "name": "[Retired] Phoenix Raceway",
-    "config": "[Retired] Oval"
+    "config": "[Retired] Oval",
+    "free": false
   },
   "236": {
     "category": "oval",
     "name": "[Retired] Phoenix Raceway",
-    "config": "[Retired] Oval w/open dogleg"
+    "config": "[Retired] Oval w/open dogleg",
+    "free": false
   },
   "237": {
     "category": "oval",
     "name": "World Wide Technology Raceway (Gateway)",
-    "config": "[Retired] Oval"
+    "config": "[Retired] Oval",
+    "free": false
   },
   "238": {
     "category": "road",
     "name": "World Wide Technology Raceway (Gateway)",
-    "config": "Road Course"
+    "config": "Road Course",
+    "free": false
   },
   "239": {
     "category": "road",
     "name": "Autodromo Nazionale Monza",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "240": {
     "category": "road",
     "name": "Autodromo Nazionale Monza",
-    "config": "Combined without chicanes"
+    "config": "Combined without chicanes",
+    "free": false
   },
   "241": {
     "category": "road",
     "name": "Autodromo Nazionale Monza",
-    "config": "Junior"
+    "config": "Junior",
+    "free": false
   },
   "242": {
     "category": "road",
     "name": "Autodromo Nazionale Monza",
-    "config": "GP without chicanes"
+    "config": "GP without chicanes",
+    "free": false
   },
   "243": {
     "category": "oval",
     "name": "Autodromo Nazionale Monza",
-    "config": "Oval - Right turning"
+    "config": "Oval - Right turning",
+    "free": false
   },
   "244": {
     "category": "road",
     "name": "Autodromo Nazionale Monza",
-    "config": "GP without first chicane"
+    "config": "GP without first chicane",
+    "free": false
   },
   "245": {
     "category": "oval",
     "name": "Autodromo Nazionale Monza",
-    "config": "Oval - Left turning"
+    "config": "Oval - Left turning",
+    "free": false
   },
   "246": {
     "category": "road",
     "name": "Autodromo Nazionale Monza",
-    "config": "Combined without first chicane"
+    "config": "Combined without first chicane",
+    "free": false
   },
   "247": {
     "category": "road",
     "name": "Autodromo Nazionale Monza",
-    "config": "Combined"
+    "config": "Combined",
+    "free": false
   },
   "248": {
     "category": "oval",
-    "name": "Five Flags Speedway"
+    "name": "Five Flags Speedway",
+    "free": false
   },
   "249": {
     "category": "road",
     "name": "Nürburgring Nordschleife",
-    "config": "Industriefahrten"
+    "config": "Industriefahrten",
+    "free": false
   },
   "250": {
     "category": "road",
     "name": "Nürburgring Grand-Prix-Strecke",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "252": {
     "category": "road",
     "name": "Nürburgring Combined",
-    "config": "Gesamtstrecke 24h"
+    "config": "Gesamtstrecke 24h",
+    "free": false
   },
   "253": {
     "category": "road",
     "name": "Nürburgring Nordschleife",
-    "config": "Touristenfahrten"
+    "config": "Touristenfahrten",
+    "free": false
   },
   "255": {
     "category": "road",
     "name": "Nürburgring Grand-Prix-Strecke",
-    "config": "BES/WEC"
+    "config": "BES/WEC",
+    "free": false
   },
   "256": {
     "category": "oval",
-    "name": "Southern National Motorsports Park"
+    "name": "Southern National Motorsports Park",
+    "free": true
   },
   "257": {
     "category": "road",
     "name": "Nürburgring Grand-Prix-Strecke",
-    "config": "Grand Prix w/out Arena"
+    "config": "Grand Prix w/out Arena",
+    "free": false
   },
   "259": {
     "category": "road",
     "name": "Nürburgring Grand-Prix-Strecke",
-    "config": "Sprintstrecke"
+    "config": "Sprintstrecke",
+    "free": false
   },
   "260": {
     "category": "road",
     "name": "Nürburgring Grand-Prix-Strecke",
-    "config": "Kurzanbindung w/out Arena"
+    "config": "Kurzanbindung w/out Arena",
+    "free": false
   },
   "261": {
     "category": "road",
     "name": "Nürburgring Grand-Prix-Strecke",
-    "config": "Müllenbachschleife"
+    "config": "Müllenbachschleife",
+    "free": false
   },
   "262": {
     "category": "road",
     "name": "Nürburgring Combined",
-    "config": "Gesamtstrecke VLN"
+    "config": "Gesamtstrecke VLN",
+    "free": false
   },
   "263": {
     "category": "road",
     "name": "Nürburgring Combined",
-    "config": "Gesamtstrecke Short w/out Arena"
+    "config": "Gesamtstrecke Short w/out Arena",
+    "free": false
   },
   "264": {
     "category": "road",
     "name": "Nürburgring Combined",
-    "config": "Gesamtstrecke Long"
+    "config": "Gesamtstrecke Long",
+    "free": false
   },
   "266": {
     "category": "road",
     "name": "Autodromo Internazionale Enzo e Dino Ferrari",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "267": {
     "category": "road",
     "name": "Autodromo Internazionale Enzo e Dino Ferrari",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "268": {
     "category": "road",
     "name": "Circuit des 24 Heures du Mans",
-    "config": "24 Heures du Mans"
+    "config": "24 Heures du Mans",
+    "free": false
   },
   "269": {
     "category": "road",
     "name": "Circuit des 24 Heures du Mans",
-    "config": "Historic"
+    "config": "Historic",
+    "free": false
   },
   "271": {
     "category": "oval",
-    "name": "The Bullring"
+    "name": "The Bullring",
+    "free": false
   },
   "273": {
     "category": "dirt_oval",
-    "name": "Eldora Speedway"
+    "name": "Eldora Speedway",
+    "free": false
   },
   "274": {
     "category": "dirt_oval",
-    "name": "Williams Grove Speedway"
+    "name": "Williams Grove Speedway",
+    "free": false
   },
   "275": {
     "category": "dirt_oval",
     "name": "USA International Speedway",
-    "config": "Dirt"
+    "config": "Dirt",
+    "free": true
   },
   "276": {
     "category": "oval",
-    "name": "Michigan International Speedway"
+    "name": "Michigan International Speedway",
+    "free": false
   },
   "277": {
     "category": "oval",
-    "name": "Pocono Raceway"
+    "name": "Pocono Raceway",
+    "free": false
   },
   "279": {
     "category": "dirt_oval",
-    "name": "Volusia Speedway Park"
+    "name": "Volusia Speedway Park",
+    "free": false
   },
   "286": {
     "category": "oval",
-    "name": "Myrtle Beach Speedway"
+    "name": "Myrtle Beach Speedway",
+    "free": false
   },
   "287": {
     "category": "dirt_oval",
     "name": "Bristol Motor Speedway",
-    "config": "Dirt - 2021"
+    "config": "Dirt - 2021",
+    "free": false
   },
   "288": {
     "category": "dirt_oval",
     "name": "Lanier National Speedway",
-    "config": "Dirt"
+    "config": "Dirt",
+    "free": true
   },
   "290": {
     "category": "dirt_road",
     "name": "Brands Hatch Circuit",
-    "config": "Rallycross"
+    "config": "Rallycross",
+    "free": false
   },
   "293": {
     "category": "dirt_road",
     "name": "Daytona Rallycross and Dirt Road",
-    "config": "Rallycross Long"
+    "config": "Rallycross Long",
+    "free": true
   },
   "295": {
     "category": "dirt_road",
     "name": "Iowa Speedway",
-    "config": "Rallycross - 2017"
+    "config": "Rallycross - 2017",
+    "free": false
   },
   "296": {
     "category": "dirt_road",
     "name": "Daytona Rallycross and Dirt Road",
-    "config": "Rallycross Short"
+    "config": "Rallycross Short",
+    "free": true
   },
   "297": {
     "category": "road",
     "name": "Snetterton Circuit",
-    "config": "300"
+    "config": "300",
+    "free": true
   },
   "298": {
     "category": "road",
     "name": "Snetterton Circuit",
-    "config": "200"
+    "config": "200",
+    "free": true
   },
   "299": {
     "category": "road",
     "name": "Snetterton Circuit",
-    "config": "100"
+    "config": "100",
+    "free": true
   },
   "303": {
     "category": "dirt_oval",
-    "name": "Limaland Motorsports Park"
+    "name": "Limaland Motorsports Park",
+    "free": true
   },
   "304": {
     "category": "dirt_road",
     "name": "Lucas Oil Indianapolis Raceway Park",
-    "config": "Rallycross"
+    "config": "Rallycross",
+    "free": false
   },
   "305": {
     "category": "dirt_oval",
-    "name": "Knoxville Raceway"
+    "name": "Knoxville Raceway",
+    "free": false
   },
   "306": {
     "category": "dirt_road",
     "name": "[Legacy] Phoenix Raceway - 2008",
-    "config": "Rallycross"
+    "config": "Rallycross",
+    "free": true
   },
   "312": {
     "category": "dirt_road",
     "name": "Sonoma Raceway",
-    "config": "Rallycross"
+    "config": "Rallycross",
+    "free": false
   },
   "314": {
     "category": "dirt_oval",
-    "name": "The Dirt Track at Charlotte"
+    "name": "The Dirt Track at Charlotte",
+    "free": false
   },
   "319": {
     "category": "road",
     "name": "Detroit Grand Prix at Belle Isle",
-    "config": "Belle Isle"
+    "config": "Belle Isle",
+    "free": false
   },
   "320": {
     "category": "dirt_oval",
     "name": "Kokomo Speedway",
-    "config": "Tires in"
+    "config": "Tires in",
+    "free": false
   },
   "322": {
     "category": "dirt_road",
     "name": "EchoPark Speedway (Atlanta)",
-    "config": "Rallycross Short"
+    "config": "Rallycross Short",
+    "free": false
   },
   "323": {
     "category": "dirt_road",
     "name": "EchoPark Speedway (Atlanta)",
-    "config": "Rallycross Long"
+    "config": "Rallycross Long",
+    "free": false
   },
   "324": {
     "category": "road",
     "name": "Tsukuba Circuit",
-    "config": "2000 Full"
+    "config": "2000 Full",
+    "free": true
   },
   "325": {
     "category": "road",
     "name": "Tsukuba Circuit",
-    "config": "2000 Moto"
+    "config": "2000 Moto",
+    "free": true
   },
   "326": {
     "category": "road",
     "name": "Tsukuba Circuit",
-    "config": "2000 Short"
+    "config": "2000 Short",
+    "free": true
   },
   "327": {
     "category": "road",
     "name": "Tsukuba Circuit",
-    "config": "1000 Full"
+    "config": "1000 Full",
+    "free": true
   },
   "328": {
     "category": "road",
     "name": "Tsukuba Circuit",
-    "config": "1000 Outer"
+    "config": "1000 Outer",
+    "free": true
   },
   "329": {
     "category": "road",
     "name": "Tsukuba Circuit",
-    "config": "1000 Chicane"
+    "config": "1000 Chicane",
+    "free": true
   },
   "330": {
     "category": "road",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Roval - 2018"
+    "config": "[Retired] Roval - 2018",
+    "free": false
   },
   "331": {
     "category": "dirt_oval",
-    "name": "Chili Bowl"
+    "name": "Chili Bowl",
+    "free": false
   },
   "332": {
     "category": "dirt_road",
-    "name": "Wild West Motorsports Park"
+    "name": "Wild West Motorsports Park",
+    "free": true
   },
   "333": {
     "category": "road",
     "name": "Tsukuba Circuit",
-    "config": "1000 Full Reverse"
+    "config": "1000 Full Reverse",
+    "free": true
   },
   "334": {
     "category": "dirt_road",
-    "name": "Firebird Motorsports Park"
+    "name": "Firebird Motorsports Park",
+    "free": false
   },
   "335": {
     "category": "oval",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Legends Oval - 2018"
+    "config": "[Retired] Legends Oval - 2018",
+    "free": false
   },
   "336": {
     "category": "road",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Legends RC Long - 2018"
+    "config": "[Retired] Legends RC Long - 2018",
+    "free": false
   },
   "337": {
     "category": "road",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Legends RC Medium - 2018"
+    "config": "[Retired] Legends RC Medium - 2018",
+    "free": false
   },
   "338": {
     "category": "road",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Legends RC Short - 2018"
+    "config": "[Retired] Legends RC Short - 2018",
+    "free": false
   },
   "339": {
     "category": "oval",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Oval - 2018"
+    "config": "[Retired] Oval - 2018",
+    "free": false
   },
   "340": {
     "category": "road",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Roval Long - 2018"
+    "config": "[Retired] Roval Long - 2018",
+    "free": false
   },
   "341": {
     "category": "road",
     "name": "Silverstone Circuit",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "342": {
     "category": "road",
     "name": "Silverstone Circuit",
-    "config": "International"
+    "config": "International",
+    "free": false
   },
   "343": {
     "category": "road",
     "name": "Silverstone Circuit",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "344": {
     "category": "dirt_oval",
-    "name": "Fairbury Speedway"
+    "name": "Fairbury Speedway",
+    "free": false
   },
   "345": {
     "category": "road",
     "name": "Circuit de Barcelona Catalunya",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "346": {
     "category": "road",
     "name": "Circuit de Barcelona Catalunya",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "347": {
     "category": "road",
     "name": "Circuit de Barcelona Catalunya",
-    "config": "Club"
+    "config": "Club",
+    "free": false
   },
   "348": {
     "category": "road",
     "name": "Circuit de Barcelona Catalunya",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "349": {
     "category": "road",
     "name": "Circuit de Barcelona Catalunya",
-    "config": "Historic"
+    "config": "Historic",
+    "free": false
   },
   "350": {
     "category": "road",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Roval"
+    "config": "[Retired] Roval",
+    "free": false
   },
   "351": {
     "category": "dirt_oval",
-    "name": "Lernerville Speedway"
+    "name": "Lernerville Speedway",
+    "free": false
   },
   "352": {
     "category": "road",
     "name": "Lime Rock Park",
-    "config": "Classic"
+    "config": "Classic",
+    "free": true
   },
   "353": {
     "category": "road",
     "name": "Lime Rock Park",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": true
   },
   "354": {
     "category": "road",
     "name": "Lime Rock Park",
-    "config": "Chicanes"
+    "config": "Chicanes",
+    "free": true
   },
   "355": {
     "category": "road",
     "name": "Lime Rock Park",
-    "config": "West Bend Chicane"
+    "config": "West Bend Chicane",
+    "free": true
   },
   "357": {
     "category": "oval",
     "name": "Texas Motor Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "358": {
     "category": "dirt_road",
     "name": "Lånkebanen (Hell RX)",
-    "config": "Hell Rallycross"
+    "config": "Hell Rallycross",
+    "free": false
   },
   "359": {
     "category": "dirt_road",
     "name": "Lånkebanen (Hell RX)",
-    "config": "Club"
+    "config": "Club",
+    "free": false
   },
   "360": {
     "category": "dirt_road",
     "name": "Lånkebanen (Hell RX)",
-    "config": "Rallycross Short"
+    "config": "Rallycross Short",
+    "free": false
   },
   "361": {
     "category": "road",
     "name": "Lånkebanen (Hell RX)",
-    "config": "Road Short"
+    "config": "Road Short",
+    "free": false
   },
   "362": {
     "category": "oval",
     "name": "Homestead Miami Speedway",
-    "config": "Open Wheel Oval"
+    "config": "Open Wheel Oval",
+    "free": false
   },
   "363": {
     "category": "road",
     "name": "Lånkebanen (Hell RX)",
-    "config": "Road Long"
+    "config": "Road Long",
+    "free": false
   },
   "364": {
     "category": "oval",
     "name": "Texas Motor Speedway",
-    "config": "Legends Oval"
+    "config": "Legends Oval",
+    "free": false
   },
   "365": {
     "category": "oval",
     "name": "Bristol Motor Speedway",
-    "config": "Single Pit Roads"
+    "config": "Single Pit Roads",
+    "free": false
   },
   "366": {
     "category": "oval",
     "name": "North Wilkesboro Speedway",
-    "config": "Oval - 1987"
+    "config": "Oval - 1987",
+    "free": false
   },
   "371": {
     "category": "oval",
     "name": "Kentucky Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "373": {
     "category": "dirt_oval",
-    "name": "Weedsport Speedway"
+    "name": "Weedsport Speedway",
+    "free": false
   },
   "374": {
     "category": "oval",
     "name": "Nashville Fairgrounds Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "380": {
     "category": "oval",
     "name": "Nashville Fairgrounds Speedway",
-    "config": "Mini"
+    "config": "Mini",
+    "free": false
   },
   "381": {
     "category": "road",
     "name": "Daytona International Speedway",
-    "config": "NASCAR Road"
+    "config": "NASCAR Road",
+    "free": false
   },
   "382": {
     "category": "dirt_road",
     "name": "Crandon International Raceway",
-    "config": "Full"
+    "config": "Full",
+    "free": false
   },
   "383": {
     "category": "dirt_road",
     "name": "Crandon International Raceway",
-    "config": "Short"
+    "config": "Short",
+    "free": false
   },
   "384": {
     "category": "oval",
-    "name": "iRacing Superspeedway"
+    "name": "iRacing Superspeedway",
+    "free": false
   },
   "385": {
     "category": "dirt_road",
     "name": "[Retired] Charlotte Motor Speedway",
-    "config": "[Retired] Rallycross"
+    "config": "[Retired] Rallycross",
+    "free": false
   },
   "386": {
     "category": "dirt_road",
     "name": "Circuit de Barcelona Catalunya",
-    "config": "Rallycross"
+    "config": "Rallycross",
+    "free": false
   },
   "387": {
     "category": "dirt_oval",
-    "name": "Cedar Lake Speedway"
+    "name": "Cedar Lake Speedway",
+    "free": false
   },
   "388": {
     "category": "road",
     "name": "Irwindale Speedway",
-    "config": "Figure Eight Jump"
+    "config": "Figure Eight Jump",
+    "free": false
   },
   "390": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "391": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "National A"
+    "config": "National A",
+    "free": false
   },
   "392": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "National B"
+    "config": "National B",
+    "free": false
   },
   "393": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Short A"
+    "config": "Short A",
+    "free": false
   },
   "394": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Short B"
+    "config": "Short B",
+    "free": false
   },
   "395": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Outer"
+    "config": "Outer",
+    "free": false
   },
   "396": {
     "category": "dirt_road",
-    "name": "Bark River International Raceway"
+    "name": "Bark River International Raceway",
+    "free": false
   },
   "397": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "[Retired] Open Wheel 2012-2018"
+    "config": "[Retired] Open Wheel 2012-2018",
+    "free": false
   },
   "398": {
     "category": "road",
     "name": "Mount Washington Hillclimb",
-    "config": "Hillclimb"
+    "config": "Hillclimb",
+    "free": false
   },
   "399": {
     "category": "road",
     "name": "Mount Washington Hillclimb",
-    "config": "Descent"
+    "config": "Descent",
+    "free": false
   },
   "400": {
     "category": "oval",
-    "name": "Nashville Superspeedway"
+    "name": "Nashville Superspeedway",
+    "free": false
   },
   "403": {
     "category": "road",
     "name": "Red Bull Ring",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "404": {
     "category": "road",
     "name": "Red Bull Ring",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "405": {
     "category": "road",
     "name": "Chicago Street Course",
-    "config": "Prototype"
+    "config": "Prototype",
+    "free": false
   },
   "407": {
     "category": "road",
     "name": "Red Bull Ring",
-    "config": "North"
+    "config": "North",
+    "free": false
   },
   "413": {
     "category": "road",
-    "name": "Hungaroring"
+    "name": "Hungaroring",
+    "free": false
   },
   "414": {
     "category": "oval",
-    "name": "Hickory Motor Speedway"
+    "name": "Hickory Motor Speedway",
+    "free": false
   },
   "418": {
     "category": "oval",
     "name": "Phoenix Raceway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "419": {
     "category": "oval",
     "name": "Phoenix Raceway",
-    "config": "Oval w/open dogleg"
+    "config": "Oval w/open dogleg",
+    "free": false
   },
   "423": {
     "category": "road",
     "name": "Knockhill Racing Circuit",
-    "config": "International"
+    "config": "International",
+    "free": false
   },
   "424": {
     "category": "road",
     "name": "Knockhill Racing Circuit",
-    "config": "International Reverse"
+    "config": "International Reverse",
+    "free": false
   },
   "425": {
     "category": "road",
     "name": "Knockhill Racing Circuit",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "426": {
     "category": "road",
     "name": "Knockhill Racing Circuit",
-    "config": "National Reverse"
+    "config": "National Reverse",
+    "free": false
   },
   "427": {
     "category": "dirt_road",
     "name": "Knockhill Racing Circuit",
-    "config": "Rallycross"
+    "config": "Rallycross",
+    "free": false
   },
   "428": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Porsche Experience Center - East"
+    "config": "Porsche Experience Center - East",
+    "free": false
   },
   "429": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Porsche Experience Center - Outer"
+    "config": "Porsche Experience Center - Outer",
+    "free": false
   },
   "430": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Porsche Experience Center - West"
+    "config": "Porsche Experience Center - West",
+    "free": false
   },
   "431": {
     "category": "road",
     "name": "Hockenheimring Baden-Württemberg",
-    "config": "Porsche Experience Center - Handling"
+    "config": "Porsche Experience Center - Handling",
+    "free": false
   },
   "432": {
     "category": "road",
     "name": "Watkins Glen International",
-    "config": "Classic"
+    "config": "Classic",
+    "free": false
   },
   "433": {
     "category": "road",
     "name": "Watkins Glen International",
-    "config": "Cup"
+    "config": "Cup",
+    "free": false
   },
   "434": {
     "category": "road",
     "name": "Watkins Glen International",
-    "config": "Boot"
+    "config": "Boot",
+    "free": false
   },
   "435": {
     "category": "road",
     "name": "Watkins Glen International",
-    "config": "Classic Boot"
+    "config": "Classic Boot",
+    "free": false
   },
   "436": {
     "category": "oval",
     "name": "Knockhill Racing Circuit",
-    "config": "Tri-Oval"
+    "config": "Tri-Oval",
+    "free": false
   },
   "437": {
     "category": "oval",
-    "name": "LA Coliseum Raceway"
+    "name": "LA Coliseum Raceway",
+    "free": false
   },
   "438": {
     "category": "dirt_oval",
-    "name": "Federated Auto Parts Raceway at I-55"
+    "name": "Federated Auto Parts Raceway at I-55",
+    "free": false
   },
   "439": {
     "category": "road",
     "name": "Winton Motor Raceway",
-    "config": "National Circuit"
+    "config": "National Circuit",
+    "free": true
   },
   "440": {
     "category": "road",
     "name": "Winton Motor Raceway",
-    "config": "Club Circuit"
+    "config": "Club Circuit",
+    "free": true
   },
   "442": {
     "category": "dirt_oval",
     "name": "Bristol Motor Speedway",
-    "config": "Dirt"
+    "config": "Dirt",
+    "free": false
   },
   "443": {
     "category": "road",
-    "name": "Sandown International Motor Raceway"
+    "name": "Sandown International Motor Raceway",
+    "free": false
   },
   "444": {
     "category": "road",
     "name": "Fuji International Speedway",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "445": {
     "category": "road",
     "name": "Fuji International Speedway",
-    "config": "No Chicane"
+    "config": "No Chicane",
+    "free": false
   },
   "446": {
     "category": "dirt_oval",
-    "name": "Port Royal Speedway"
+    "name": "Port Royal Speedway",
+    "free": false
   },
   "447": {
     "category": "oval",
     "name": "EchoPark Speedway (Atlanta)",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "448": {
     "category": "road",
     "name": "Indianapolis Motor Speedway",
-    "config": "Road Course"
+    "config": "Road Course",
+    "free": false
   },
   "449": {
     "category": "road",
     "name": "Motorsport Arena Oschersleben",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": true
   },
   "451": {
     "category": "road",
-    "name": "Rudskogen Motorsenter"
+    "name": "Rudskogen Motorsenter",
+    "free": true
   },
   "452": {
     "category": "dirt_oval",
     "name": "Lucas Oil Speedway",
-    "config": "Dirt Oval"
+    "config": "Dirt Oval",
+    "free": false
   },
   "453": {
     "category": "oval",
     "name": "Indianapolis Motor Speedway",
-    "config": "Open Wheel Oval"
+    "config": "Open Wheel Oval",
+    "free": false
   },
   "454": {
     "category": "road",
     "name": "Motorsport Arena Oschersleben",
-    "config": "Alternate"
+    "config": "Alternate",
+    "free": true
   },
   "455": {
     "category": "road",
     "name": "Motorsport Arena Oschersleben",
-    "config": "B Course"
+    "config": "B Course",
+    "free": true
   },
   "456": {
     "category": "road",
     "name": "Motorsport Arena Oschersleben",
-    "config": "C Course"
+    "config": "C Course",
+    "free": true
   },
   "462": {
     "category": "dirt_oval",
-    "name": "Lincoln Speedway"
+    "name": "Lincoln Speedway",
+    "free": false
   },
   "463": {
     "category": "road",
     "name": "Circuit de Nevers Magny-Cours",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "465": {
     "category": "road",
     "name": "Virginia International Raceway",
-    "config": "Full Course"
+    "config": "Full Course",
+    "free": true
   },
   "466": {
     "category": "road",
     "name": "Virginia International Raceway",
-    "config": "Grand Course"
+    "config": "Grand Course",
+    "free": true
   },
   "467": {
     "category": "road",
     "name": "Virginia International Raceway",
-    "config": "North Course"
+    "config": "North Course",
+    "free": true
   },
   "468": {
     "category": "road",
     "name": "Virginia International Raceway",
-    "config": "South Course"
+    "config": "South Course",
+    "free": true
   },
   "469": {
     "category": "road",
     "name": "Virginia International Raceway",
-    "config": "Patriot Course"
+    "config": "Patriot Course",
+    "free": true
   },
   "470": {
     "category": "dirt_road",
     "name": "Daytona Rallycross and Dirt Road",
-    "config": "Dirt Road Long"
+    "config": "Dirt Road Long",
+    "free": true
   },
   "471": {
     "category": "dirt_road",
     "name": "Daytona Rallycross and Dirt Road",
-    "config": "Dirt Road Short"
+    "config": "Dirt Road Short",
+    "free": true
   },
   "472": {
     "category": "dirt_road",
     "name": "[Legacy] Phoenix Raceway - 2008",
-    "config": "Dirt Road"
+    "config": "Dirt Road",
+    "free": true
   },
   "473": {
     "category": "road",
     "name": "Circuito de Jerez - Ángel Nieto",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "474": {
     "category": "road",
     "name": "Circuito de Jerez - Ángel Nieto",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "475": {
     "category": "road",
     "name": "MotorLand Aragón",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "476": {
     "category": "road",
     "name": "MotorLand Aragón",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "477": {
     "category": "road",
     "name": "MotorLand Aragón",
-    "config": "West"
+    "config": "West",
+    "free": false
   },
   "478": {
     "category": "road",
     "name": "MotorLand Aragón",
-    "config": "Motorcycle Grand Prix"
+    "config": "Motorcycle Grand Prix",
+    "free": false
   },
   "479": {
     "category": "road",
     "name": "MotorLand Aragón",
-    "config": "Motorcycle National"
+    "config": "Motorcycle National",
+    "free": false
   },
   "480": {
     "category": "road",
     "name": "MotorLand Aragón",
-    "config": "Outer"
+    "config": "Outer",
+    "free": false
   },
   "481": {
     "category": "road",
     "name": "Willow Springs International Raceway",
-    "config": "Big Willow"
+    "config": "Big Willow",
+    "free": false
   },
   "482": {
     "category": "road",
     "name": "MotorLand Aragón",
-    "config": "Touring Car"
+    "config": "Touring Car",
+    "free": false
   },
   "483": {
     "category": "road",
     "name": "Chicago Street Course",
-    "config": "2023 Cup"
+    "config": "2023 Cup",
+    "free": false
   },
   "485": {
     "category": "road",
     "name": "Circuit Zandvoort",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "486": {
     "category": "road",
     "name": "Circuit Zandvoort",
-    "config": "Grand Prix w/chicane"
+    "config": "Grand Prix w/chicane",
+    "free": false
   },
   "487": {
     "category": "road",
     "name": "Circuit Zandvoort",
-    "config": "Nationaal"
+    "config": "Nationaal",
+    "free": false
   },
   "488": {
     "category": "road",
     "name": "Circuit Zandvoort",
-    "config": "Oostelijk"
+    "config": "Oostelijk",
+    "free": false
   },
   "489": {
     "category": "road",
-    "name": "Circuit de Lédenon"
+    "name": "Circuit de Lédenon",
+    "free": true
   },
   "493": {
     "category": "oval",
     "name": "Kevin Harvick's Kern Raceway",
-    "config": "Asphalt Track"
+    "config": "Asphalt Track",
+    "free": false
   },
   "494": {
     "category": "dirt_oval",
     "name": "Kevin Harvick's Kern Raceway",
-    "config": "Dirt Track"
+    "config": "Dirt Track",
+    "free": false
   },
   "496": {
     "category": "oval",
     "name": "Kevin Harvick's Kern Raceway",
-    "config": "Legends"
+    "config": "Legends",
+    "free": false
   },
   "497": {
     "category": "dirt_oval",
     "name": "Kevin Harvick's Kern Raceway",
-    "config": "Dirt Mini Oval"
+    "config": "Dirt Mini Oval",
+    "free": false
   },
   "498": {
     "category": "road",
     "name": "Autodromo Internazionale del Mugello",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "499": {
     "category": "road",
     "name": "Autodromo Internazionale del Mugello",
-    "config": "Short"
+    "config": "Short",
+    "free": false
   },
   "500": {
     "category": "oval",
     "name": "Slinger Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "501": {
     "category": "road",
     "name": "Misano World Circuit Marco Simoncelli",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "502": {
     "category": "road",
     "name": "Misano World Circuit Marco Simoncelli",
-    "config": "Grand Prix - 2007"
+    "config": "Grand Prix - 2007",
+    "free": false
   },
   "503": {
     "category": "road",
     "name": "Misano World Circuit Marco Simoncelli",
-    "config": "Grand Prix - Historic Reverse"
+    "config": "Grand Prix - Historic Reverse",
+    "free": false
   },
   "504": {
     "category": "road",
     "name": "Misano World Circuit Marco Simoncelli",
-    "config": "Club"
+    "config": "Club",
+    "free": false
   },
   "505": {
     "category": "road",
     "name": "Misano World Circuit Marco Simoncelli",
-    "config": "Truck"
+    "config": "Truck",
+    "free": false
   },
   "506": {
     "category": "road",
     "name": "Slinger Speedway",
-    "config": "Figure 8"
+    "config": "Figure 8",
+    "free": false
   },
   "508": {
     "category": "road",
     "name": "Lime Rock Park",
-    "config": "School"
+    "config": "School",
+    "free": true
   },
   "509": {
     "category": "road",
     "name": "Algarve International Circuit",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "510": {
     "category": "road",
     "name": "Algarve International Circuit",
-    "config": "Grand Prix - Chicanes"
+    "config": "Grand Prix - Chicanes",
+    "free": false
   },
   "511": {
     "category": "road",
     "name": "Algarve International Circuit",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "512": {
     "category": "road",
     "name": "Algarve International Circuit",
-    "config": "Moto - Chicanes"
+    "config": "Moto - Chicanes",
+    "free": false
   },
   "513": {
     "category": "dirt_oval",
-    "name": "Millbridge Speedway"
+    "name": "Millbridge Speedway",
+    "free": false
   },
   "514": {
     "category": "dirt_oval",
     "name": "Kokomo Speedway",
-    "config": "Tires out"
+    "config": "Tires out",
+    "free": false
   },
   "515": {
     "category": "road",
     "name": "Circuito de Navarra",
-    "config": "Speed Circuit"
+    "config": "Speed Circuit",
+    "free": true
   },
   "516": {
     "category": "road",
     "name": "Circuito de Navarra",
-    "config": "Speed Circuit - Medium"
+    "config": "Speed Circuit - Medium",
+    "free": true
   },
   "517": {
     "category": "road",
     "name": "Circuito de Navarra",
-    "config": "Speed Circuit - Short"
+    "config": "Speed Circuit - Short",
+    "free": true
   },
   "518": {
     "category": "oval",
     "name": "Oswego Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "519": {
     "category": "oval",
     "name": "Oswego Speedway",
-    "config": "Mini Oval"
+    "config": "Mini Oval",
+    "free": false
   },
   "520": {
     "category": "dirt_oval",
     "name": "Oswego Speedway",
-    "config": "Dirt"
+    "config": "Dirt",
+    "free": false
   },
   "521": {
     "category": "road",
-    "name": "Sachsenring"
+    "name": "Sachsenring",
+    "free": false
   },
   "522": {
     "category": "oval",
     "name": "Indianapolis Motor Speedway",
-    "config": "NASCAR Oval"
+    "config": "NASCAR Oval",
+    "free": false
   },
   "523": {
     "category": "road",
     "name": "Circuit de Spa-Francorchamps",
-    "config": "Grand Prix Pits"
+    "config": "Grand Prix Pits",
+    "free": false
   },
   "524": {
     "category": "road",
     "name": "Circuit de Spa-Francorchamps",
-    "config": "Classic Pits"
+    "config": "Classic Pits",
+    "free": false
   },
   "525": {
     "category": "road",
     "name": "Circuit de Spa-Francorchamps",
-    "config": "Endurance"
+    "config": "Endurance",
+    "free": false
   },
   "526": {
     "category": "road",
     "name": "Circuit de Spa-Francorchamps",
-    "config": "Bike"
+    "config": "Bike",
+    "free": false
   },
   "527": {
     "category": "road",
     "name": "Cadwell Park Circuit",
-    "config": "Full"
+    "config": "Full",
+    "free": false
   },
   "528": {
     "category": "road",
     "name": "Cadwell Park Circuit",
-    "config": "Club"
+    "config": "Club",
+    "free": false
   },
   "529": {
     "category": "road",
     "name": "Cadwell Park Circuit",
-    "config": "Moto"
+    "config": "Moto",
+    "free": false
   },
   "530": {
     "category": "road",
     "name": "Cadwell Park Circuit",
-    "config": "Woodlands"
+    "config": "Woodlands",
+    "free": false
   },
   "531": {
     "category": "dirt_oval",
-    "name": "Huset's Speedway"
+    "name": "Huset's Speedway",
+    "free": false
   },
   "532": {
     "category": "road",
-    "name": "Thruxton Circuit"
+    "name": "Thruxton Circuit",
+    "free": false
   },
   "533": {
     "category": "road",
     "name": "Miami International Autodrome",
-    "config": "Marina Loop"
+    "config": "Marina Loop",
+    "free": false
   },
   "534": {
     "category": "road",
     "name": "Miami International Autodrome",
-    "config": "MIA Loop"
+    "config": "MIA Loop",
+    "free": false
   },
   "535": {
     "category": "road",
     "name": "Miami International Autodrome",
-    "config": "Extended MIA Loop"
+    "config": "Extended MIA Loop",
+    "free": false
   },
   "536": {
     "category": "road",
     "name": "Portland International Raceway",
-    "config": "Full Circuit"
+    "config": "Full Circuit",
+    "free": false
   },
   "537": {
     "category": "road",
     "name": "Portland International Raceway",
-    "config": "No Chicane"
+    "config": "No Chicane",
+    "free": false
   },
   "538": {
     "category": "road",
     "name": "Miami International Autodrome",
-    "config": "Extended Marina Loop"
+    "config": "Extended Marina Loop",
+    "free": false
   },
   "539": {
     "category": "road",
     "name": "Miami International Autodrome",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "540": {
     "category": "road",
     "name": "Shell V-Power Motorsport Park at The Bend",
-    "config": "GT Circuit"
+    "config": "GT Circuit",
+    "free": false
   },
   "541": {
     "category": "road",
     "name": "Shell V-Power Motorsport Park at The Bend",
-    "config": "International Circuit"
+    "config": "International Circuit",
+    "free": false
   },
   "542": {
     "category": "road",
     "name": "Shell V-Power Motorsport Park at The Bend",
-    "config": "East Circuit"
+    "config": "East Circuit",
+    "free": false
   },
   "543": {
     "category": "road",
     "name": "Shell V-Power Motorsport Park at The Bend",
-    "config": "West Circuit"
+    "config": "West Circuit",
+    "free": false
   },
   "544": {
     "category": "road",
     "name": "Shell V-Power Motorsport Park at The Bend",
-    "config": "West Plus Circuit"
+    "config": "West Plus Circuit",
+    "free": false
   },
   "545": {
     "category": "road",
     "name": "Shell V-Power Motorsport Park at The Bend",
-    "config": "Sprint Circuit"
+    "config": "Sprint Circuit",
+    "free": false
   },
   "546": {
     "category": "road",
     "name": "Shell V-Power Motorsport Park at The Bend",
-    "config": "South West Circuit"
+    "config": "South West Circuit",
+    "free": false
   },
   "550": {
     "category": "road",
     "name": "Charlotte Motor Speedway ",
-    "config": "Legends Road Course 2025"
+    "config": "Legends Road Course 2025",
+    "free": true
   },
   "551": {
     "category": "road",
     "name": "Charlotte Motor Speedway ",
-    "config": "Infield Road Course Long"
+    "config": "Infield Road Course Long",
+    "free": true
   },
   "552": {
     "category": "road",
     "name": "Charlotte Motor Speedway ",
-    "config": "Infield Road Course"
+    "config": "Infield Road Course",
+    "free": true
   },
   "553": {
     "category": "road",
     "name": "Charlotte Motor Speedway ",
-    "config": "Roval 2019"
+    "config": "Roval 2019",
+    "free": true
   },
   "554": {
     "category": "road",
     "name": "Charlotte Motor Speedway ",
-    "config": "Roval 2025"
+    "config": "Roval 2025",
+    "free": true
   },
   "555": {
     "category": "road",
     "name": "Charlotte Motor Speedway ",
-    "config": "Roval No Chicanes"
+    "config": "Roval No Chicanes",
+    "free": true
   },
   "556": {
     "category": "oval",
     "name": "Charlotte Motor Speedway ",
-    "config": "Oval"
+    "config": "Oval",
+    "free": true
   },
   "557": {
     "category": "oval",
     "name": "Charlotte Motor Speedway",
-    "config": "Legends Oval"
+    "config": "Legends Oval",
+    "free": true
   },
   "558": {
     "category": "dirt_road",
     "name": "Charlotte Motor Speedway ",
-    "config": "Rallyx"
+    "config": "Rallyx",
+    "free": true
   },
   "559": {
     "category": "oval",
     "name": "Iowa Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "560": {
     "category": "oval",
     "name": "World Wide Technology Raceway (Gateway)",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "561": {
     "category": "oval",
-    "name": "Richmond Raceway"
+    "name": "Richmond Raceway",
+    "free": false
   },
   "562": {
     "category": "oval",
     "name": "North Wilkesboro Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "563": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Indycar 2005-2007"
+    "config": "Indycar 2005-2007",
+    "free": false
   },
   "564": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Indycar 2008-2011"
+    "config": "Indycar 2008-2011",
+    "free": false
   },
   "565": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Indycar 2012-2018"
+    "config": "Indycar 2012-2018",
+    "free": false
   },
   "566": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Cup Long"
+    "config": "Cup Long",
+    "free": false
   },
   "567": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Cup Short"
+    "config": "Cup Short",
+    "free": false
   },
   "568": {
     "category": "oval",
     "name": "Sonoma Raceway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "569": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Short"
+    "config": "Short",
+    "free": false
   },
   "570": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Sportscar"
+    "config": "Sportscar",
+    "free": false
   },
   "571": {
     "category": "road",
     "name": "Sonoma Raceway",
-    "config": "Sportscar Alt"
+    "config": "Sportscar Alt",
+    "free": false
   },
   "572": {
     "category": "road",
     "name": "Autódromo Hermanos Rodríguez",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "573": {
     "category": "road",
     "name": "Autódromo Hermanos Rodríguez",
-    "config": "Grand Prix Historic"
+    "config": "Grand Prix Historic",
+    "free": false
   },
   "574": {
     "category": "road",
     "name": "Autódromo Hermanos Rodríguez",
-    "config": "National"
+    "config": "National",
+    "free": false
   },
   "575": {
     "category": "road",
     "name": "Autódromo Hermanos Rodríguez",
-    "config": "National Historic"
+    "config": "National Historic",
+    "free": false
   },
   "576": {
     "category": "road",
     "name": "Autódromo Hermanos Rodríguez",
-    "config": "EV Circuit"
+    "config": "EV Circuit",
+    "free": false
   },
   "577": {
     "category": "oval",
     "name": "Autódromo Hermanos Rodríguez",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "578": {
     "category": "road",
     "name": "Autódromo Hermanos Rodríguez",
-    "config": "Oval Stadium"
+    "config": "Oval Stadium",
+    "free": false
   },
   "579": {
     "category": "road",
     "name": "Circuit of the Americas",
-    "config": "NASCAR West"
+    "config": "NASCAR West",
+    "free": false
   },
   "580": {
     "category": "road",
-    "name": "Adelaide Street Circuit"
+    "name": "Adelaide Street Circuit",
+    "free": false
   },
   "581": {
     "category": "dirt_road",
     "name": "Lucas Oil Speedway",
-    "config": "Dirt Road"
+    "config": "Dirt Road",
+    "free": false
   },
   "582": {
     "category": "dirt_road",
     "name": "Winton Motor Raceway",
-    "config": "Rallycross"
+    "config": "Rallycross",
+    "free": true
   },
   "583": {
     "category": "oval",
     "name": "Rockingham Speedway",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "584": {
     "category": "road",
     "name": "St. Petersburg Grand Prix",
-    "config": "Grand Prix"
+    "config": "Grand Prix",
+    "free": false
   },
   "585": {
     "category": "road",
-    "name": "Barber Motorsports Park"
+    "name": "Barber Motorsports Park",
+    "free": false
   },
   "586": {
     "category": "road",
     "name": "WeatherTech Raceway at Laguna Seca",
-    "config": "2026"
+    "config": "2026",
+    "free": false
   },
   "587": {
     "category": "dirt_road",
     "name": "Charlotte Motor Speedway",
-    "config": "Dirt Road"
+    "config": "Dirt Road",
+    "free": true
   },
   "588": {
     "category": "road",
     "name": "Mid-Ohio Sports Car Course",
-    "config": "Full Course"
+    "config": "Full Course",
+    "free": false
   },
   "589": {
     "category": "road",
-    "name": "Qualcomm Circuit (Naval Base Coronado)"
+    "name": "Qualcomm Circuit (Naval Base Coronado)",
+    "free": false
   },
   "590": {
     "category": "road",
     "name": "Mid-Ohio Sports Car Course",
-    "config": "Chicane"
+    "config": "Chicane",
+    "free": false
   },
   "591": {
     "category": "road",
     "name": "Mid-Ohio Sports Car Course",
-    "config": "Short"
+    "config": "Short",
+    "free": false
   },
   "592": {
     "category": "oval",
     "name": "Mid-Ohio Sports Car Course",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "593": {
     "category": "oval",
     "name": "Mid-Ohio Sports Car Course",
-    "config": "Alt Oval"
+    "config": "Alt Oval",
+    "free": false
   },
   "594": {
     "category": "oval",
     "name": "The Milwaukee Mile",
-    "config": "Oval"
+    "config": "Oval",
+    "free": false
   },
   "595": {
     "category": "road",
     "name": "The Milwaukee Mile",
-    "config": "Road"
+    "config": "Road",
+    "free": false
   },
   "596": {
     "category": "road",
     "name": "Road America",
-    "config": "Full Course"
+    "config": "Full Course",
+    "free": false
   },
   "597": {
     "category": "road",
     "name": "Road America",
-    "config": "Bend"
+    "config": "Bend",
+    "free": false
   },
   "598": {
     "category": "road",
     "name": "Road America",
-    "config": "Short East"
+    "config": "Short East",
+    "free": false
   },
   "599": {
     "category": "road",
     "name": "Road America",
-    "config": "Short West"
+    "config": "Short West",
+    "free": false
   }
 }

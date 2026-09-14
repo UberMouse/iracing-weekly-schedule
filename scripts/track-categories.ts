@@ -18,6 +18,14 @@ export interface TrackCategoryEntry {
   /** For human readability only — not consumed by the compute logic. */
   name?: string;
   config?: string;
+  /**
+   * Whether this layout is included in the base iRacing subscription
+   * (`free_with_subscription` from `/data/track/get`), i.e. doesn't need to
+   * be purchased separately. Always present on entries built by
+   * `buildTrackCategoryCatalogue`; absent on a legacy entry from before this
+   * field existed (treated as not-free by `computeTrackUsage`).
+   */
+  free?: boolean;
 }
 
 export type TrackCategoryCatalogue = Record<string, TrackCategoryEntry>;
@@ -28,6 +36,7 @@ export interface RawTrackLayout {
   track_name: string;
   config_name?: string;
   category?: string;
+  free_with_subscription?: boolean;
 }
 
 const KNOWN_CATEGORIES = new Set(["road", "oval", "dirt_road", "dirt_oval"]);
@@ -51,6 +60,10 @@ export function buildTrackCategoryCatalogue(tracks: RawTrackLayout[]): TrackCate
       category: track.category,
       name: track.track_name,
       ...(track.config_name ? { config: track.config_name } : {}),
+      // `free_with_subscription` is always present on a live API response;
+      // coerced explicitly so a missing/undefined value reads as not-free
+      // rather than leaking `undefined` into the committed JSON.
+      free: track.free_with_subscription === true,
     };
   }
   return catalogue;

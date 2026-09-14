@@ -14,6 +14,13 @@ export interface TrackUsageRow {
   /** Series-weeks per season id, for every season in `AggregatedTrackUsage.seasons`. */
   perSeason: Record<string, number>;
   total: number;
+  /** Passed through from `TrackUsageEntry.free` — see there for the definition. */
+  free: boolean;
+}
+
+export interface AggregateTrackUsageOptions {
+  /** Drop rows for tracks that are free with subscription (default: keep them). */
+  hideFree?: boolean;
 }
 
 export interface AggregatedTrackUsage {
@@ -54,20 +61,27 @@ function perSeasonCounts(
  * "all" sums every bucket in `counts`, including "unknown", so usage is never
  * silently dropped. A single-category filter counts only that bucket, so a
  * track run on multiple layout types only shows the weeks matching the filter.
+ *
+ * `options.hideFree` combines with the type filter (AND): it drops rows for
+ * tracks marked `free` after the type filter's zero-total rows are already
+ * excluded, then the remaining rows are (re-)sorted as usual.
  */
 export function aggregateTrackUsage(
   file: TrackUsageFile,
   filter: TrackUsageFilterValue,
+  options: AggregateTrackUsageOptions = {},
 ): AggregatedTrackUsage {
   const buckets = bucketsForFilter(filter);
+  const { hideFree = false } = options;
 
   const rows = file.tracks
     .map((entry): TrackUsageRow => {
       const perSeason = perSeasonCounts(entry, file.seasons, buckets);
       const total = Object.values(perSeason).reduce((a, b) => a + b, 0);
-      return { trackName: entry.trackName, perSeason, total };
+      return { trackName: entry.trackName, perSeason, total, free: entry.free };
     })
     .filter((row) => row.total > 0)
+    .filter((row) => !hideFree || !row.free)
     .sort((a, b) => b.total - a.total || a.trackName.localeCompare(b.trackName));
 
   return { seasons: file.seasons, rows };
