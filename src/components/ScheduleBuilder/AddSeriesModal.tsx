@@ -27,13 +27,12 @@ function SeriesRow({
 }) {
   const weekTrack = series.scheduleWeeks.find((w) => w.seasonWeek === week);
   return (
-    <button
-      onClick={onAdd}
-      className={`text-left px-3 py-2.5 rounded-md hover:bg-gray-800 transition-colors flex items-center gap-2 ${
+    <div
+      className={`rounded-md hover:bg-gray-800 transition-colors flex items-center gap-2 ${
         isInSchedule ? "bg-gray-800/40" : ""
       }`}
     >
-      <div className="flex-1 min-w-0">
+      <button onClick={onAdd} className="flex-1 min-w-0 text-left px-3 py-2.5">
         <div className="text-sm font-medium flex items-center gap-1.5">
           {series.seriesName}
           <EventTypeBadge raceTimeMinutes={series.raceTimeMinutes} isRepeating={series.isRepeating} compact />
@@ -53,20 +52,17 @@ function SeriesRow({
             )}
           </div>
         ) : null}
-      </div>
+      </button>
       {onAddAll && (
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onAddAll();
-          }}
-          className="shrink-0 text-xs text-gray-500 hover:text-gray-300 px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors"
+          onClick={onAddAll}
+          className="shrink-0 text-xs text-gray-500 hover:text-gray-300 px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors mr-3"
           title="Add to all weeks this series races"
         >
           All weeks
         </button>
       )}
-    </button>
+    </div>
   );
 }
 
