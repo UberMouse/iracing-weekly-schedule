@@ -178,13 +178,25 @@ export interface BackToBackLoop {
   /** Each series' session length for the week, parallel to `series`. */
   sessionMinutes: number[];
   /**
-   * Shift every grid in the loop is invariant under: the lcm of their repeats
-   * when that divides a day, else a day.
+   * Shift every grid in the loop is invariant under: the lcm of their repeats,
+   * which divides a day.
    */
   gridMinutes: number;
-  /** Every distinct cycle, by canonical start. */
+  /** Every distinct cycle, by canonical start (only the first found if `truncated`). */
   variants: BackToBackLoopVariant[];
 }
+
+export interface BackToBackLoops {
+  loops: BackToBackLoop[];
+  /** Some series order hit the search step budget, so its loops are only the first found. */
+  truncated: boolean;
+}
+
+/**
+ * Cycle search expansions one series order may take. Real schedules need a
+ * handful; dense grids of short sessions can need exponentially many.
+ */
+const LOOP_SEARCH_STEP_BUDGET = 50_000;
 
 interface LoopSeries {
   series: Series;
@@ -220,8 +232,15 @@ function hopStarts(from: LoopSeries, t: number, to: LoopSeries): number[] {
   return starts;
 }
 
-/** Every simple cycle of the lap graph for one series order, rotated to its smallest node. */
-function loopVariants(order: LoopSeries[], gridMinutes: number): BackToBackLoopVariant[] {
+/**
+ * Every simple cycle of the lap graph for one series order, rotated to its
+ * smallest node, or those found within `stepBudget` search expansions.
+ */
+function loopVariants(
+  order: LoopSeries[],
+  gridMinutes: number,
+  stepBudget: number,
+): { variants: BackToBackLoopVariant[]; truncated: boolean } {
   const [first] = order;
   const nodes = first.startMinutes.filter((m) => m < gridMinutes);
   const nodeAt = new Map(nodes.map((m, i) => [m, i]));
@@ -256,7 +275,9 @@ function loopVariants(order: LoopSeries[], gridMinutes: number): BackToBackLoopV
   };
   // Search cycles through node `s` using only nodes ≥ s, so each is found
   // once, from its smallest node, visiting only nodes that can get back to s.
-  for (let s = 0; s < nodes.length; s++) {
+  let steps = 0;
+  let truncated = false;
+  for (let s = 0; s < nodes.length && !truncated; s++) {
     const canReturn = new Uint8Array(nodes.length);
     const queue = [s];
     canReturn[s] = 1;
@@ -271,8 +292,13 @@ function loopVariants(order: LoopSeries[], gridMinutes: number): BackToBackLoopV
     const onPath = new Uint8Array(nodes.length);
     const path: Lap[] = [];
     const search = (node: number) => {
+      if (++steps > stepBudget) {
+        truncated = true;
+        return;
+      }
       onPath[node] = 1;
       for (const lap of laps[node]) {
+        if (truncated) break;
         if (lap.to === s) {
           record([...path, lap]);
         } else if (lap.to > s && canReturn[lap.to] && !onPath[lap.to]) {
@@ -285,23 +311,30 @@ function loopVariants(order: LoopSeries[], gridMinutes: number): BackToBackLoopV
     };
     search(s);
   }
-  return variants;
+  return { variants, truncated };
 }
 
 /**
  * Every endless back-2-back loop among `series` for `week`: 2 or 3 distinct
  * series raced in a fixed rotation (each once per lap), every hop qualifying
  * as a back-2-back, repeating forever. Only repeating series with a session
- * length can loop. A loop's order starts with its series earliest in
- * `series`, so rotations of one order are one loop, and a 2-series loop is
- * listed once; a 3-series loop's two directions are separate loops.
+ * length whose repeat divides a day can loop: any other grid has an irregular
+ * gap at midnight, so it can't keep a loop going. A loop's order starts with
+ * its series earliest in `series`, so rotations of one order are one loop, and
+ * a 2-series loop is listed once; a 3-series loop's two directions are
+ * separate loops. Each order's search stops after `stepBudget` expansions
+ * (overridable for tests), keeping the cycles found so far.
  */
-export function findBackToBackLoops(series: Series[], week: number): BackToBackLoop[] {
+export function findBackToBackLoops(
+  series: Series[],
+  week: number,
+  stepBudget = LOOP_SEARCH_STEP_BUDGET,
+): BackToBackLoops {
   const eligible: LoopSeries[] = [];
   for (const s of series) {
     if (eligible.some((e) => e.series.seriesId === s.seriesId)) continue;
     const timing = toTiming(s.scheduleWeeks.find((w) => w.seasonWeek === week)?.raceTimes);
-    if (timing?.kind !== "daily") continue;
+    if (timing?.kind !== "daily" || MINUTES_PER_DAY % timing.repeatMinutes !== 0) continue;
     const isStart = new Uint8Array(MINUTES_PER_DAY);
     for (const m of timing.startMinutes) isStart[m] = 1;
     eligible.push({
@@ -330,12 +363,14 @@ export function findBackToBackLoops(series: Series[], week: number): BackToBackL
   orders.sort((a, b) => a.length - b.length);
 
   const loops: BackToBackLoop[] = [];
+  let truncated = false;
   for (const indices of orders) {
     if (!indices.every((from, p) => hasHop[from][indices[(p + 1) % indices.length]])) continue;
     const order = indices.map((i) => eligible[i]);
-    const lcm = order.reduce((l, s) => (l / gcd(l, s.repeatMinutes)) * s.repeatMinutes, 1);
-    const gridMinutes = MINUTES_PER_DAY % lcm === 0 ? lcm : MINUTES_PER_DAY;
-    const variants = loopVariants(order, gridMinutes);
+    // Every repeat divides a day, so their lcm does too.
+    const gridMinutes = order.reduce((l, s) => (l / gcd(l, s.repeatMinutes)) * s.repeatMinutes, 1);
+    const { variants, truncated: cutShort } = loopVariants(order, gridMinutes, stepBudget);
+    truncated ||= cutShort;
     // Cycles come out by smallest node, so already by canonical start.
     if (variants.length > 0) {
       loops.push({
@@ -346,7 +381,7 @@ export function findBackToBackLoops(series: Series[], week: number): BackToBackL
       });
     }
   }
-  return loops;
+  return { loops, truncated };
 }
 
 export interface FormatBackToBackOptions {

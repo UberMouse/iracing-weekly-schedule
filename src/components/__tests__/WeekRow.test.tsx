@@ -1,8 +1,19 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect } from "vitest";
+import { afterEach, describe, it, expect, vi } from "vitest";
 import WeekRow from "../ScheduleBuilder/WeekRow";
 import type { RaceTimes, Series } from "../../types";
+
+// Lets a test shrink the loop search's step budget; left undefined, the real default applies.
+const loopSearch = vi.hoisted(() => ({ stepBudget: undefined as number | undefined }));
+vi.mock("../ScheduleBuilder/backToBack", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../ScheduleBuilder/backToBack")>();
+  return {
+    ...actual,
+    findBackToBackLoops: (series: Series[], week: number) =>
+      actual.findBackToBackLoops(series, week, loopSearch.stepBudget),
+  };
+});
 
 const carRotationSeries: Series = {
   seriesId: 100,
@@ -255,6 +266,31 @@ describe("WeekRow", () => {
       expect(loop!.compareDocumentPosition(pairsHeading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       expect(pairsHeading.compareDocumentPosition(pairHeading("Mini Stock (20 min) → ARCA")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       expect(screen.queryByText("No loops this week")).not.toBeInTheDocument();
+      expect(screen.queryByText(/too many loops/i)).not.toBeInTheDocument();
+    });
+
+    describe("when the loop search runs out of steps", () => {
+      afterEach(() => {
+        loopSearch.stepBudget = undefined;
+      });
+
+      it("notes the loops are only the first found, still listing and counting them", async () => {
+        // One step finds Mini :15 ⇄ ARCA, then runs out before trying Mini :45.
+        loopSearch.stepBudget = 1;
+        renderWeek([mini.seriesId, arca.seriesId]);
+        await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (2) · Loops (1)" }));
+        expect(screen.getByText("Too many loops to list — showing the first ones found")).toBeVisible();
+        expect(pairHeading("Mini Stock (20 min) ⇄ ARCA (31 min)")).toBeVisible();
+        expect(screen.queryByText("No loops this week")).not.toBeInTheDocument();
+      });
+
+      it("doesn't claim there are no loops when none were found in time", async () => {
+        loopSearch.stepBudget = 0;
+        renderWeek([mini.seriesId, arca.seriesId]);
+        await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (2) · Loops (0)" }));
+        expect(screen.getByText("Too many loops to list — showing the first ones found")).toBeVisible();
+        expect(screen.queryByText("No loops this week")).not.toBeInTheDocument();
+      });
     });
 
     it("says when there are no loops, still listing the pairs", async () => {

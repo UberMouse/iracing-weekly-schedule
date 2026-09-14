@@ -354,10 +354,10 @@ describe("findBackToBackLoops", () => {
   const arca = makeSeries(167, "ARCA", { 1: repeating("00:45", 60, 31) });
   const loopNames = (loops: { series: Series[] }[]) => loops.map((l) => l.series.map((s) => s.seriesName).join(" → "));
   const utcLines = (series: Series[]) =>
-    findBackToBackLoops(series, 1).map((loop) => formatBackToBackLoop(loop, { timeZone: "UTC" }));
+    findBackToBackLoops(series, 1).loops.map((loop) => formatBackToBackLoop(loop, { timeZone: "UTC" }));
 
   it("finds the real Mini Stock ⇄ ARCA loop, once, whichever series comes first", () => {
-    const loops = findBackToBackLoops([mini, arca], 1);
+    const loops = findBackToBackLoops([mini, arca], 1).loops;
     expect(loops).toEqual([
       {
         series: [mini, arca],
@@ -380,7 +380,7 @@ describe("findBackToBackLoops", () => {
     // ARCA for 40 min ends at :25: Mini's :15 is 10 min early and :45 20 min late.
     const longArca = makeSeries(167, "ARCA", { 1: repeating("00:45", 60, 40) });
     expect(findBackToBacks([mini, longArca], 1).pairs).toHaveLength(1);
-    expect(findBackToBackLoops([mini, longArca], 1)).toEqual([]);
+    expect(findBackToBackLoops([mini, longArca], 1).loops).toEqual([]);
   });
 
   it("finds a 3-series loop in the only direction that works, listed once for all rotations", () => {
@@ -388,18 +388,18 @@ describe("findBackToBackLoops", () => {
     const a = makeSeries(1, "A", { 1: repeating("00:00", 60, 20) });
     const b = makeSeries(2, "B", { 1: repeating("00:30", 60, 10) });
     const c = makeSeries(3, "C", { 1: repeating("00:45", 60, 12) });
-    const loops = findBackToBackLoops([a, b, c], 1);
+    const loops = findBackToBackLoops([a, b, c], 1).loops;
     expect(loopNames(loops)).toEqual(["A → B → C"]);
     expect(loops[0].variants).toEqual([{ starts: [0, 30, 45], repeatMinutes: 60 }]);
     // The loop starts from whichever of its series is listed first.
-    expect(loopNames(findBackToBackLoops([b, c, a], 1))).toEqual(["B → C → A"]);
-    expect(loopNames(findBackToBackLoops([c, a, b], 1))).toEqual(["C → A → B"]);
+    expect(loopNames(findBackToBackLoops([b, c, a], 1).loops)).toEqual(["B → C → A"]);
+    expect(loopNames(findBackToBackLoops([c, a, b], 1).loops)).toEqual(["C → A → B"]);
   });
 
   it("lists both directions of a 3-series loop separately when both work", () => {
     // Every hop: 25 min then 5 min to the next half hour, so any order loops.
     const [a, b, c] = ["A", "B", "C"].map((name, i) => makeSeries(i + 1, name, { 1: repeating("00:00", 30, 25) }));
-    const loops = findBackToBackLoops([a, b, c], 1);
+    const loops = findBackToBackLoops([a, b, c], 1).loops;
     expect(loopNames(loops)).toEqual(["A → B", "A → C", "B → C", "A → B → C", "A → C → B"]);
     expect(loops[3].variants).toEqual([{ starts: [0, 30, 60], repeatMinutes: 90 }]);
     expect(formatBackToBackLoop(loops[3], { timeZone: "UTC" })).toEqual([
@@ -411,7 +411,7 @@ describe("findBackToBackLoops", () => {
     // Both every 30 min for 25: the :00 → :30 → :00 cycle takes an hour but works from :30 too.
     const a = makeSeries(1, "A", { 1: repeating("00:00", 30, 25) });
     const b = makeSeries(2, "B", { 1: repeating("00:00", 30, 25) });
-    const [loop] = findBackToBackLoops([a, b], 1);
+    const [loop] = findBackToBackLoops([a, b], 1).loops;
     expect(loop.gridMinutes).toBe(30);
     // Starting at :30 is the same cycle shifted by the grid, not a second line.
     expect(loop.variants).toEqual([{ starts: [0, 30], repeatMinutes: 60 }]);
@@ -428,7 +428,7 @@ describe("findBackToBackLoops", () => {
     // Daily grids: A 00:00 for 1435 ends 23:55 → B 00:00 for 24 h → A 00:00, a two-day cycle.
     const a = makeSeries(1, "A", { 1: repeating("00:00", 1440, 1435) });
     const b = makeSeries(2, "B", { 1: repeating("00:00", 1440, 1440) });
-    const [loop] = findBackToBackLoops([a, b], 1);
+    const [loop] = findBackToBackLoops([a, b], 1).loops;
     expect(loop.gridMinutes).toBe(1440);
     expect(loop.variants).toEqual([{ starts: [0, 1440], repeatMinutes: 2880 }]);
     expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
@@ -440,7 +440,7 @@ describe("findBackToBackLoops", () => {
     // B every 20 min for 40: A :00 → B :20 → A :00 next hour, and A :30 → B :40 → A :30 next hour.
     const a = makeSeries(1, "A", { 1: repeating("00:00", 30, 12) });
     const b = makeSeries(2, "B", { 1: repeating("00:00", 20, 40) });
-    const loops = findBackToBackLoops([a, b], 1);
+    const loops = findBackToBackLoops([a, b], 1).loops;
     expect(loops).toHaveLength(1);
     expect(loops[0].gridMinutes).toBe(60);
     expect(loops[0].variants).toEqual([
@@ -457,7 +457,7 @@ describe("findBackToBackLoops", () => {
     // B every 20 min for 15: A :00 → B :20 → A :30 → B :40 → A :00, a gap one lap and an overlap the next.
     const a = makeSeries(1, "A", { 1: repeating("00:00", 30, 12) });
     const b = makeSeries(2, "B", { 1: repeating("00:00", 20, 15) });
-    const [loop] = findBackToBackLoops([a, b], 1);
+    const [loop] = findBackToBackLoops([a, b], 1).loops;
     expect(loop.variants).toEqual([{ starts: [0, 20, 30, 40], repeatMinutes: 60 }]);
     expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
       ":00 → ends :12 → :20 (8 min gap) → ends :35 → :30 (5 min overlap) → ends :42 → :40 (2 min overlap) → ends :55 → :00 (+1h) (5 min gap) · repeats every 1 h",
@@ -472,7 +472,7 @@ describe("findBackToBackLoops", () => {
     // Daily: A 23:30 for 700 min ends 11:10 → B 11:20 for 725 min ends 23:25 → A 23:30.
     const a = makeSeries(1, "A", { 1: repeating("23:30", 1440, 700) });
     const b = makeSeries(2, "B", { 1: repeating("11:20", 1440, 725) });
-    const [loop] = findBackToBackLoops([a, b], 1);
+    const [loop] = findBackToBackLoops([a, b], 1).loops;
     expect(loop.gridMinutes).toBe(1440);
     expect(loop.variants).toEqual([{ starts: [1410, 2120], repeatMinutes: 1440 }]);
     expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
@@ -484,7 +484,7 @@ describe("findBackToBackLoops", () => {
     // A on odd hours ends :50 → B :55 ends :55 an hour on → A on the next odd hour.
     const a = makeSeries(1, "A", { 1: repeating("05:00", 120, 50) });
     const b = makeSeries(2, "B", { 1: repeating("00:55", 60, 60) });
-    const [loop] = findBackToBackLoops([a, b], 1);
+    const [loop] = findBackToBackLoops([a, b], 1).loops;
     expect(loop.gridMinutes).toBe(120);
     expect(loop.variants).toEqual([{ starts: [60, 115], repeatMinutes: 120 }]);
     expect(formatBackToBackLoop(loop, { timeZone: "UTC" })).toEqual([
@@ -497,7 +497,7 @@ describe("findBackToBackLoops", () => {
   });
 
   it("shows sub-hour loops in minutes past the local hour in a half-hour offset zone", () => {
-    const [loop] = findBackToBackLoops([mini, arca], 1);
+    const [loop] = findBackToBackLoops([mini, arca], 1).loops;
     expect(formatBackToBackLoop(loop, { timeZone: "Asia/Kolkata" })).toEqual([
       ":45 → ends :05 → :15 (10 min gap) → ends :46 (+1h) → :45 (+1h) (1 min overlap) · repeats every 1 h",
     ]);
@@ -512,9 +512,42 @@ describe("findBackToBackLoops", () => {
       ),
     });
     expect(findBackToBacks([mini, scheduledArca], 1).pairs).toHaveLength(2);
-    expect(findBackToBackLoops([mini, scheduledArca], 1)).toEqual([]);
+    expect(findBackToBackLoops([mini, scheduledArca], 1).loops).toEqual([]);
     const noLength = makeSeries(167, "ARCA", { 1: repeating("00:45", 60, null) });
-    expect(findBackToBackLoops([mini, noLength], 1)).toEqual([]);
+    expect(findBackToBackLoops([mini, noLength], 1).loops).toEqual([]);
+  });
+
+  it("leaves out series whose repeat doesn't divide a day, quickly, while still pairing them", () => {
+    // A 35-min grid has an irregular gap at midnight; with 15-min grids it once took seconds to search.
+    const a = makeSeries(1, "A", { 1: repeating("00:00", 15, 10) });
+    const odd = makeSeries(2, "Odd", { 1: repeating("00:00", 35, 10) });
+    const c = makeSeries(3, "C", { 1: repeating("00:00", 15, 10) });
+    expect(names(findBackToBacks([a, odd, c], 1).pairs)).toEqual(["A → Odd", "A → C", "Odd → A", "Odd → C", "C → A", "C → Odd"]);
+    const started = performance.now();
+    const { loops, truncated } = findBackToBackLoops([a, odd, c], 1);
+    const elapsed = performance.now() - started;
+    expect(loopNames(loops)).toEqual(["A → C"]);
+    expect(truncated).toBe(false);
+    expect(elapsed).toBeLessThan(200);
+  });
+
+  it("stops searching a series order once its step budget runs out, keeping the loops found", () => {
+    // 15- and 16-min grids align only every 4 h, so this order has hundreds of cycles.
+    const a = makeSeries(1, "A", { 1: repeating("00:00", 15, 5) });
+    const b = makeSeries(2, "B", { 1: repeating("00:00", 16, 10) });
+    const full = findBackToBackLoops([a, b], 1);
+    expect(full.truncated).toBe(false);
+    const started = performance.now();
+    const cut = findBackToBackLoops([a, b], 1, 100);
+    const elapsed = performance.now() - started;
+    expect(cut.truncated).toBe(true);
+    expect(cut.loops).toHaveLength(1);
+    const found = cut.loops[0].variants;
+    expect(found.length).toBeGreaterThan(0);
+    // The first cycles found, still in order.
+    expect(found.length).toBeLessThan(full.loops[0].variants.length);
+    expect(found).toEqual(full.loops[0].variants.slice(0, found.length));
+    expect(elapsed).toBeLessThan(200);
   });
 
   it("stays fast with 15 series on 15/30/60-min grids", () => {
@@ -525,7 +558,7 @@ describe("findBackToBackLoops", () => {
       }),
     );
     const started = performance.now();
-    const loops = findBackToBackLoops(series, 1);
+    const loops = findBackToBackLoops(series, 1).loops;
     const elapsed = performance.now() - started;
     expect(loops.length).toBeGreaterThan(0);
     expect(elapsed).toBeLessThan(200);
@@ -539,7 +572,8 @@ describe("findBackToBackLoops", () => {
     const mod = (n: number, m: number) => ((n % m) + m) % m;
     const hhmm = (m: number) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
     type Spec = { first: number; repeat: number; session: number };
-    // Every repeat below divides a day, so a grid is simply its first time modulo the repeat.
+    // Only repeats that divide a day can loop, and their grid is simply the first time modulo the repeat.
+    const canLoop = (spec: Spec) => 1440 % spec.repeat === 0;
     const startsAt = (spec: Spec, minute: number) => mod(minute - spec.first, spec.repeat) === 0;
 
     /**
@@ -549,9 +583,10 @@ describe("findBackToBackLoops", () => {
      */
     const bruteForce = (specs: Spec[], tuple: number[], found: Set<string>) => {
       const k = tuple.length;
-      // Smallest day-dividing shift that leaves every grid in the tuple unchanged.
+      if (!tuple.every((i) => canLoop(specs[i]))) return;
+      // Smallest day-dividing shift that leaves every grid in the tuple unchanged (a day always does).
       let period = 1;
-      while (1440 % period !== 0 || tuple.some((i) => period % specs[i].repeat !== 0)) period++;
+      while (period < 1440 && (1440 % period !== 0 || tuple.some((i) => period % specs[i].repeat !== 0))) period++;
       const record = (chain: number[], duration: number) => {
         // Rotate to whichever lap starts first mod the period, then shift into the first period.
         let best = chain;
@@ -588,10 +623,12 @@ describe("findBackToBackLoops", () => {
     };
 
     let cycles = 0;
-    for (let trial = 0; trial < 200; trial++) {
+    let excluded = 0;
+    for (let trial = 0; trial < 400; trial++) {
       const specs: Spec[] = Array.from({ length: 2 + Math.floor(random() * 2) }, () => ({
         first: 5 * Math.floor(random() * 288),
-        repeat: choose([15, 20, 30, 45, 60, 90, 120]),
+        // 35 and 50 don't divide a day, so those series never loop.
+        repeat: choose([15, 20, 30, 35, 45, 50, 60, 90, 120]),
         session: 5 + Math.floor(random() * 96),
       }));
       const series = specs.map((spec, i) =>
@@ -607,13 +644,17 @@ describe("findBackToBackLoops", () => {
           for (const l of indices) if (l > i && l !== j) bruteForce(specs, [i, j, l], expected);
         }
       }
-      const actual = findBackToBackLoops(series, 1).flatMap((loop) =>
+      const { loops, truncated } = findBackToBackLoops(series, 1);
+      expect(truncated).toBe(false);
+      const actual = loops.flatMap((loop) =>
         loop.variants.map((v) => JSON.stringify([loop.series.map((s) => s.seriesId), v.starts, v.repeatMinutes])),
       );
       expect({ trial, specs, cycles: actual.sort() }).toEqual({ trial, specs, cycles: [...expected].sort() });
       cycles += actual.length;
+      excluded += specs.filter((spec) => !canLoop(spec)).length;
     }
-    // Guard against a generator that never produces loops.
+    // Guard against a generator that never produces loops, or never a series that can't.
     expect(cycles).toBeGreaterThan(200);
+    expect(excluded).toBeGreaterThan(20);
   });
 });

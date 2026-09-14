@@ -84,13 +84,11 @@ export default function WeekRow({
       })
       .filter((s): s is Series & { isMaybe: boolean } => s !== null);
   }, [series, pickedIds, maybeIds]);
-  const backToBacks = useMemo(
-    () =>
-      pickedSeries.length >= 2
-        ? { ...findBackToBacks(pickedSeries, week), loops: findBackToBackLoops(pickedSeries, week) }
-        : null,
-    [pickedSeries, week],
-  );
+  const backToBacks = useMemo(() => {
+    if (pickedSeries.length < 2) return null;
+    const { loops, truncated } = findBackToBackLoops(pickedSeries, week);
+    return { ...findBackToBacks(pickedSeries, week), loops, loopsTruncated: truncated };
+  }, [pickedSeries, week]);
   // Formatting is the expensive part, so only do it while the panel is open.
   const backToBackLines = useMemo(() => {
     if (!showBackToBacks || !backToBacks) return null;
@@ -233,8 +231,13 @@ export default function WeekRow({
             {backToBackLines && (
               <>
                 <h3 className={sectionHeadingClass}>Loops</h3>
+                {backToBacks.loopsTruncated && (
+                  <p className="text-[var(--color-text-muted)]">
+                    Too many loops to list — showing the first ones found
+                  </p>
+                )}
                 {backToBacks.loops.length === 0 ? (
-                  <p className="text-[var(--color-text-muted)]">No loops this week</p>
+                  !backToBacks.loopsTruncated && <p className="text-[var(--color-text-muted)]">No loops this week</p>
                 ) : (
                   <ul className="flex flex-col gap-2">
                     {backToBacks.loops.map((loop, i) => (
