@@ -666,3 +666,259 @@ describe("resolveSessionMinutes and resolveIsRepeating", () => {
     expect(series.raceTimeMinutes).toBe(180);
   });
 });
+
+describe("raceTimes", () => {
+  const baseSeries = [
+    {
+      series_id: 600,
+      series_name: "Endurance Series",
+      category_id: 5,
+      min_license_level: 1,
+      allowed_licenses: [
+        { group_name: "Rookie", min_license_level: 1, max_license_level: 4 },
+      ],
+    },
+  ];
+
+  // Two-week season so we can verify per-week mapping (different weeks get
+  // their own descriptor, matched by race_week_num).
+  const twoWeekSeason = {
+    series_id: 600,
+    season_id: 6001,
+    season_year: 2026,
+    season_quarter: 2,
+    fixed_setup: false,
+    car_class_ids: [74],
+    schedules: [
+      {
+        race_week_num: 0,
+        start_date: "2026-03-17",
+        track: { track_id: 10, track_name: "Spa" },
+      },
+      {
+        race_week_num: 1,
+        start_date: "2026-03-24",
+        track: { track_id: 20, track_name: "Monza" },
+      },
+    ],
+  };
+
+  const refSeason = {
+    series_id: 230,
+    season_id: 4001,
+    season_year: 2026,
+    season_quarter: 2,
+    fixed_setup: false,
+    car_class_ids: [74],
+    schedules: Array.from({ length: 12 }, (_, i) => ({
+      race_week_num: i,
+      start_date: new Date(2026, 2, 17 + i * 7).toISOString().split("T")[0],
+      track: { track_id: i + 10, track_name: `Track ${i + 1}` },
+    })),
+  };
+
+  function transform(detailed: Map<number, RawDetailedSchedule>) {
+    const { series: r } = transformToSeries(
+      [...rawSeries, ...baseSeries],
+      [refSeason, twoWeekSeason],
+      rawCars,
+      rawCarClasses,
+      undefined,
+      detailed,
+    );
+    return r.find((s) => s.seriesId === 600)!;
+  }
+
+  it("maps a repeating descriptor to kind: repeating", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{
+            repeating: true,
+            session_minutes: 154,
+            first_session_time: "00:45:00",
+            repeat_minutes: 120,
+          }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toEqual({
+      kind: "repeating",
+      firstSessionTime: "00:45",
+      repeatMinutes: 120,
+      sessionMinutes: 154,
+    });
+  });
+
+  it("maps a scheduled descriptor to kind: scheduled", () => {
+    const sessionTimes = [
+      "2026-02-04T02:00:00Z",
+      "2026-02-04T22:00:00Z",
+      "2026-02-06T02:00:00Z",
+      "2026-02-08T10:00:00Z",
+    ];
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{
+            repeating: false,
+            session_minutes: 69,
+            session_times: sessionTimes,
+          }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toEqual({
+      kind: "scheduled",
+      sessionTimes,
+      sessionMinutes: 69,
+    });
+  });
+
+  it("maps session_minutes of 0 to null", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{
+            repeating: true,
+            session_minutes: 0,
+            first_session_time: "00:45:00",
+            repeat_minutes: 120,
+          }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toEqual({
+      kind: "repeating",
+      firstSessionTime: "00:45",
+      repeatMinutes: 120,
+      sessionMinutes: null,
+    });
+  });
+
+  it("omits raceTimes when there is no detailed schedule at all", () => {
+    const { series: r } = transformToSeries(
+      [...rawSeries, ...baseSeries],
+      [refSeason, twoWeekSeason],
+      rawCars,
+      rawCarClasses,
+    );
+    const series = r.find((s) => s.seriesId === 600)!;
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("omits raceTimes when the detailed schedule has no matching week", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, { schedules: [] }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("omits raceTimes when the week has no descriptors", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, { schedules: [{ race_week_num: 0 }] }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("omits raceTimes for a repeating descriptor missing first_session_time", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{ repeating: true, session_minutes: 154, repeat_minutes: 120 }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("omits raceTimes for a repeating descriptor with repeat_minutes <= 0", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{
+            repeating: true,
+            session_minutes: 154,
+            first_session_time: "00:45:00",
+            repeat_minutes: 0,
+          }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("omits raceTimes for a scheduled descriptor with an empty session_times array", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{ repeating: false, session_minutes: 69, session_times: [] }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("omits raceTimes for a scheduled descriptor missing session_times", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [{
+          race_week_num: 0,
+          race_time_descriptors: [{ repeating: false, session_minutes: 69 }],
+        }],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toBeUndefined();
+  });
+
+  it("maps each week to its own raceTimes independently", () => {
+    const detailed = new Map<number, RawDetailedSchedule>([
+      [6001, {
+        schedules: [
+          {
+            race_week_num: 0,
+            race_time_descriptors: [{
+              repeating: false,
+              session_minutes: 252,
+              session_times: ["2026-02-04T02:00:00Z"],
+            }],
+          },
+          {
+            race_week_num: 1,
+            race_time_descriptors: [{
+              repeating: false,
+              session_minutes: 115,
+              session_times: ["2026-02-11T02:00:00Z", "2026-02-13T22:00:00Z"],
+            }],
+          },
+        ],
+      }],
+    ]);
+    const series = transform(detailed);
+    expect(series.scheduleWeeks[0].raceTimes).toEqual({
+      kind: "scheduled",
+      sessionTimes: ["2026-02-04T02:00:00Z"],
+      sessionMinutes: 252,
+    });
+    expect(series.scheduleWeeks[1].raceTimes).toEqual({
+      kind: "scheduled",
+      sessionTimes: ["2026-02-11T02:00:00Z", "2026-02-13T22:00:00Z"],
+      sessionMinutes: 115,
+    });
+  });
+});

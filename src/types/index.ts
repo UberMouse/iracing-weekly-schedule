@@ -18,6 +18,18 @@ export interface TrackMapLayers {
   turns?: string;
 }
 
+/**
+ * Per-week race start time(s), derived from the detailed schedule's
+ * `race_time_descriptors[0]` (`/data/series/season_schedule/{season_id}`).
+ */
+export type RaceTimes =
+  // A single session that repeats every `repeatMinutes` around the clock,
+  // starting at `firstSessionTime` (e.g. most sprint series).
+  | { kind: "repeating"; firstSessionTime: string /* "HH:MM", UTC */; repeatMinutes: number; sessionMinutes: number | null }
+  // A fixed list of session start times for the week, as given by the API
+  // (e.g. NASCAR-style weekly slots), rather than a repeating cadence.
+  | { kind: "scheduled"; sessionTimes: string[] /* ISO-8601 UTC, as the API gives them */; sessionMinutes: number | null };
+
 export interface WeekSchedule {
   weekNumber: number;
   seasonWeek: number;
@@ -30,6 +42,7 @@ export interface WeekSchedule {
   trackMapUrl?: string;
   trackMapLayers?: TrackMapLayers;
   cars?: Car[];
+  raceTimes?: RaceTimes;
 }
 
 export interface Series {

@@ -1,4 +1,4 @@
-import type { Series, Category, LicenseClass, TrackMapLayers } from "../src/types";
+import type { Series, Category, LicenseClass, TrackMapLayers, RaceTimes } from "../src/types";
 
 const TRACK_IMAGE_BASE = "https://images-static.iracing.com/";
 
@@ -44,6 +44,11 @@ export interface RawRaceTimeDescriptor {
   session_minutes: number;
   repeat_minutes?: number | null;
   super_session?: boolean;
+  first_session_time?: string;
+  session_times?: string[];
+  day_offset?: number[];
+  start_date?: string;
+  end_offset_minutes?: number;
 }
 
 export interface RawSeasonSchedule {
@@ -288,6 +293,47 @@ function resolveSessionMinutes(
   return null;
 }
 
+/** "00:45:00" -> "00:45" */
+function formatFirstSessionTime(time: string): string {
+  const [hh, mm] = time.split(":");
+  return `${hh}:${mm}`;
+}
+
+/**
+ * Build the per-week RaceTimes from a detailed schedule week's first
+ * race_time_descriptor. Returns undefined if there's no detailed week, no
+ * descriptor, or the descriptor is missing the fields its kind needs.
+ */
+function resolveWeekRaceTimes(
+  detailedWeek: RawDetailedSchedule["schedules"][number] | undefined,
+): RaceTimes | undefined {
+  const descriptor = detailedWeek?.race_time_descriptors?.[0];
+  if (!descriptor) return undefined;
+
+  const sessionMinutes = descriptor.session_minutes > 0 ? descriptor.session_minutes : null;
+
+  if (descriptor.repeating) {
+    if (!descriptor.first_session_time || !descriptor.repeat_minutes || descriptor.repeat_minutes <= 0) {
+      return undefined;
+    }
+    return {
+      kind: "repeating",
+      firstSessionTime: formatFirstSessionTime(descriptor.first_session_time),
+      repeatMinutes: descriptor.repeat_minutes,
+      sessionMinutes,
+    };
+  }
+
+  if (!descriptor.session_times || descriptor.session_times.length === 0) {
+    return undefined;
+  }
+  return {
+    kind: "scheduled",
+    sessionTimes: descriptor.session_times,
+    sessionMinutes,
+  };
+}
+
 export function transformToSeries(
   rawSeries: RawSeries[],
   rawSeasons: RawSeason[],
@@ -355,6 +401,7 @@ export function transformToSeries(
           const weekCars = detailedWeek?.race_week_cars
             ?.map((c) => ({ carId: c.car_id, carName: c.car_name }))
             ?? undefined;
+          const raceTimes = resolveWeekRaceTimes(detailedWeek);
 
           return {
             weekNumber,
@@ -372,6 +419,7 @@ export function transformToSeries(
             ...(trackMapUrl ? { trackMapUrl } : {}),
             ...(trackMapLayers ? { trackMapLayers } : {}),
             ...(weekCars ? { cars: weekCars } : {}),
+            ...(raceTimes ? { raceTimes } : {}),
           };
         })
         // Filter to only weeks in the current season (seasonWeek 1-12)
