@@ -127,8 +127,13 @@ describe("WeekRow", () => {
       kind: "repeating", firstSessionTime: "00:45", repeatMinutes: 60, sessionMinutes: 15,
     });
     const b2bSeries = [early, late, normalSeries, carRotationSeries];
+    const earlyToLate = "Early Sprint (15 min) → Late Sprint";
 
-    function renderWeek(picks: number[], maybes: number[] = [], readOnly = false) {
+    /** The pair heading spans elements (the length is its own span), so match on its whole text. */
+    const pairHeading = (text: string) =>
+      screen.queryByText((_, element) => element?.tagName === "DIV" && element.textContent === text);
+
+    function renderWeek(picks: number[], maybes: number[] = [], readOnly = false, provisional?: boolean) {
       render(
         <WeekRow
           week={1}
@@ -138,6 +143,7 @@ describe("WeekRow", () => {
           weeklyPicks={{ 1: picks }}
           weeklyMaybes={{ 1: maybes }}
           readOnly={readOnly}
+          provisional={provisional}
         />,
       );
     }
@@ -150,31 +156,50 @@ describe("WeekRow", () => {
       const region = document.getElementById(toggle.getAttribute("aria-controls")!);
       expect(region).not.toBeNull();
       expect(region).not.toBeVisible();
-      expect(screen.queryByText("Early Sprint → Late Sprint")).not.toBeInTheDocument();
+      expect(pairHeading(earlyToLate)).not.toBeInTheDocument();
     });
 
     it("renders the panel contents again after collapsing and reopening", async () => {
       renderWeek([early.seriesId, late.seriesId]);
       const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
       await userEvent.click(toggle);
-      expect(screen.getByText("Early Sprint → Late Sprint")).toBeVisible();
+      expect(pairHeading(earlyToLate)).toBeVisible();
       await userEvent.click(toggle);
       expect(toggle).toHaveAttribute("aria-expanded", "false");
-      expect(screen.queryByText("Early Sprint → Late Sprint")).not.toBeInTheDocument();
+      expect(pairHeading(earlyToLate)).not.toBeInTheDocument();
       await userEvent.click(toggle);
-      expect(screen.getByText("Early Sprint → Late Sprint")).toBeVisible();
+      expect(pairHeading(earlyToLate)).toBeVisible();
     });
 
-    it("expands on click to show pairs and series without start times", async () => {
+    it("expands on click to show pairs with A's length, end and gap, and series without start times", async () => {
       renderWeek([early.seriesId, late.seriesId], [normalSeries.seriesId]);
       const toggle = screen.getByRole("button", { name: "Back-2-backs (1)" });
       await userEvent.click(toggle);
       expect(toggle).toHaveAttribute("aria-expanded", "true");
       const region = document.getElementById(toggle.getAttribute("aria-controls")!);
       expect(region).toBeVisible();
-      expect(screen.getByText("Early Sprint → Late Sprint")).toBeVisible();
-      expect(screen.queryByText("Late Sprint → Early Sprint")).not.toBeInTheDocument();
+      expect(pairHeading(earlyToLate)).toBeVisible();
+      expect(pairHeading("Late Sprint (15 min) → Early Sprint")).not.toBeInTheDocument();
+      expect(screen.getByText(":30 → ends :45 → :45 (0 min gap) · hourly")).toBeVisible();
       expect(screen.getByText("No start times: GT3 Sprint")).toBeVisible();
+    });
+
+    it("shows official session lengths plainly, without a tooltip", async () => {
+      renderWeek([early.seriesId, late.seriesId]);
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1)" }));
+      const length = screen.getByText("(15 min)");
+      expect(length).not.toHaveAttribute("title");
+      expect(screen.queryByText("(~15 min)")).not.toBeInTheDocument();
+    });
+
+    it("marks provisional session lengths as estimates with a tooltip", async () => {
+      renderWeek([early.seriesId, late.seriesId], [], false, true);
+      await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1)" }));
+      expect(pairHeading("Early Sprint (~15 min) → Late Sprint")).toBeVisible();
+      expect(screen.getByText("(~15 min)")).toHaveAttribute(
+        "title",
+        "Estimated from iRacing's preliminary schedule",
+      );
     });
 
     it("includes maybes and is shown for read-only seasons", () => {

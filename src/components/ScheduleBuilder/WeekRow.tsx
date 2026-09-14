@@ -15,6 +15,8 @@ interface Props {
   weeklyPicks: Record<number, number[]>;
   weeklyMaybes: Record<number, number[]>;
   readOnly?: boolean;
+  /** The season came from iRacing's preliminary PDF, so session lengths are estimates. */
+  provisional?: boolean;
 }
 
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
@@ -59,6 +61,7 @@ export default function WeekRow({
   weeklyPicks,
   weeklyMaybes,
   readOnly = false,
+  provisional = false,
 }: Props) {
   const { removeWeeklyPick, removeWeeklyMaybe, toggleMaybe } = useAppStore();
   const [showModal, setShowModal] = useState(false);
@@ -89,7 +92,9 @@ export default function WeekRow({
   const backToBackLines = useMemo(() => {
     if (!showBackToBacks || !backToBacks) return null;
     const referenceDate = new Date(new Date(seasonStartDate).getTime() + (week - 1) * MS_PER_WEEK);
-    return backToBacks.pairs.map((pair) => formatBackToBackMatches(pair.matches, { referenceDate }));
+    return backToBacks.pairs.map((pair) =>
+      formatBackToBackMatches(pair.matches, pair.sessionMinutes, { referenceDate }),
+    );
   }, [showBackToBacks, backToBacks, seasonStartDate, week]);
 
   return (
@@ -228,7 +233,16 @@ export default function WeekRow({
                     {backToBacks.pairs.map((pair, i) => (
                       <li key={`${pair.from.seriesId}-${pair.to.seriesId}`}>
                         <div className="font-medium text-[var(--color-text-primary)]">
-                          {pair.from.seriesName} → {pair.to.seriesName}
+                          {pair.from.seriesName}{" "}
+                          <span
+                            className={`font-normal text-[var(--color-text-secondary)] ${
+                              provisional ? "cursor-help underline decoration-dotted underline-offset-2" : ""
+                            }`}
+                            title={provisional ? "Estimated from iRacing's preliminary schedule" : undefined}
+                          >
+                            {`(${provisional ? "~" : ""}${pair.sessionMinutes} min)`}
+                          </span>{" "}
+                          → {pair.to.seriesName}
                         </div>
                         <div className="flex flex-wrap gap-x-3 font-mono text-[var(--color-text-secondary)]">
                           {backToBackLines[i].map((line) => (

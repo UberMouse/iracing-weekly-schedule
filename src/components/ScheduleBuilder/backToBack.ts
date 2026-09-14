@@ -25,6 +25,8 @@ export type BackToBackMatches =
 export interface BackToBackPair {
   from: Series;
   to: Series;
+  /** A's session length for the week (minutes), which sets A's end. */
+  sessionMinutes: number;
   matches: BackToBackMatches;
 }
 
@@ -151,7 +153,9 @@ export function findBackToBacks(series: Series[], week: number): BackToBacks {
     for (const b of timed) {
       if (a.series.seriesId === b.series.seriesId) continue;
       const matches = matchTimings(a.timing, b.timing);
-      if (matches.occurrences.length > 0) pairs.push({ from: a.series, to: b.series, matches });
+      if (matches.occurrences.length > 0) {
+        pairs.push({ from: a.series, to: b.series, sessionMinutes: a.timing.sessionMinutes, matches });
+      }
     }
   }
   return { pairs, missingStartTimes };
@@ -224,8 +228,14 @@ function cadenceLabel(minutes: number): string {
   return minutes % 60 === 0 ? `every ${minutes / 60} h` : `every ${minutes} min`;
 }
 
+/** "(N min gap)" when B starts at/after A's end, "(N min overlap)" before it. */
+function gapLabel(minutesAfterEnd: number): string {
+  return minutesAfterEnd >= 0 ? `(${minutesAfterEnd} min gap)` : `(${-minutesAfterEnd} min overlap)`;
+}
+
 function formatDaily(
   occurrences: { fromMinute: number; toMinute: number }[],
+  sessionMinutes: number,
   offset: number,
 ): string[] {
   // Occurrences sharing a start-to-start gap are one periodic pattern (period
@@ -247,48 +257,67 @@ function formatDaily(
   patterns.sort((x, y) => x.from - y.from || x.gap - y.gap);
   return patterns.map(({ from, gap, cadence }) => {
     const hourly = 60 % cadence === 0;
-    const show = (m: number) => (hourly ? `:${clock(m).slice(3)}` : clock(m));
-    // Minutes past the hour hide whole hours of the gap (":30 → :30" when B
-    // starts an hour later), so spell those out. A shorter gap that wraps
-    // (":45 → :15") reads naturally as the next hour.
-    const extraHours = hourly && gap >= 60 ? ` (+${Math.floor(gap / 60)}h)` : "";
-    return `${show(from)} → ${show(from + gap)}${extraHours} · ${cadenceLabel(cadence)}`;
+    // Minutes past the hour hide whole hours of an offset from A's start
+    // (":30 → :30" when B starts an hour later), so spell those out. A shorter
+    // offset that wraps (":45 → :15") reads naturally as the next hour.
+    const show = (minutesAfterStart: number) => {
+      const time = clock(from + minutesAfterStart);
+      if (!hourly) return time;
+      const extraHours = minutesAfterStart >= 60 ? ` (+${Math.floor(minutesAfterStart / 60)}h)` : "";
+      return `:${time.slice(3)}${extraHours}`;
+    };
+    // Within a pattern A's length is fixed, so the gap to B is too.
+    const minutesAfterEnd = gap - sessionMinutes;
+    return `${show(0)} → ends ${show(sessionMinutes)} → ${show(gap)} ${gapLabel(minutesAfterEnd)} · ${cadenceLabel(cadence)}`;
   });
 }
 
 /**
- * Concise display lines for a pair's matches in `timeZone`: one line per
- * periodic pattern for daily matches (":30 → :45 · hourly",
- * ":30 → :30 (+1h) · hourly", "01:45 → 03:00 · every 2 h"), or one per A start
- * for dated matches, listing every B start after it ("Sat 19:00 → 20:15, 20:30",
- * with a weekday added whenever a B start falls on a later day than the time
- * before it).
+ * Concise display lines for a pair's matches in `timeZone`, where
+ * `sessionMinutes` is A's session length (`BackToBackPair.sessionMinutes`).
+ * Each line reads A start → A end → B start(s), every B start followed by its
+ * minutes of gap (or overlap) against A's end. Daily matches get one line per
+ * periodic pattern (":15 → ends :35 → :45 (10 min gap) · hourly",
+ * ":30 → ends :23 → :30 (+1h) (7 min gap) · hourly",
+ * "01:45 → ends 02:50 → 03:00 (10 min gap) · every 2 h"); dated matches one per
+ * A start, listing every B start after it
+ * ("Sat 19:00 → ends 20:10 → 20:15 (5 min gap), 20:25 (15 min gap)"), with a
+ * weekday added whenever a time falls on a different day than the time before it.
  */
 export function formatBackToBackMatches(
   matches: BackToBackMatches,
+  sessionMinutes: number,
   { timeZone, referenceDate = new Date() }: FormatBackToBackOptions = {},
 ): string[] {
   if (matches.kind === "daily") {
     // Daily patterns are shown with the zone's UTC offset at a single instant
     // (callers pass the week's start), so a DST change part-way through the
     // week is approximated: later days display an hour off.
-    return formatDaily(matches.occurrences, utcOffsetMinutes(referenceDate, timeZone));
+    return formatDaily(matches.occurrences, sessionMinutes, utcOffsetMinutes(referenceDate, timeZone));
   }
+  const durationMs = sessionMinutes * MS_PER_MINUTE;
   // Occurrences are sorted by A start, then B start, so each A start's B
   // starts are adjacent and ascending.
   const lines: { fromStart: number; text: string; lastDateKey: string }[] = [];
+  const dayPrefix = (parts: LocalParts, previousDateKey: string) =>
+    parts.dateKey === previousDateKey ? "" : `${parts.weekday} `;
   for (const { fromStart, toStart } of matches.occurrences) {
-    const to = localParts(toStart, timeZone);
     let line = lines.at(-1);
     if (line?.fromStart !== fromStart) {
       const from = localParts(fromStart, timeZone);
-      line = { fromStart, text: `${from.weekday} ${clock(from.minuteOfDay)} →`, lastDateKey: from.dateKey };
+      const end = localParts(fromStart + durationMs, timeZone);
+      line = {
+        fromStart,
+        text: `${from.weekday} ${clock(from.minuteOfDay)} → ends ${dayPrefix(end, from.dateKey)}${clock(end.minuteOfDay)} →`,
+        lastDateKey: end.dateKey,
+      };
       lines.push(line);
     } else {
       line.text += ",";
     }
-    const toDay = to.dateKey === line.lastDateKey ? "" : `${to.weekday} `;
-    line.text += ` ${toDay}${clock(to.minuteOfDay)}`;
+    const to = localParts(toStart, timeZone);
+    const minutesAfterEnd = (toStart - fromStart - durationMs) / MS_PER_MINUTE;
+    line.text += ` ${dayPrefix(to, line.lastDateKey)}${clock(to.minuteOfDay)} ${gapLabel(minutesAfterEnd)}`;
     line.lastDateKey = to.dateKey;
   }
   return lines.map((line) => line.text);

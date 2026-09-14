@@ -83,6 +83,7 @@ export default function ScheduleBuilder() {
                 weeklyPicks={viewingPicks.weeklyPicks}
                 weeklyMaybes={viewingPicks.weeklyMaybes}
                 readOnly={readOnly}
+                provisional={viewing.provisional ?? false}
               />
             ))}
           </div>

@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { findBackToBacks, formatBackToBackMatches } from "../ScheduleBuilder/backToBack";
+import {
+  WINDOW_AFTER_END_MINUTES,
+  WINDOW_BEFORE_END_MINUTES,
+  findBackToBacks,
+  formatBackToBackMatches,
+} from "../ScheduleBuilder/backToBack";
 import type { RaceTimes, Series } from "../../types";
 
 function makeSeries(seriesId: number, seriesName: string, weeks: Record<number, RaceTimes | undefined>): Series {
@@ -58,10 +63,12 @@ describe("findBackToBacks", () => {
   });
 
   it("is directional: A → B can qualify while B → A doesn't", () => {
-    const b = makeSeries(2, "B", { 1: repeating("10:30", 1440, 30) });
+    const b = makeSeries(2, "B", { 1: repeating("10:30", 1440, 45) });
     const { pairs } = findBackToBacks([b, a], 1);
     expect(names(pairs)).toEqual(["A → B"]);
     expect(pairs[0].matches).toEqual({ kind: "daily", occurrences: [{ fromMinute: 600, toMinute: 630 }] });
+    // The pair carries A's session length, not B's.
+    expect(pairs[0].sessionMinutes).toBe(30);
   });
 
   it("wraps windows past midnight for repeating series", () => {
@@ -121,7 +128,9 @@ describe("findBackToBacks", () => {
       kind: "dated",
       occurrences: [{ fromStart: Date.parse("2026-02-14T23:50:00Z"), toStart: Date.parse("2026-02-15T00:10:00Z") }],
     });
-    expect(formatBackToBackMatches(pairs[0].matches, { timeZone: "UTC" })).toEqual(["Sat 23:50 → Sun 00:10"]);
+    expect(formatBackToBackMatches(pairs[0].matches, pairs[0].sessionMinutes, { timeZone: "UTC" })).toEqual([
+      "Sat 23:50 → ends Sun 00:10 → 00:10 (0 min gap)",
+    ]);
   });
 
   it("excludes and reports series without usable start data", () => {
@@ -144,37 +153,54 @@ describe("findBackToBacks", () => {
 });
 
 describe("formatBackToBackMatches", () => {
-  const format = (from: Series, to: Series, timeZone: string, referenceDate?: Date) =>
-    formatBackToBackMatches(findBackToBacks([from, to], 1).pairs.find((p) => p.from === from)!.matches, {
-      timeZone,
-      referenceDate,
-    });
+  const format = (from: Series, to: Series, timeZone: string, referenceDate?: Date) => {
+    const pair = findBackToBacks([from, to], 1).pairs.find((p) => p.from === from)!;
+    return formatBackToBackMatches(pair.matches, pair.sessionMinutes, { timeZone, referenceDate });
+  };
 
-  it("collapses hourly patterns to minutes past the hour", () => {
+  it("collapses hourly patterns to minutes past the hour, with A's end and the gap", () => {
     const a = makeSeries(1, "A", { 1: repeating("00:30", 60, 15) });
     const b = makeSeries(2, "B", { 1: repeating("00:45", 60, 15) });
-    expect(format(a, b, "UTC")).toEqual([":30 → :45 · hourly"]);
-    expect(format(a, b, "Asia/Kolkata")).toEqual([":00 → :15 · hourly"]);
+    expect(format(a, b, "UTC")).toEqual([":30 → ends :45 → :45 (0 min gap) · hourly"]);
+    expect(format(a, b, "Asia/Kolkata")).toEqual([":00 → ends :15 → :15 (0 min gap) · hourly"]);
   });
 
-  it("leaves sub-hour gaps between starts as plain minutes", () => {
+  it("wraps an end past the hour without a suffix when it is under an hour after A's start", () => {
+    // A 25 min from :45 ends at :10; B at :15 starts 5 min later.
+    const a = makeSeries(1, "A", { 1: repeating("00:45", 60, 25) });
+    const b = makeSeries(2, "B", { 1: repeating("00:15", 60, 10) });
+    expect(format(a, b, "UTC")).toEqual([":45 → ends :10 → :15 (5 min gap) · hourly"]);
     // A 50 min from :00 ends at :50; B at :55 starts 55 min after A.
-    const a = makeSeries(1, "A", { 1: repeating("00:00", 60, 50) });
-    const b = makeSeries(2, "B", { 1: repeating("00:55", 60, 10) });
-    expect(format(a, b, "UTC")).toEqual([":00 → :55 · hourly"]);
+    const c = makeSeries(3, "C", { 1: repeating("00:00", 60, 50) });
+    const d = makeSeries(4, "D", { 1: repeating("00:55", 60, 10) });
+    expect(format(c, d, "UTC")).toEqual([":00 → ends :50 → :55 (5 min gap) · hourly"]);
   });
 
-  it("marks whole hours hidden by minutes-past-the-hour times", () => {
-    // A 53 min from :30 ends at :23; B at :30 the next hour starts 60 min after A.
+  it("marks whole hours hidden by minutes-past-the-hour times on B's start", () => {
+    // A 53 min from :30 ends at :23 (53 min later); B at :30 the next hour starts 60 min after A.
     const a = makeSeries(1, "A", { 1: repeating("00:30", 60, 53) });
     const b = makeSeries(2, "B", { 1: repeating("00:30", 60, 10) });
-    expect(format(a, b, "UTC")).toEqual([":30 → :30 (+1h) · hourly"]);
-    // A at :10/:40 for 55 min; B every 15 min starts 50 or 65 min later.
+    expect(format(a, b, "UTC")).toEqual([":30 → ends :23 → :30 (+1h) (7 min gap) · hourly"]);
+    // A at :10/:40 for 55 min ends at :05; B every 15 min starts 50 or 65 min after A.
     const halfHourly = makeSeries(3, "Half-hourly", { 1: repeating("00:10", 30, 55) });
     const quarterly = makeSeries(4, "Quarterly", { 1: repeating("00:00", 15, 10) });
     expect(format(halfHourly, quarterly, "UTC")).toEqual([
-      ":10 → :00 · every 30 min",
-      ":10 → :15 (+1h) · every 30 min",
+      ":10 → ends :05 → :00 (5 min overlap) · every 30 min",
+      ":10 → ends :05 → :15 (+1h) (10 min gap) · every 30 min",
+    ]);
+  });
+
+  it("marks whole hours on A's end too, in whole-hour and half-hour offset zones", () => {
+    // A 65 min from :30 ends at :35 an hour on; B on :30 and :45 starts 60 or 75 min after A.
+    const a = makeSeries(1, "A", { 1: repeating("00:30", 60, 65) });
+    const b = makeSeries(2, "B", { 1: repeating("00:00", 15, 10) });
+    expect(format(a, b, "UTC")).toEqual([
+      ":30 → ends :35 (+1h) → :30 (+1h) (5 min overlap) · hourly",
+      ":30 → ends :35 (+1h) → :45 (+1h) (10 min gap) · hourly",
+    ]);
+    expect(format(a, b, "Asia/Kolkata")).toEqual([
+      ":00 → ends :05 (+1h) → :00 (+1h) (5 min overlap) · hourly",
+      ":00 → ends :05 (+1h) → :15 (+1h) (10 min gap) · hourly",
     ]);
   });
 
@@ -182,30 +208,37 @@ describe("formatBackToBackMatches", () => {
     const a = makeSeries(1, "A", { 1: repeating("10:00", 1440, 30) });
     const b = makeSeries(2, "B", { 1: repeating("10:30", 1440, 30) });
     // UK clocks go back on 2026-10-25: BST (+1) before, GMT after.
-    expect(format(a, b, "Europe/London", new Date("2026-10-19T00:00:00Z"))).toEqual(["11:00 → 11:30 · daily"]);
-    expect(format(a, b, "Europe/London", new Date("2026-10-26T00:00:00Z"))).toEqual(["10:00 → 10:30 · daily"]);
+    expect(format(a, b, "Europe/London", new Date("2026-10-19T00:00:00Z"))).toEqual([
+      "11:00 → ends 11:30 → 11:30 (0 min gap) · daily",
+    ]);
+    expect(format(a, b, "Europe/London", new Date("2026-10-26T00:00:00Z"))).toEqual([
+      "10:00 → ends 10:30 → 10:30 (0 min gap) · daily",
+    ]);
   });
 
   it("shows multi-hour cadences from the first occurrence after local midnight", () => {
-    // A every 2 h from 01:45 for 60 min ends at :45; B on the hour starts 15 min later.
-    const a = makeSeries(1, "A", { 1: repeating("01:45", 120, 60) });
+    // A every 2 h from 01:45 for 65 min ends at 02:50; B on the hour starts 10 min later.
+    const a = makeSeries(1, "A", { 1: repeating("01:45", 120, 65) });
     const b = makeSeries(2, "B", { 1: repeating("00:00", 60, 30) });
-    expect(format(a, b, "UTC")).toEqual(["01:45 → 03:00 · every 2 h"]);
+    expect(format(a, b, "UTC")).toEqual(["01:45 → ends 02:50 → 03:00 (10 min gap) · every 2 h"]);
     // +05:30: 01:45 UTC is 07:15 local, whose first 2-hourly slot after midnight is 01:15.
-    expect(format(a, b, "Asia/Kolkata")).toEqual(["01:15 → 02:30 · every 2 h"]);
+    expect(format(a, b, "Asia/Kolkata")).toEqual(["01:15 → ends 02:20 → 02:30 (10 min gap) · every 2 h"]);
   });
 
   it("lists each distinct gap once for sub-hour cadences", () => {
     const a = makeSeries(1, "A", { 1: repeating("00:00", 30, 20) });
     const b = makeSeries(2, "B", { 1: repeating("00:15", 15, 20) });
-    expect(format(a, b, "UTC")).toEqual([":00 → :15 · every 30 min", ":00 → :30 · every 30 min"]);
+    expect(format(a, b, "UTC")).toEqual([
+      ":00 → ends :20 → :15 (5 min overlap) · every 30 min",
+      ":00 → ends :20 → :30 (10 min gap) · every 30 min",
+    ]);
   });
 
   it("shows once-a-day patterns as daily across midnight", () => {
     const late = makeSeries(1, "Late", { 1: repeating("23:45", 1440, 20) });
     const early = makeSeries(2, "Early", { 1: repeating("00:05", 1440, 20) });
-    expect(format(late, early, "UTC")).toEqual(["23:45 → 00:05 · daily"]);
-    expect(format(late, early, "Asia/Kolkata")).toEqual(["05:15 → 05:35 · daily"]);
+    expect(format(late, early, "UTC")).toEqual(["23:45 → ends 00:05 → 00:05 (0 min gap) · daily"]);
+    expect(format(late, early, "Asia/Kolkata")).toEqual(["05:15 → ends 05:35 → 05:35 (0 min gap) · daily"]);
   });
 
   it("lists scheduled occurrences with weekday and local time", () => {
@@ -213,26 +246,102 @@ describe("formatBackToBackMatches", () => {
       1: scheduled(["2026-02-14T17:00:00Z", "2026-02-14T18:00:00Z"], 60),
     });
     const sprint = makeSeries(2, "Sprint", { 1: repeating("00:15", 60, 20) });
-    expect(format(special, sprint, "UTC")).toEqual(["Sat 17:00 → 18:15", "Sat 18:00 → 19:15"]);
-    expect(format(special, sprint, "Asia/Kolkata")).toEqual(["Sat 22:30 → 23:45", "Sat 23:30 → Sun 00:45"]);
+    expect(format(special, sprint, "UTC")).toEqual([
+      "Sat 17:00 → ends 18:00 → 18:15 (15 min gap)",
+      "Sat 18:00 → ends 19:00 → 19:15 (15 min gap)",
+    ]);
+    // In +05:30 the second race's end crosses midnight, so the end gets the weekday.
+    expect(format(special, sprint, "Asia/Kolkata")).toEqual([
+      "Sat 22:30 → ends 23:30 → 23:45 (15 min gap)",
+      "Sat 23:30 → ends Sun 00:30 → 00:45 (15 min gap)",
+    ]);
   });
 
   it("groups every B start after the same scheduled A start onto one line", () => {
+    // Sat 19:00 for 70 min ends at 20:10; both scheduled B starts qualify.
+    const evening = makeSeries(1, "Evening", { 1: scheduled(["2026-02-14T19:00:00Z"], 70) });
+    const pairOfStarts = makeSeries(2, "Pair", {
+      1: scheduled(["2026-02-14T20:15:00Z", "2026-02-14T20:25:00Z", "2026-02-14T20:30:00Z"], 30),
+    });
+    expect(format(evening, pairOfStarts, "UTC")).toEqual(["Sat 19:00 → ends 20:10 → 20:15 (5 min gap), 20:25 (15 min gap)"]);
     // Tue 00:00 for 60 min ends at 01:00; the 15-min grid's 01:00 and 01:15 both qualify.
-    const special = makeSeries(1, "Special", { 1: scheduled(["2026-02-17T00:00:00Z"], 60) });
-    const grid = makeSeries(2, "Grid", { 1: repeating("00:00", 15, 20) });
-    expect(format(special, grid, "UTC")).toEqual(["Tue 00:00 → 01:00, 01:15"]);
+    const special = makeSeries(3, "Special", { 1: scheduled(["2026-02-17T00:00:00Z"], 60) });
+    const grid = makeSeries(4, "Grid", { 1: repeating("00:00", 15, 20) });
+    expect(format(special, grid, "UTC")).toEqual(["Tue 00:00 → ends 01:00 → 01:00 (0 min gap), 01:15 (15 min gap)"]);
     // Ends at 23:50: 23:45 and Sun 00:00 qualify, the weekday added once the day changes.
-    const late = makeSeries(3, "Late", { 1: scheduled(["2026-02-14T23:30:00Z"], 20) });
-    expect(format(late, grid, "UTC")).toEqual(["Sat 23:30 → 23:45, Sun 00:00"]);
+    const late = makeSeries(5, "Late", { 1: scheduled(["2026-02-14T23:30:00Z"], 20) });
+    expect(format(late, grid, "UTC")).toEqual(["Sat 23:30 → ends 23:50 → 23:45 (5 min overlap), Sun 00:00 (10 min gap)"]);
+  });
+
+  it("adds a weekday whenever the day differs from the time before it", () => {
+    // Sat 23:30 for 32 min ends Sun 00:02; B at Sat 23:58 overlaps, then Sun 00:15 follows.
+    const late = makeSeries(1, "Late", { 1: scheduled(["2026-02-14T23:30:00Z"], 32) });
+    const b = makeSeries(2, "B", { 1: scheduled(["2026-02-14T23:58:00Z", "2026-02-15T00:15:00Z"], 30) });
+    expect(format(late, b, "UTC")).toEqual([
+      "Sat 23:30 → ends Sun 00:02 → Sat 23:58 (4 min overlap), Sun 00:15 (13 min gap)",
+    ]);
   });
 
   it("groups scheduled B starts by the repeating A start they follow", () => {
-    // A every 15 min for 50: 00:00 reaches 01:00; 00:15 (ends 01:05) reaches both 01:00 and 01:10.
+    // A every 15 min for 50: 00:00 (ends 00:50) reaches 01:00; 00:15 (ends 01:05) reaches both 01:00 and 01:10.
     const grid = makeSeries(1, "Grid", { 1: repeating("00:00", 15, 50) });
     const special = makeSeries(2, "Special", {
       1: scheduled(["2026-02-17T01:00:00Z", "2026-02-17T01:10:00Z"], 60),
     });
-    expect(format(grid, special, "UTC")).toEqual(["Tue 00:00 → 01:00", "Tue 00:15 → 01:00, 01:10"]);
+    expect(format(grid, special, "UTC")).toEqual([
+      "Tue 00:00 → ends 00:50 → 01:00 (10 min gap)",
+      "Tue 00:15 → ends 01:05 → 01:00 (5 min overlap), 01:10 (5 min gap)",
+    ]);
+  });
+
+  it("prints exactly the real B-start-minus-A-end differences, always within the window", () => {
+    const diffLabel = /\((\d+) min (gap|overlap)\)/g;
+    const printedDiffs = (lines: string[]) =>
+      lines.flatMap((line) =>
+        [...line.matchAll(diffLabel)].map(([, n, kind]) => (kind === "gap" ? Number(n) : -Number(n))),
+      );
+    let checked = 0;
+    const zones = ["UTC", "Asia/Kolkata", "America/St_Johns"];
+    const grids = [15, 30, 60, 120, 1440];
+    for (const repeatA of grids) {
+      for (const repeatB of grids) {
+        for (const sessionMinutes of [7, 20, 53, 65, 118]) {
+          for (const firstB of ["00:00", "00:07", "00:44"]) {
+            const a = makeSeries(1, "A", { 1: repeating("00:30", repeatA, sessionMinutes) });
+            const b = makeSeries(2, "B", { 1: repeating(firstB, repeatB, 10) });
+            const dated = makeSeries(3, "Dated", {
+              1: scheduled(["2026-02-14T23:40:00Z", "2026-02-15T11:12:00Z"], sessionMinutes),
+            });
+            for (const [from, to] of [[a, b], [dated, b], [a, dated]]) {
+              const pair = findBackToBacks([from, to], 1).pairs.find((p) => p.from === from);
+              if (!pair) continue;
+              const expected =
+                pair.matches.kind === "daily"
+                  ? pair.matches.occurrences.map((o) => o.toMinute - o.fromMinute - pair.sessionMinutes)
+                  : pair.matches.occurrences.map(
+                      (o) => (o.toStart - o.fromStart) / 60_000 - pair.sessionMinutes,
+                    );
+              const lines = formatBackToBackMatches(pair.matches, pair.sessionMinutes, {
+                timeZone: zones[checked % zones.length],
+                referenceDate: new Date("2026-02-16T00:00:00Z"),
+              });
+              const printed = printedDiffs(lines);
+              for (const diff of printed) {
+                expect(diff).toBeGreaterThanOrEqual(-WINDOW_BEFORE_END_MINUTES);
+                expect(diff).toBeLessThanOrEqual(WINDOW_AFTER_END_MINUTES);
+              }
+              // Daily patterns collapse repeats, so compare distinct values; dated lines list every occurrence.
+              if (pair.matches.kind === "daily") {
+                expect(new Set(printed)).toEqual(new Set(expected));
+              } else {
+                expect(printed.sort((x, y) => x - y)).toEqual(expected.sort((x, y) => x - y));
+              }
+              checked++;
+            }
+          }
+        }
+      }
+    }
+    expect(checked).toBeGreaterThan(100);
   });
 });
