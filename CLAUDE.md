@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 npm run dev          # Vite dev server with HMR
 npm run build        # tsc + vite build (local, no data fetch)
-npm run build:prod   # fetch-data + tsc + vite build (CI/production)
+npm run build:prod   # fetch-data + tsc + vite build (local; CI runs plain `build`)
 npm run fetch-data   # Fetch iRacing API data via 1Password (op run), can be run anytime and credentials will be injected
 npm run fetch-prelim -- <pdf-url-or-path>   # Build next season from iRacing's preliminary schedule PDF (add --dry-run to preview)
 npm run fetch-track-categories   # Refresh data/track-categories.json from the Data API (also done by fetch-data/fetch-prelim)
@@ -55,7 +55,7 @@ Things the PDF does not state, and where they come from:
 ### Frontend
 
 - **React 19 + TypeScript** with Vite 7, Tailwind CSS 4, Zustand 5, React Router v7, Motion.js
-- Two-page SPA: `/series` (browse/filter the current season) and `/schedule` (build/view weekly plan, with a season switcher)
+- SPA routes: `/series` (browse/filter the current season), `/schedule` (build/view weekly plan, with a season switcher), `/tracks` (per-season track usage table) and `/about`
 - Season data is fetched at runtime: `useAppStore.loadSeasons()` fetches `current-season.json` (cache-busted with `?v=__BUILD_VERSION__`); past seasons are lazy-fetched per `<id>.json` when selected in the switcher. The app shows a loading gate until the current season resolves.
 - Zustand store (`src/store/useAppStore.ts`) with `persist` middleware — favorites, **per-season** picks (`seasonPicks` keyed by season id), and filter state survive in localStorage; fetched season data is ephemeral. A `migrate` (v0→v1) folds legacy flat picks into `seasonPicks["2026-S2"]`. Past seasons render read-only; only the current season is editable.
 
@@ -74,6 +74,8 @@ Things the PDF does not state, and where they come from:
 - **SeriesCard** — Series metadata, cars, schedule weeks with track info
 - **AddSeriesModal** — Modal for picking series into a specific week
 - **TrackUsage** (`/tracks`) — Table of per-season track appearance counts (series-weeks) fetched from `track-usage.json`, filterable by track type (all/road/oval/dirt road/dirt oval); pure sort/filter/aggregate logic lives in `TrackUsage/aggregate.ts`
+- **StatusMessage** — Shared `LoadingState` / `ErrorState` (with retry), full-screen for the app's load gate or inline for pages
+- **FilterPill** — Shared colour-tinted toggle pill (`aria-pressed`) used by FilterBar's category filter and the TrackUsage type filter
 
 ### Transform Logic
 
@@ -86,4 +88,4 @@ The transform (`scripts/transform.ts`) handles several non-obvious mappings:
 
 ## Deployment
 
-GitHub Actions (`.github/workflows/deploy.yml`): push to main, manual dispatch, or quarterly cron runs `npm run build` (no data fetch) then deploys committed files (including `public/seasons/`) to GitHub Pages. Base path: `/iracing-weekly-schedule/`. To publish a new season: run `npm run fetch-data` locally, commit the new `public/seasons/` files, and push.
+GitHub Actions (`.github/workflows/deploy.yml`): push to main, manual dispatch, or quarterly cron runs `npm run build` (no data fetch, no credentials) then deploys committed files (including `public/seasons/`) plus the build-generated `track-usage.json` to GitHub Pages. Base path: `/iracing-weekly-schedule/`. To publish a new season: run `npm run fetch-data` locally, commit the new `public/seasons/` files and any `data/track-categories.json` changes, and push.
