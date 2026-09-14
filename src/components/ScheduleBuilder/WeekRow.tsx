@@ -241,7 +241,10 @@ export default function WeekRow({
                             title={provisional ? "Estimated from iRacing's preliminary schedule" : undefined}
                           >
                             {`(${provisional ? "~" : ""}${pair.sessionMinutes} min)`}
-                          </span>{" "}
+                          </span>
+                          {provisional && (
+                            <span className="sr-only"> (estimated from iRacing's preliminary schedule)</span>
+                          )}{" "}
                           → {pair.to.seriesName}
                         </div>
                         <div className="flex flex-wrap gap-x-3 font-mono text-[var(--color-text-secondary)]">

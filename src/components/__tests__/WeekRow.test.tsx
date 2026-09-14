@@ -129,9 +129,17 @@ describe("WeekRow", () => {
     const b2bSeries = [early, late, normalSeries, carRotationSeries];
     const earlyToLate = "Early Sprint (15 min) → Late Sprint";
 
-    /** The pair heading spans elements (the length is its own span), so match on its whole text. */
+    /**
+     * The pair heading spans elements (the length is its own span, and
+     * provisional seasons add a screen-reader-only note after it), so match
+     * the innermost element whose whole text equals the expected string
+     * rather than coupling to the wrapper tag.
+     */
     const pairHeading = (text: string) =>
-      screen.queryByText((_, element) => element?.tagName === "DIV" && element.textContent === text);
+      screen.queryByText((_, element) => {
+        if (!element || element.textContent !== text) return false;
+        return Array.from(element.children).every((child) => child.textContent !== text);
+      });
 
     function renderWeek(picks: number[], maybes: number[] = [], readOnly = false, provisional?: boolean) {
       render(
@@ -184,22 +192,30 @@ describe("WeekRow", () => {
       expect(screen.getByText("No start times: GT3 Sprint")).toBeVisible();
     });
 
-    it("shows official session lengths plainly, without a tooltip", async () => {
+    it("shows official session lengths plainly, without a tooltip or screen-reader note", async () => {
       renderWeek([early.seriesId, late.seriesId]);
       await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1)" }));
       const length = screen.getByText("(15 min)");
       expect(length).not.toHaveAttribute("title");
       expect(screen.queryByText("(~15 min)")).not.toBeInTheDocument();
+      expect(screen.queryByText(/estimated from iRacing's preliminary schedule/i)).not.toBeInTheDocument();
     });
 
-    it("marks provisional session lengths as estimates with a tooltip", async () => {
+    it("marks provisional session lengths as estimates with a tooltip and screen-reader note", async () => {
       renderWeek([early.seriesId, late.seriesId], [], false, true);
       await userEvent.click(screen.getByRole("button", { name: "Back-2-backs (1)" }));
-      expect(pairHeading("Early Sprint (~15 min) → Late Sprint")).toBeVisible();
+      expect(
+        pairHeading(
+          "Early Sprint (~15 min) (estimated from iRacing's preliminary schedule) → Late Sprint",
+        ),
+      ).toBeVisible();
       expect(screen.getByText("(~15 min)")).toHaveAttribute(
         "title",
         "Estimated from iRacing's preliminary schedule",
       );
+      // The tooltip alone doesn't reach keyboard/touch/most screen-reader users,
+      // so a visually-hidden note carries the same explanation in the a11y tree.
+      expect(screen.getByText("(estimated from iRacing's preliminary schedule)")).toBeInTheDocument();
     });
 
     it("includes maybes and is shown for read-only seasons", () => {
