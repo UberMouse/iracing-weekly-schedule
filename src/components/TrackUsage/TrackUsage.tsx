@@ -1,8 +1,14 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { TrackUsageFile } from "../../types";
 import { LoadingState, ErrorState } from "../StatusMessage";
 import FilterPill from "../FilterPill";
-import { aggregateTrackUsage, type TrackUsageFilterValue } from "./aggregate";
+import {
+  aggregateTrackUsage,
+  DEFAULT_TRACK_USAGE_SORT,
+  type TrackUsageFilterValue,
+  type TrackUsageSort,
+  type TrackUsageSortColumn,
+} from "./aggregate";
 
 const TRACK_USAGE_URL = `${import.meta.env.BASE_URL}track-usage.json`;
 
@@ -16,6 +22,43 @@ const FILTERS: { value: TrackUsageFilterValue; label: string; color: string | nu
   { value: "dirt_oval", label: "Dirt Oval", color: "var(--color-cat-dirt-oval)" },
 ];
 
+function sameColumn(a: TrackUsageSortColumn, b: TrackUsageSortColumn): boolean {
+  return a.kind === "total" ? b.kind === "total" : b.kind === "season" && a.seasonId === b.seasonId;
+}
+
+interface SortHeaderProps {
+  column: TrackUsageSortColumn;
+  sort: TrackUsageSort;
+  onSort: (column: TrackUsageSortColumn) => void;
+  className: string;
+  children: ReactNode;
+}
+
+/** A right-aligned numeric column header that sorts the table when clicked. */
+function SortHeader({ column, sort, onSort, className, children }: SortHeaderProps) {
+  const active = sameColumn(column, sort.column);
+  const arrow = sort.direction === "desc" ? "▼" : "▲";
+  return (
+    <th
+      scope="col"
+      aria-sort={active ? (sort.direction === "desc" ? "descending" : "ascending") : undefined}
+      className={`text-right font-display uppercase tracking-wider text-xs px-3 py-2.5 whitespace-nowrap ${className}`}
+    >
+      <button
+        type="button"
+        onClick={() => onSort(column)}
+        className="inline-flex items-center gap-1 uppercase tracking-wider cursor-pointer hover:text-[var(--color-text-primary)]"
+      >
+        {children}
+        {/* Always rendered (invisible when inactive) so headers don't shift width. */}
+        <span aria-hidden="true" className={`text-[9px] ${active ? "" : "invisible"}`}>
+          {active ? arrow : "▼"}
+        </span>
+      </button>
+    </th>
+  );
+}
+
 /**
  * "Tracks" tab: how often each track (all layouts grouped) appears in the
  * schedule per season, filterable by layout type. Data comes from
@@ -28,6 +71,7 @@ export default function TrackUsage() {
   const [data, setData] = useState<TrackUsageFile | null>(null);
   const [filter, setFilter] = useState<TrackUsageFilterValue>("all");
   const [hideFree, setHideFree] = useState(false);
+  const [sort, setSort] = useState<TrackUsageSort>(DEFAULT_TRACK_USAGE_SORT);
   // Bumped on retry to re-trigger the fetch effect below; the effect itself
   // only sets state from its fetch's async callbacks, never synchronously
   // from the effect body (react-hooks/set-state-in-effect).
@@ -62,9 +106,18 @@ export default function TrackUsage() {
   }, [reloadToken]);
 
   const aggregated = useMemo(
-    () => (data ? aggregateTrackUsage(data, filter, { hideFree }) : null),
-    [data, filter, hideFree],
+    () => (data ? aggregateTrackUsage(data, filter, { hideFree, sort }) : null),
+    [data, filter, hideFree, sort],
   );
+
+  // A new column starts most-used first; re-clicking the active one flips direction.
+  const handleSort = useCallback((column: TrackUsageSortColumn) => {
+    setSort((current) =>
+      sameColumn(column, current.column)
+        ? { column, direction: current.direction === "desc" ? "asc" : "desc" }
+        : { column, direction: "desc" },
+    );
+  }, []);
 
   if (status === "loading") {
     return <LoadingState label="Loading track usage…" />;
@@ -119,10 +172,12 @@ export default function TrackUsage() {
                   Track
                 </th>
                 {seasons.map((season) => (
-                  <th
+                  <SortHeader
                     key={season.id}
-                    scope="col"
-                    className="text-right font-display uppercase tracking-wider text-xs text-[var(--color-text-secondary)] px-3 py-2.5 whitespace-nowrap"
+                    column={{ kind: "season", seasonId: season.id }}
+                    sort={sort}
+                    onSort={handleSort}
+                    className="text-[var(--color-text-secondary)]"
                   >
                     {season.name}
                     {season.provisional && (
@@ -131,14 +186,16 @@ export default function TrackUsage() {
                         Provisional
                       </span>
                     )}
-                  </th>
+                  </SortHeader>
                 ))}
-                <th
-                  scope="col"
-                  className="text-right font-display uppercase tracking-wider text-xs text-[var(--color-text-primary)] px-3 py-2.5 whitespace-nowrap"
+                <SortHeader
+                  column={{ kind: "total" }}
+                  sort={sort}
+                  onSort={handleSort}
+                  className="text-[var(--color-text-primary)]"
                 >
                   Total
-                </th>
+                </SortHeader>
               </tr>
             </thead>
             <tbody>

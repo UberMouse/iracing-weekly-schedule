@@ -143,4 +143,66 @@ describe("aggregateTrackUsage", () => {
     expect(rows.find((r) => r.trackName === "Tie B")).toBeUndefined();
     expect(rows.find((r) => r.trackName === "Tie A")).toBeDefined();
   });
+
+  describe("sort option", () => {
+    it("defaults to total descending", () => {
+      const implicit = aggregateTrackUsage(file, "all").rows.map((r) => r.trackName);
+      const explicit = aggregateTrackUsage(file, "all", {
+        sort: { column: { kind: "total" }, direction: "desc" },
+      }).rows.map((r) => r.trackName);
+      expect(explicit).toEqual(implicit);
+    });
+
+    it("sorts by a season's count descending, breaking ties by total desc then name", () => {
+      const { rows } = aggregateTrackUsage(file, "all", {
+        sort: { column: { kind: "season", seasonId: "2026-S3" }, direction: "desc" },
+      });
+      // S3: Lanier 10, Charlotte 6, Daytona 3, then zeros: Mystery (total 5),
+      // Tie A (3), Tie B (3, name after Tie A).
+      expect(rows.map((r) => r.trackName)).toEqual([
+        "Lanier National Speedway",
+        "Charlotte Motor Speedway",
+        "Daytona International Speedway",
+        "Mystery Track",
+        "Tie A",
+        "Tie B",
+      ]);
+    });
+
+    it("sorts by a season's count ascending, still breaking ties by total desc then name", () => {
+      const { rows } = aggregateTrackUsage(file, "all", {
+        sort: { column: { kind: "season", seasonId: "2026-S3" }, direction: "asc" },
+      });
+      expect(rows.map((r) => r.trackName)).toEqual([
+        "Mystery Track",
+        "Tie A",
+        "Tie B",
+        "Daytona International Speedway",
+        "Charlotte Motor Speedway",
+        "Lanier National Speedway",
+      ]);
+    });
+
+    it("sorts by total ascending, ties by name", () => {
+      const { rows } = aggregateTrackUsage(file, "all", {
+        sort: { column: { kind: "total" }, direction: "asc" },
+      });
+      expect(rows.map((r) => r.trackName)).toEqual([
+        "Tie A", // 3
+        "Tie B", // 3
+        "Daytona International Speedway", // 4
+        "Mystery Track", // 5
+        "Charlotte Motor Speedway", // 12
+        "Lanier National Speedway", // 20
+      ]);
+    });
+
+    it("sorts by the filtered season count, and still drops zero-total rows", () => {
+      const { rows } = aggregateTrackUsage(file, "road", {
+        sort: { column: { kind: "season", seasonId: "2026-S4" }, direction: "desc" },
+      });
+      // Charlotte has 2 road weeks in S4, Daytona 0 (but 3 in S3, so it stays).
+      expect(rows.map((r) => r.trackName)).toEqual(["Charlotte Motor Speedway", "Daytona International Speedway"]);
+    });
+  });
 });

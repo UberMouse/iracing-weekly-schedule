@@ -82,6 +82,51 @@ describe("TrackUsage", () => {
     expect(names).toEqual(["Lanier National Speedway, Free", "Charlotte Motor Speedway", "Mystery Track"]);
   });
 
+  it("marks Total as the active descending sort by default", async () => {
+    mockFetchOnce({ ok: true, json: async () => file });
+    render(<TrackUsage />);
+    await waitFor(() => expect(screen.getByText("Charlotte Motor Speedway")).toBeInTheDocument());
+
+    expect(screen.getByRole("columnheader", { name: "Total" })).toHaveAttribute("aria-sort", "descending");
+    expect(screen.getByRole("columnheader", { name: /2026 Season 4/ })).not.toHaveAttribute("aria-sort");
+  });
+
+  it("clicking a season header sorts by that season descending, then ascending on re-click", async () => {
+    mockFetchOnce({ ok: true, json: async () => file });
+    render(<TrackUsage />);
+    await waitFor(() => expect(screen.getByText("Charlotte Motor Speedway")).toBeInTheDocument());
+
+    const names = () => screen.getAllByRole("row").slice(1).map((r) => r.querySelector("th")?.textContent);
+    const s4Header = screen.getByRole("columnheader", { name: /2026 Season 4/ });
+    const s4Button = screen.getByRole("button", { name: /2026 Season 4/ });
+
+    await userEvent.click(s4Button);
+    // S4: Charlotte 2; Lanier and Mystery 0, tied → total desc (20 before 5).
+    expect(s4Header).toHaveAttribute("aria-sort", "descending");
+    expect(screen.getByRole("columnheader", { name: "Total" })).not.toHaveAttribute("aria-sort");
+    expect(names()).toEqual(["Charlotte Motor Speedway", "Lanier National Speedway, Free", "Mystery Track"]);
+
+    await userEvent.click(s4Button);
+    expect(s4Header).toHaveAttribute("aria-sort", "ascending");
+    expect(names()).toEqual(["Lanier National Speedway, Free", "Mystery Track", "Charlotte Motor Speedway"]);
+  });
+
+  it("switching to another column starts descending", async () => {
+    mockFetchOnce({ ok: true, json: async () => file });
+    render(<TrackUsage />);
+    await waitFor(() => expect(screen.getByText("Charlotte Motor Speedway")).toBeInTheDocument());
+
+    const totalButton = screen.getByRole("button", { name: "Total" });
+    await userEvent.click(totalButton); // Total → ascending
+    expect(screen.getByRole("columnheader", { name: "Total" })).toHaveAttribute("aria-sort", "ascending");
+
+    await userEvent.click(screen.getByRole("button", { name: /2026 Season 2/ }));
+    expect(screen.getByRole("columnheader", { name: /2026 Season 2/ })).toHaveAttribute("aria-sort", "descending");
+
+    await userEvent.click(totalButton);
+    expect(screen.getByRole("columnheader", { name: "Total" })).toHaveAttribute("aria-sort", "descending");
+  });
+
   it("shows a 0 for seasons with no usage rather than a blank cell", async () => {
     mockFetchOnce({ ok: true, json: async () => file });
     render(<TrackUsage />);

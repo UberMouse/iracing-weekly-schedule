@@ -18,9 +18,21 @@ export interface TrackUsageRow {
   free: boolean;
 }
 
+/** A sortable column: the Total column, or one season's column. */
+export type TrackUsageSortColumn = { kind: "total" } | { kind: "season"; seasonId: string };
+
+export interface TrackUsageSort {
+  column: TrackUsageSortColumn;
+  direction: "asc" | "desc";
+}
+
+export const DEFAULT_TRACK_USAGE_SORT: TrackUsageSort = { column: { kind: "total" }, direction: "desc" };
+
 export interface AggregateTrackUsageOptions {
   /** Drop rows for tracks that are free with subscription (default: keep them). */
   hideFree?: boolean;
+  /** Row order (default: total descending). */
+  sort?: TrackUsageSort;
 }
 
 export interface AggregatedTrackUsage {
@@ -53,10 +65,27 @@ function perSeasonCounts(
   return perSeason;
 }
 
+function sortValue(row: TrackUsageRow, column: TrackUsageSortColumn): number {
+  return column.kind === "total" ? row.total : (row.perSeason[column.seasonId] ?? 0);
+}
+
+/**
+ * Orders by the sort column in the chosen direction. Ties always break the
+ * same way regardless of direction: total descending, then name ascending.
+ */
+function compareRows(sort: TrackUsageSort) {
+  const sign = sort.direction === "desc" ? -1 : 1;
+  return (a: TrackUsageRow, b: TrackUsageRow) =>
+    sign * (sortValue(a, sort.column) - sortValue(b, sort.column)) ||
+    b.total - a.total ||
+    a.trackName.localeCompare(b.trackName);
+}
+
 /**
  * Pure aggregation for the Tracks page: applies the type filter, sums
  * series-weeks per season and in total, drops tracks with a zero filtered
- * total, and sorts by total descending (name ascending on ties).
+ * total, and sorts by `options.sort` (default total descending; ties by
+ * total descending, then name ascending).
  *
  * "all" sums every bucket in `counts`, including "unknown", so usage is never
  * silently dropped. A single-category filter counts only that bucket, so a
@@ -72,7 +101,7 @@ export function aggregateTrackUsage(
   options: AggregateTrackUsageOptions = {},
 ): AggregatedTrackUsage {
   const buckets = bucketsForFilter(filter);
-  const { hideFree = false } = options;
+  const { hideFree = false, sort = DEFAULT_TRACK_USAGE_SORT } = options;
 
   const rows = file.tracks
     .map((entry): TrackUsageRow => {
@@ -82,7 +111,7 @@ export function aggregateTrackUsage(
     })
     .filter((row) => row.total > 0)
     .filter((row) => !hideFree || !row.free)
-    .sort((a, b) => b.total - a.total || a.trackName.localeCompare(b.trackName));
+    .sort(compareRows(sort));
 
   return { seasons: file.seasons, rows };
 }
